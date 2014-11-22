@@ -1,0 +1,594 @@
+canvas { 
+	z-index: 0; 
+	height: 10;
+	
+	pixelMapError: 1;
+	resolution: 512;
+	heightmapsize: 513;
+	
+	splat: 0, Asphalt_background, 5, 5;
+	splat: 1, Grass, 5, 5;
+	splat: 2, Pebbles, 5, 5;
+	
+	detail: 0, Weed2;
+}
+/* flat areas, general rules */
+area[amenity],
+area[natural],
+area[historic=memorial],
+area[landuse]											{ builder: splat; splat: 2; z-index: 10; fill-color: #FF0000;}
+
+
+/* buildings */
+/* Take note that building-style is set to residential. We have to distinguish different types */
+/*area[barrier=fence],*/
+area[man_made=tower],
+area[building:levels],
+area[building:shape],
+area[building:part],
+area[building]											{ z-index: 10; builder: building; behaviour: solid; height:12; min_height: 0; building-style:residential; fill-color:#f4f4f4; roof-color:#a5a5a5; roof-style:flat;}
+
+area[amenity=shelter][shelter_type=public_transport]						{z-index: 9;  builder: building; behaviour: solid; height:3; building-style:residential; fill-color:#f4f4f4; roof-color:#a5a5a5; roof-style:flat;}
+
+/* TODO: Dangerous rules! Sometimes builder is missed but this rule is applied */
+
+/* some of the buildings have set layer=1 instead of min_height*/
+/*area[building][layer>0]								{ min_height: eval(num(tag('layer')) * num(3));}*/
+
+/*area[building:levels]									{ height: eval(num(tag('building:levels')) * num(5));}*/
+area[height]												{ height: eval(num(tag('height')));}
+area[building:height]									{ height: eval(num(tag('building:height')));}
+area[building:height][roof:height]						{ height: eval(num(tag('building:height')) - num(tag('roof:height')));}
+
+area[building:min_height]								{ min_height: eval(num(tag('building:min_height')));}
+area[min_height]											{ min_height: eval(num(tag('min_height')));}
+
+area[building=residential], 	
+area[building=yes]										{ builder: building; building-style:residential;}
+area[building:part],area[building=yes]					{ part: true; building-style: part;}	
+
+area[building:shape=sphere]								{ builder: sphere; material: Buildings/Building;}
+area[building:shape=cylinder]							{ builder: cylinder; material: Buildings/Building;}					
+
+
+area[building=bridge]									{height:0.1;}
+/*area[building=tourism]								{ fill-color: #0066ff;}
+area[building=commercial] 								{ fill-color: #efc8c8;}
+area[building=garage] 									{ fill-color: #bca9a9;}
+area[building=apartments]								{ fill-color: #bca9a9;}*/
+
+/* Color mapping*/
+/*area[building:material]									{ facade-material: eval(tag('building:material'));} */
+
+area[building:material=brick],
+area[building:facade:material=brick],
+area[building:cladding=brick]											{fill-color:#cc7755}
+area[building:roof:material=brick],
+area[roof:material=brick]												{roof-color:#cc7755}
+
+area[building:material=bronze],
+area[building:facade:material=bronze],
+area[building:cladding=bronze]											{fill-color:#ffeecc}
+area[building:roof:material=bronze],
+area[roof:material=bronze]												{roof-color:#ffeecc}
+
+area[building:material=canvas],
+area[building:facade:material=canvas],
+area[building:cladding=canvas]											{fill-color:#fff8f0}
+area[building:roof:material=canvas],
+area[roof:material=canvas]												{roof-color:#fff8f0}
+
+area[building:material=concrete],
+area[building:facade:material=concrete],
+area[building:cladding=concrete]											{fill-color:#a5a5a5}
+area[building:roof:material=concrete],
+area[roof:material=concrete]												{roof-color:#a5a5a5}
+
+area[building:material=copper],
+area[building:facade:material=copper],
+area[building:cladding=copper]											{fill-color:#a0e0d0}
+area[building:roof:material=copper],
+area[roof:material=copper]												{roof-color:#a0e0d0}
+
+area[building:material=glass],
+area[building:facade:material=glass],
+area[building:cladding=glass]											{fill-color:#e8f8f8}
+area[building:roof:material=glass],
+area[roof:material=glass]												{roof-color:#e8f8f8}
+
+area[building:material=gold],
+area[building:facade:material=gold],
+area[building:cladding=gold]												{fill-color:#ffcc00}
+area[building:roof:material=gold],
+area[roof:material=gold]													{roof-color:#ffcc00}
+
+area[building:material=plants],
+area[building:facade:material=plants],
+area[building:cladding=plants]											{fill-color:#009933}
+area[building:roof:material=plants],
+area[roof:material=plants]												{roof-color:#009933}
+
+area[building:material=metal],
+area[building:facade:material=metal],
+area[building:cladding=metal]											{fill-color:#aaaaaa}
+area[building:roof:material=metal],
+area[roof:material=metal]												{roof-color:#aaaaaa}
+
+area[building:material=panel],
+area[building:facade:material=panel],
+area[building:cladding=panel]											{fill-color:#fff8f0}
+area[building:roof:material=panel],
+area[roof:material=panel]												{roof-color:#fff8f0}
+
+area[building:material=plaster],
+area[building:facade:material=plaster],
+area[building:cladding=plaster]											{fill-color:#999999}
+area[building:roof:material=plaster],
+area[roof:material=plaster]												{roof-color:#999999}
+
+area[building:material=roof_tiles],
+area[building:facade:material=roof_tiles],
+area[building:cladding=roof_tiles]										{fill-color:#f08060}
+area[building:roof:material=roof_tiles],
+area[roof:material=roof_tiles]											{roof-color:#f08060}
+
+area[building:material=silver],
+area[building:facade:material=silver],
+area[building:cladding=silver]											{fill-color:#cccccc}
+area[building:roof:material=silver],
+area[roof:material=silver]												{roof-color:#cccccc}
+
+area[building:material=slate],
+area[building:facade:material=slate],
+area[building:cladding=slate]											{fill-color:#666666}
+area[building:roof:material=slate],
+area[roof:material=slate]												{roof-color:#666666}
+
+area[building:material=stone],
+area[building:facade:material=stone],
+area[building:cladding=stone]											{fill-color:#996666}
+area[building:roof:material=stone],
+area[roof:material=stone]												{roof-color:#996666}
+
+area[building:material=tar_paper],
+area[building:facade:material=tar_paper],
+area[building:cladding=tar_paper]										{fill-color:#333333}
+area[building:roof:material=tar_paper],
+area[roof:material=tar_paper]											{roof-color:#333333}
+
+area[building:material=wood],
+area[building:facade:material=wood],
+area[building:cladding=wood]												{fill-color:#deb887}
+area[building:roof:material=wood],
+area[roof:material=wood]													{roof-color:#deb887}
+
+area[building:colour]													{ fill-color:eval(color(tag('building:colour')));}
+area[building:color]														{ fill-color:eval(color(tag('building:color')));}
+
+/* support only mansard/flat so far, so don't eval */
+area[roof:shape=flat]									{ roof-style: flat;}
+area[roof:shape=mansard]									{ roof-style: flat;}
+area[roof:shape=dome]									{ roof-style: dome;}
+area[roof:shape=pyramidal]								{ roof-style: pyramidal;}
+area[roof:shape=gabled]									{ roof-style: gabled;}
+area[roof:shape=hipped]									{ roof-style: hipped;}
+
+area[roof:height]										{roof-height: eval(num(tag('roof:height')))}
+
+area[man_made=bridge]									{ z-index: 9;  builder: building; behaviour: solid; height:0.5; min_height: 0; fill-color:#000000; roof-color:#000000; building-style:bridge;}
+
+area[landuse=residential]								{ fill-color: #dddddd;}
+
+area[landuse=cemetery],
+area[landuse=grave_yard],
+area[amenity=grave_yard] 								{ fill-color: #aacbaf;}
+
+area[landuse=farm],
+area[landuse=farmland] 									{ fill-color: #ead8bd;}
+
+area[landuse=commercial]								{ fill-color: #7A96A3;}
+
+area[landuse=retail] 									{ fill-color: #f1dada;	}
+
+area[landuse=brownfield],
+area[landuse=landfill],
+area[landuse=greenfield],
+area[landuse=construction] 								{ fill-color: #9d9d6c; fill-opacity: 0.7;}
+
+area[amenity=parking][parking=surface]					{ fill-color: #f7efb7;}
+
+/*area[amenity],*/
+area[natural=beach]										{ fill-color: #22FF11; }
+
+area[amenity=university],
+area[amenity=college],
+area[amenity=school],
+area[amenity=hospital],
+area[amenity=kindergarten] {
+    fill-color: #f0f0d8;
+}
+
+/*area[tourism=attraction]									{ z-index: 10; fill-color: #f2caea;}*/
+
+
+/* green zones */
+area[landuse=forest],
+area[leisure], 						
+area[landuse=village_green],									
+area[landuse=grass],
+area[landuse=meadow],													
+area[landuse=industrial],		
+area[landuse=railway]									{ builder: splat; splat: 1; z-index: 10; fill-color:gray}
+
+area[natural=wood],		
+area[leisure=park],		
+area[landuse=forest] 									{ builder: splat; splat: 1; terrainDetail:0; fill-color: #8dc56c; }
+
+area[natural=wood],	
+area[landuse=forest]										{ forest:true;}
+
+area[landuse=meadow],
+area[landuse=farmland],
+area[landuse=scrub],
+area[landuse=grass]										{ builder: splat; splat: 1; terrainDetail:0; fill-color:#e9efda; }
+
+area[landuse=village_green],
+area[amenity=kindergarten]								{ fill-color: #22FF11;}
+
+area[landuse=grass],
+area[landuse=meadow]									{ builder: splat; splat: 1; terrainDetail:0; fill-color: #cfeca8;}
+
+area[leisure=recreation_ground]							{ builder: splat; splat: 1; terrainDetail:0; fill-color: #b6fdb6; }
+
+area[landuse=industrial],		
+area[landuse=railway]									{ fill-color: #dfd1d6;}
+
+/* water */
+area[natural=water],	
+area[landuse=basin],	
+area[waterway=riverbank], 
+area[waterway=dock]										{ z-index: 9; fill-color: #a3c3ec; builder: water; material: Water/Daylight_Simple_Water; behaviour: water; layer:4;}
+
+
+/************************************************** WAYS ********************************************/
+way[waterway],
+way[waterway][name]										{ z-index: 9; fill-color: #a3c3ec; builder: water; material: Water/Daylight_Simple_Water; behaviour: water; layer:4;}
+														
+/*way[barrier] :closed									{ z-index: 10; builder:flat; fill-color: #444444; width: 0.4;}*/
+
+/* roads */
+way[highway]											{ z-index: 10; builder:road; width:2 }
+
+way[highway=tertiary],
+way[highway=residential],
+way[highway=service],
+way[highway=unclassified],
+way[highway=road]										{ fill-color: #bbbbbb; width:12; }
+way[highway=living_street]								{ fill-color: #000000; width:10.5; }
+
+way[highway=trunk],
+way[highway=trunk_link],
+way[highway=primary],
+way[highway=primary_link],
+way[highway=motorway],
+way[highway=motorway_link]								{ fill-color: #e7c930; width:11; }
+
+
+			
+way[highway=secondary],
+way[highway=secondary_link]								{ fill-color: #a37b48; width:9; }
+
+way[highway=tertiary],
+way[highway=tertiary_link]								{ fill-color: #e7c930; width:11; }
+
+
+way[highway=path][foot=designated]						{ fill-color: #FA8072; width:3.5; }
+
+way[highway=service]									{ fill-color: #FFFFFF; width:3; }
+
+way[highway=footway] 									{width:2;}
+
+way[barrier]											{ builder: barrier; material: Roads/Road; texture:Roads/Road; height:2; width:0.2;  }
+
+
+/************************************************** NODES ********************************************/
+
+node[natural=tree]										{ builder:tree; }
+/*node[highway=traffic_signals]							{ z-index: 2.6; builder:detail; detail:Prefabs/Details/Traffic_light_1; roadFix:true; rotation:180;}
+node[highway=bus_stop]									{ z-index: 1.1; builder:detail; detail:Prefabs/Details/Bus_stop_1; roadFix:true; rotation:-40;}
+node[railway=tram_stop]									{ z-index: 1.1; builder:detail; detail:Prefabs/Details/Bus_stop_1; roadFix:true; rotation:-40;}
+node[amenity=recycling]									{ z-index: 0.45; builder:detail; detail:Prefabs/Details/trashbox_1; roadFix:true;}
+node[amenity=telephone]									{ z-index: 1; builder:detail; detail:Prefabs/Details/Phone_1; roadFix:true;}
+node[amenity=atm]										{ z-index: 0.3; builder:detail; detail:Prefabs/Details/atm_1; roadFix:true;}*/
+
+
+/* Info */
+node[tourism=alpinehut]							                { z-index:16; builder:info; key:accommodation_alpinehut; collider:false; }
+node[tourism=guest_house]							                { z-index:16; builder:info; key:accommodation_bed_and_breakfast; collider:false; }
+node[tourism=camp_site]							                { z-index:16; builder:info; key:accommodation_camping; collider:false; }
+node[tourism=caravan_site]							                { z-index:16; builder:info; key:accommodation_caravan_park; collider:false; }
+node[tourism=chalet]							                { z-index:16; builder:info; key:accommodation_chalet; collider:false; }
+node[tourism=hostel]							                { z-index:16; builder:info; key:accommodation_hostel; collider:false; }
+node[tourism=hotel]							                { z-index:16; builder:info; key:accommodation_hotel; collider:false; }
+node[tourism=motel]							                { z-index:16; builder:info; key:accommodation_motel; collider:false; }
+node[amenity=shelter]							                { z-index:16; builder:info; key:accommodation_shelter; collider:false; }
+
+node[tourism=youth_hostel]							                { z-index:16; builder:info; key:accommodation_youth_hostel; collider:false; }
+
+node[amenity=bench]							                { z-index:16; builder:info; key:amenity_bench; collider:false; }
+node[amenity=courthouse]							                { z-index:16; builder:info; key:amenity_court; collider:false; }
+node[amenity=fire_station]							                { z-index:16; builder:info; key:amenity_firestation; collider:false; }
+node[amenity=fountain]							                { z-index:16; builder:info; key:amenity_fountain; collider:false; }
+node[amenity=library]							                { z-index:16; builder:info; key:amenity_library; collider:false; }
+node[leisure=playground]							                { z-index:16; builder:info; key:amenity_playground; collider:false; }
+node[amenity=police]							                { z-index:16; builder:info; key:amenity_police; collider:false; }
+node[amenity=post_box]							                { z-index:16; builder:info; key:amenity_post_box; collider:false; }
+node[amenity=post_office]							                { z-index:16; builder:info; key:amenity_post_office; collider:false; }
+
+node[amenity=prison]							                { z-index:16; builder:info; key:amenity_prison; collider:false; }
+node[amenity=public_building]							                { z-index:16; builder:info; key:amenity_public_building; collider:false; }
+node[amenity=recycling]							                { z-index:16; builder:info; key:amenity_recycling; collider:false; }
+node[man_made=survey_point]							                { z-index:16; builder:info; key:amenity_survey_point; collider:false; }
+node[amenity=telephone]							                { z-index:16; builder:info; key:amenity_telephone; collider:false; }
+node[amenity=toilets]							                { z-index:16; builder:info; key:amenity_toilets; collider:false; }
+/*node[amenity_toilets_disabled]							                { z-index:16; builder:info; key:amenity_toilets_disabled; collider:false; }
+node[amenity_toilets_men]							                { z-index:16; builder:info; key:amenity_toilets_men; collider:false; }
+node[amenity_toilets_women]							                { z-index:16; builder:info; key:amenity_toilets_women; collider:false; }*/
+node[amenity=townhall]							                { z-index:16; builder:info; key:amenity_town_hall; collider:false; }
+
+node[waste],node[amenity=waste_basket]							                { z-index:16; builder:info; key:amenity_waste_bin; collider:false; }
+node[barrier=block]							                { z-index:16; builder:info; key:barrier_blocks; collider:false; }
+node[barrier=bollard]							                { z-index:1; builder:info; key:barrier_bollard; collider:false; }
+node[barrier=cattle_grid]							                { z-index:16; builder:info; key:barrier_cattle_grid; collider:false; }
+node[barrier=cycle_barrier]							                { z-index:16; builder:info; key:barrier_cycle_barrier; collider:false; }
+node[barrier=entrance]							                { z-index:16; builder:info; key:barrier_entrance; collider:false; }
+node[barrier=exit]							                { z-index:16; builder:info; key:barrier_exit; collider:false; }
+node[barrier=gate]							                { z-index:16; builder:info; key:barrier_gate; collider:false; }
+node[barrier=kissing_gate]							                { z-index:16; builder:info; key:barrier_kissing_gate; collider:false; }
+node[barrier=lift_gate]							                { z-index:16; builder:info; key:barrier_lift_gate; collider:false; }
+node[barrier=step]							                { z-index:16; builder:info; key:barrier_steps; collider:false; }
+node[barrier=stile]							                { z-index:16; builder:info; key:barrier_stile; collider:false; }
+node[barrier=toll_booth]							                { z-index:16; builder:info; key:barrier_toll_booth; collider:false; }
+node[amenity=college]							                { z-index:16; builder:info; key:education_college; collider:false; }
+/*node[education_college_vocational]							                { z-index:16; builder:info; key:education_college_vocational; collider:false; }*/
+node[amenity=nursery]							                { z-index:16; builder:info; key:education_nursery; collider:false; }
+/*node[education_nursery2]							                { z-index:16; builder:info; key:education_nursery2; collider:false; }
+node[education_nursery3]							                { z-index:16; builder:info; key:education_nursery3; collider:false; }*/
+node[amenity=school]							                { z-index:16; builder:info; key:education_school; collider:false; }
+/*node[education_school_primary]							                { z-index:16; builder:info; key:education_school_primary; collider:false; }
+node[education_school_secondary]							                { z-index:16; builder:info; key:education_school_secondary; collider:false; }*/
+node[amenity=university]							                { z-index:16; builder:info; key:education_university; collider:false; }
+node[amenity=bar]							                { z-index:16; builder:info; key:food_bar; collider:false; }
+node[amenity=biergarten]							                { z-index:16; builder:info; key:food_biergarten; collider:false; }
+node[amenity=cafe]							                { z-index:16; builder:info; key:food_cafe; collider:false; }
+node[amenity=drinking_water]							                { z-index:16; builder:info; key:food_drinkingtap; collider:false; }
+node[amenity=fast_food]							                { z-index:16; builder:info; key:food_fastfood; collider:false; }
+/*node[food_fastfood2]							                { z-index:16; builder:info; key:food_fastfood2; collider:false; }*/
+/*node[amenity=fastfood_pizza]							                { z-index:16; builder:info; key:food_fastfood_pizza; collider:false; }*/
+node[amenity=ice_cream]							                { z-index:16; builder:info; key:food_ice_cream; collider:false; }
+node[amenity=pizza]							                { z-index:16; builder:info; key:food_pizza; collider:false; }
+node[amenity=pub]							                { z-index:16; builder:info; key:food_pub; collider:false; }
+node[amenity=restaurant]							                { z-index:16; builder:info; key:food_restaurant; collider:false; }
+node[amenity=dentist]							                { z-index:16; builder:info; key:health_dentist; collider:false; }
+node[amenity=doctors]							                { z-index:16; builder:info; key:health_doctors; collider:false; }
+node[amenity=hospital]							                { z-index:16; builder:info; key:health_hospital; collider:false; }
+
+
+node[shop=optician]							                { z-index:16; builder:info; key:health_opticians; collider:false; }
+node[amenity=pharmacy]							                { z-index:16; builder:info; key:health_pharmacy; collider:false; }
+/*node[health_pharmacy_dispencing]							                { z-index:16; builder:info; key:health_pharmacy_dispencing; collider:false; }*/
+node[amenity=veterinary]							                { z-index:16; builder:info; key:health_veterinary; collider:false; }
+node[wood=coniferous]							                { z-index:16; builder:info; key:landuse_coniferous; collider:false; }
+/*node[landuse_coniferous_and_deciduous]							                { z-index:16; builder:info; key:landuse_coniferous_and_deciduous; collider:false; }*/
+node[landuse=deciduous]							                { z-index:16; builder:info; key:landuse_deciduous; collider:false; }
+node[landuse=grass]							                { z-index:16; builder:info; key:landuse_grass; collider:false; }
+node[landuse_hills]							                { z-index:16; builder:info; key:landuse_hills; collider:false; }
+node[landuse=quary]							                { z-index:16; builder:info; key:landuse_quary; collider:false; }
+node[landuse=scrub]							                { z-index:16; builder:info; key:landuse_scrub; collider:false; }
+node[landuse=swamp]							                { z-index:16; builder:info; key:landuse_swamp; collider:false; }
+node[amenity=atm]							                { z-index:16; builder:info; key:money_atm; collider:false; }
+
+node[amenity=bank]							                { z-index:16; builder:info; key:money_bank; collider:false; }
+
+node[amenity=bureau_de_change]							                { z-index:16; builder:info; key:money_currency_exchange; collider:false; }
+
+/* check also amenity=place_of_worship */
+node[religion=bahai]							                { z-index:16; builder:info; key:place_of_worship_bahai; collider:false; }
+node[religion=buddhist]							                { z-index:16; builder:info; key:place_of_worship_buddhist; collider:false; }
+node[religion=christian]							                { z-index:16; builder:info; key:place_of_worship_christian; collider:false; }
+node[religion=hindu]							                { z-index:16; builder:info; key:place_of_worship_hindu; collider:false; }
+node[religion=islamic]							                { z-index:16; builder:info; key:place_of_worship_islamic; collider:false; }
+node[religion=jain]							                { z-index:16; builder:info; key:place_of_worship_jain; collider:false; }
+node[religion=jewish]							                { z-index:16; builder:info; key:place_of_worship_jewish; collider:false; }
+node[religion=shinto]							                { z-index:16; builder:info; key:place_of_worship_shinto; collider:false; }
+node[religion=sikh]							                { z-index:16; builder:info; key:place_of_worship_sikh; collider:false; }
+node[religion=unknown]							                { z-index:16; builder:info; key:place_of_worship_unknown; collider:false; }
+
+node[boundary=administrative]							                { z-index:16; builder:info; key:poi_boundary_administrative; collider:false; }
+node[ natural=cave_entrance]							                { z-index:16; builder:info; key:poi_cave; collider:false; }
+node[man_made=crane]							                { z-index:16; builder:info; key:poi_crane; collider:false; }
+node[amenity=embassy]							                { z-index:16; builder:info; key:poi_embassy; collider:false; }
+
+node[military=bunker]							                { z-index:16; builder:info; key:poi_military_bunker; collider:false; }
+node[historic=mine]							                { z-index:16; builder:info; key:poi_mine; collider:false; }
+/*node[poi_mine_abandoned]							                { z-index:16; builder:info; key:poi_mine_abandoned; collider:false; }*/
+node[mountain_pass]							                { z-index:16; builder:info; key:poi_mountain_pass; collider:false; }
+node[natural=peak]							                { z-index:16; builder:info; key:poi_peak; collider:false; }
+
+node[place=city]							                { z-index:16; builder:info; key:poi_place_city; collider:false; }
+node[place=hamlet]							                { z-index:16; builder:info; key:poi_place_hamlet; collider:false; }
+node[place=suburb]							                { z-index:16; builder:info; key:poi_place_suburb; collider:false; }
+node[place=town]							                { z-index:16; builder:info; key:poi_place_town; collider:false; }
+node[place=village]							                { z-index:16; builder:info; key:poi_place_village; collider:false; }
+/*node[poi_point_of_interest]							                { z-index:16; builder:info; key:poi_point_of_interest; collider:false; }*/
+node[man_made=communications_tower]							                { z-index:16; builder:info; key:poi_tower_communications; collider:false; }
+node[tower:type=observation]							                { z-index:16; builder:info; key:poi_tower_lookout; collider:false; }
+node[power=tower]							                { z-index:16; builder:info; key:poi_tower_power; collider:false; }
+node[man_made=water_tower]							                { z-index:16; builder:info; key:poi_tower_water; collider:false; }
+/* not sure here */
+node[power_source=coal]							                { z-index:16; builder:info; key:power_station_coal; collider:false; }
+node[power_source=gas]							                { z-index:16; builder:info; key:power_station_gas; collider:false; }
+node[power_source=solar]							                { z-index:16; builder:info; key:power_station_solar; collider:false; }
+node[power_source=water]							                { z-index:16; builder:info; key:power_station_water; collider:false; }
+node[power_source=wind]							                { z-index:16; builder:info; key:power_station_wind; collider:false; }
+node[power=substation]							                { z-index:16; builder:info; key:power_substation; collider:false; }
+
+/*node[power_tower_high]							                { z-index:16; builder:info; key:power_tower_high; collider:false; }
+node[power_tower_high2]							                { z-index:16; builder:info; key:power_tower_high2; collider:false; }
+node[power_tower_low]							                { z-index:16; builder:info; key:power_tower_low; collider:false; }*/
+
+node[power=transformer]							                { z-index:16; builder:info; key:power_transformer; collider:false; }
+node[shop=alcohol]							                { z-index:16; builder:info; key:shopping_alcohol; collider:false; }
+node[shop=bakery]							                { z-index:16; builder:info; key:shopping_bakery; collider:false; }
+node[shop=bicycle]							                { z-index:16; builder:info; key:shopping_bicycle; collider:false; }
+node[shop=book]							                { z-index:16; builder:info; key:shopping_book; collider:false; }
+node[shop=butcher]							                { z-index:16; builder:info; key:shopping_butcher; collider:false; }
+
+node[shop=car]							                { z-index:16; builder:info; key:shopping_car; collider:false; }
+node[shop=car_repair]							                { z-index:16; builder:info; key:shopping_car_repair; collider:false; }
+node[shop=clothes]							                { z-index:16; builder:info; key:shopping_clothes; collider:false; }
+node[shop=computer]							                { z-index:16; builder:info; key:shopping_computer; collider:false; }
+node[shop=confectionery]							                { z-index:16; builder:info; key:shopping_confectionery; collider:false; }
+node[shop=convenience]							                { z-index:16; builder:info; key:shopping_convenience; collider:false; }
+node[shop=copyshop]							                { z-index:16; builder:info; key:shopping_copyshop; collider:false; }
+node[shop=department_store]							                { z-index:16; builder:info; key:shopping_department_store; collider:false; }
+node[shop=doityourself]							                { z-index:16; builder:info; key:shopping_diy; collider:false; }
+node[shop=cestateagent]							                { z-index:16; builder:info; key:shopping_estateagent; collider:false; }
+
+node[shop=fish]							                { z-index:16; builder:info; key:shopping_fish; collider:false; }
+node[shop=florist]							                { z-index:16; builder:info; key:shopping_florist; collider:false; }
+node[shop=garden_centre]							                { z-index:16; builder:info; key:shopping_garden_centre; collider:false; }
+node[shop=gift]							                { z-index:16; builder:info; key:shopping_gift; collider:false; }
+node[shop=greengrocer]							                { z-index:16; builder:info; key:shopping_greengrocer; collider:false; }
+node[shop=hairdresser]							                { z-index:16; builder:info; key:shopping_hairdresser; collider:false; }
+node[shop=hearing_aids]							                { z-index:16; builder:info; key:shopping_hearing_aids; collider:false; }
+node[shop=hifi]							                { z-index:16; builder:info; key:shopping_hifi; collider:false; }
+node[shop=jewelry]							                { z-index:16; builder:info; key:shopping_jewelry; collider:false; }
+
+node[shop=kiosk]							                { z-index:16; builder:info; key:shopping_kiosk; collider:false; }
+node[shop=laundrette]							                { z-index:16; builder:info; key:shopping_laundrette; collider:false; }
+node[amenity=marketplace]							                { z-index:16; builder:info; key:shopping_marketplace; collider:false; }
+node[shop=mobile_phone]							                { z-index:16; builder:info; key:shopping_mobile_phone; collider:false; }
+node[shop=motorcycle]							                { z-index:16; builder:info; key:shopping_motorcycle; collider:false; }
+node[shop=music]							                { z-index:16; builder:info; key:shopping_music; collider:false; }
+node[shop=newsagent]							                { z-index:16; builder:info; key:shopping_newspaper; collider:false; }
+node[shop=pet]							                { z-index:16; builder:info; key:shopping_pet; collider:false; }
+
+node[shop=photo]							                { z-index:16; builder:info; key:shopping_photo; collider:false; }
+node[shop=supermarket]							                { z-index:16; builder:info; key:shopping_supermarket; collider:false; }
+node[shop=tackle]							                { z-index:16; builder:info; key:shopping_tackle; collider:false; }
+node[shop=tobacco]							                { z-index:16; builder:info; key:shopping_tobacco; collider:false; }
+node[shop=toys]							                { z-index:16; builder:info; key:shopping_toys; collider:false; }
+node[amenity=vending_machine]							                { z-index:16; builder:info; key:shopping_vending_machine; collider:false; }
+node[shop=video]							                { z-index:16; builder:info; key:shopping_video_rental; collider:false; }
+
+
+node[sport=archery]							                { z-index:16; builder:info; key:sport_archery; collider:false; }
+node[sport=baseball]							                { z-index:16; builder:info; key:sport_baseball; collider:false; }
+node[sport=canoe]							                { z-index:16; builder:info; key:sport_canoe; collider:false; }
+node[sport=cricket]							                { z-index:16; builder:info; key:sport_cricket; collider:false; }
+node[sport=diving]							                { z-index:16; builder:info; key:sport_diving; collider:false; }
+node[sport=golf]							                { z-index:16; builder:info; key:sport_golf; collider:false; }
+node[amenity=gym]							                { z-index:16; builder:info; key:sport_gym; collider:false; }
+node[sport=gymnasium]							                { z-index:16; builder:info; key:sport_gymnasium; collider:false; }
+node[sport=climbing]							                { z-index:16; builder:info; key:sport_hillclimbing; collider:false; }
+node[sport=horse_racing]							                { z-index:16; builder:info; key:sport_horse_racing; collider:false; }
+node[sport=skating]							                { z-index:16; builder:info; key:sport_iceskating; collider:false; }
+node[sport=jetski]							                { z-index:16; builder:info; key:sport_jetski; collider:false; }
+node[leisure=sports_centre]							                { z-index:16; builder:info; key:sport_leisure_centre; collider:false; }
+node[leisure=miniature_golf]							                { z-index:16; builder:info; key:sport_minature_golf; collider:false; }
+node[sport=motor]							                { z-index:16; builder:info; key:sport_motorracing; collider:false; }
+node[leisure=playground]							                { z-index:16; builder:info; key:sport_playground; collider:false; }
+node[sport=sailing]							                { z-index:16; builder:info; key:sport_sailing; collider:false; }
+node[sport=shooting]							                { z-index:16; builder:info; key:sport_shooting; collider:false; }
+/*node[sport_skiing_crosscountry]							                { z-index:16; builder:info; key:sport_skiing_crosscountry; collider:false; }
+node[sport_skiing_downhill]							                { z-index:16; builder:info; key:sport_skiing_downhill; collider:false; }*/
+node[sport=snooker]							                { z-index:16; builder:info; key:sport_snooker; collider:false; }
+node[sport=soccer]							                { z-index:16; builder:info; key:sport_soccer; collider:false; }
+node[leisure=stadium]							                { z-index:16; builder:info; key:sport_stadium; collider:false; }
+/*node[sport_swimming_indoor]	 ?? leisure=swimming_pool
+								sport=swimming						                { z-index:16; builder:info; key:sport_swimming_indoor; collider:false; }
+node[sport_swimming_outdoor]	leisure=swimming_pool
+								sport=swimming						                { z-index:16; builder:info; key:sport_swimming_outdoor; collider:false; }*/
+node[sport=tennis]							                { z-index:16; builder:info; key:sport_tennis; collider:false; }
+/*node[sport_windsurfing]							                { z-index:16; builder:info; key:sport_windsurfing; collider:false; }*/
+node[historic=archaeological_site]							                { z-index:16; builder:info; key:tourist_archaeological; collider:false; }
+node[tourism=gallery]							                { z-index:16; builder:info; key:tourist_art_gallery; collider:false; }
+node[tourism=attraction]							                { z-index:16; builder:info; key:tourist_attraction; collider:false; }
+node[historic=battlefield]							                { z-index:16; builder:info; key:tourist_battlefield; collider:false; }
+/*node[tourist_beach]	??	natural=beach or leisure=beach_resort					                { z-index:16; builder:info; key:tourist_beach; collider:false; }*/
+node[amenity=casino]							                { z-index:16; builder:info; key:tourist_casino; collider:false; }
+node[historic=castle]							                { z-index:16; builder:info; key:tourist_castle; collider:false; }
+node[amenity=cinema]							                { z-index:16; builder:info; key:tourist_cinema; collider:false; }
+node[amenity=clock]							                { z-index:16; builder:info; key:tourist_clock; collider:false; }
+node[amenity=fountain]							                { z-index:16; builder:info; key:tourist_fountain; collider:false; }
+node[information=guidepost]							                { z-index:16; builder:info; key:tourist_guidepost; collider:false; }
+node[tourism=information]							                { z-index:16; builder:info; key:tourist_information; collider:false; }
+/*node[tourist_map]						                { z-index:16; builder:info; key:tourist_map; collider:false; }*/
+node[historic=memorial]							                { z-index:16; builder:info; key:tourist_memorial; collider:false; }
+node[historic=monument]							                { z-index:16; builder:info; key:tourist_monument; collider:false; }
+node[tourism=museum]							                { z-index:16; builder:info; key:tourist_museum; collider:false; }
+node[tourism=picnic_site]							                { z-index:16; builder:info; key:tourist_picnic; collider:false; }
+node[historic=ruins]							                { z-index:16; builder:info; key:tourist_ruin; collider:false; }
+/*node[tourist_steam_train]							                { z-index:16; builder:info; key:tourist_steam_train; collider:false; }*/
+node[amenity=theatre ]							                { z-index:16; builder:info; key:tourist_theatre; collider:false; }
+node[tourism=theme_park]							                { z-index:16; builder:info; key:tourist_theme_park; collider:false; }
+node[tourism=viewpoint]							                { z-index:16; builder:info; key:tourist_view_point; collider:false; }
+/*node[tourist_waterwheel]							                { z-index:16; builder:info; key:tourist_waterwheel; collider:false; }*/
+node[historic=wayside_cross]							                { z-index:16; builder:info; key:tourist_wayside_cross; collider:false; }
+node[historic=wayside_shrine]							                { z-index:16; builder:info; key:tourist_wayside_shrine; collider:false; }
+node[man_made=windmill]							                { z-index:16; builder:info; key:tourist_windmill; collider:false; }
+node[historic=wreck]							                { z-index:16; builder:info; key:tourist_wreck; collider:false; }
+node[tourism=zoo]							                { z-index:16; builder:info; key:tourist_zoo; collider:false; }
+node[aeroway=aerodrome]							                { z-index:16; builder:info; key:transport_aerodrome; collider:false; }
+node[aeroway=airport]							                { z-index:16; builder:info; key:transport_airport; collider:false; }
+node[aeroway=gate]							                { z-index:16; builder:info; key:transport_airport_gate; collider:false; }
+node[aeroway=terminal]							                { z-index:16; builder:info; key:transport_airport_terminal; collider:false; }
+node[amenity=bus_station]							                { z-index:16; builder:info; key:transport_bus_station; collider:false; }
+node[highway=bus_stop]							                { z-index:16; builder:info; key:transport_bus_stop; collider:false; }
+node[amenity=car_sharing]							                { z-index:16; builder:info; key:transport_car_share; collider:false; }
+node[emergency=phone]							                { z-index:16; builder:info; key:transport_emergency_phone; collider:false; }
+node[highway=ford]							                { z-index:16; builder:info; key:transport_ford; collider:false; }
+node[amenity=fuel]							                { z-index:16; builder:info; key:transport_fuel; collider:false; }
+/*node[fuel_lpg=yes]							                { z-index:16; builder:info; key:transport_fuel_lpg; collider:false; }*/
+node[transport_helicopter]							                { z-index:16; builder:info; key:transport_helicopter; collider:false; }
+node[aeroway=helipad]							                { z-index:16; builder:info; key:transport_helicopter_pad; collider:false; }
+node[man_made=lighthouse]							                { z-index:16; builder:info; key:transport_lighthouse; collider:false; }
+/*node[transport_marina]							                { z-index:16; builder:info; key:transport_marina; collider:false; }
+node[transport_miniroundabout_anticlockwise]							                { z-index:16; builder:info; key:transport_miniroundabout_anticlockwise; collider:false; }*/
+node[highway=mini_roundabout]							                { z-index:16; builder:info; key:transport_miniroundabout_clockwise; collider:false; }
+node[amenity=parking]							                { z-index:16; builder:info; key:transport_parking; collider:false; }
+node[amenity=bicycle_parking]							                { z-index:16; builder:info; key:transport_parking_bicycle; collider:false; }
+/*node[transport_parking_car]							                { z-index:16; builder:info; key:transport_parking_car; collider:false; }
+node[transport_parking_car_paid]							                { z-index:16; builder:info; key:transport_parking_car_paid; collider:false; }
+node[transport_parking_disabled]							                { z-index:16; builder:info; key:transport_parking_disabled; collider:false; }
+node[transport_parking_private]							                { z-index:16; builder:info; key:transport_parking_private; collider:false; }
+node[transport_parking_private2]							                { z-index:16; builder:info; key:transport_parking_private2; collider:false; }
+node[transport_parking_private3]							                { z-index:16; builder:info; key:transport_parking_private3; collider:false; }*/
+node[landuse=port]							                			{ z-index:16; builder:info; key:transport_port; collider:false; }
+node[amenity=bicycle_rental]							                { z-index:16; builder:info; key:transport_rental_bicycle; collider:false; }
+node[amenity=car_rental]							                { z-index:16; builder:info; key:transport_rental_car; collider:false; }
+/*node[junction=roundabout direction=clockwise]							                { z-index:16; builder:info; key:transport_roundabout_anticlockwise; collider:false; }*/
+node[junction=roundabout]							                { z-index:16; builder:info; key:transport_roundabout_clockwise; collider:false; }
+node[leisure=slipway]							                { z-index:16; builder:info; key:transport_slipway; collider:false; }
+/*node[traffic_calming=bump]							                { z-index:16; builder:info; key:transport_speedbump; collider:false; }*/
+node[railway=subway_entrance]							                { z-index:16; builder:info; key:transport_subway; collider:false; }
+node[amenity=taxi]							                { z-index:16; builder:info; key:transport_taxi_rank; collider:false; }
+node[highway=traffic_signals]							                { z-index:16; builder:info; key:transport_traffic_lights; collider:false; }
+node[railway=station]							                { z-index:16; builder:info; key:transport_train_station; collider:false; }
+node[railway=tram_stop]							                { z-index:16; builder:info; key:transport_tram_stop; collider:false; }
+node[highway=turning_circle]							                { z-index:16; builder:info; key:transport_turning_circle; collider:false; }
+node[highway=path]							                { z-index:16; builder:info; key:transport_walking; collider:false; }
+node[highway=crossing]							                { z-index:16; builder:info; key:transport_zebra_crossing; collider:false; }
+node[waterway=dam]							                { z-index:16; builder:info; key:water_dam; collider:false; }
+node[man_made=water_tower]							                { z-index:16; builder:info; key:water_tower; collider:false; }
+node[waterway=weir]							                { z-index:16; builder:info; key:water_weir; collider:false; }
+
+
+
+
+/* Shouldn't be shown */
+way[level<0],
+way[layer<0], 											
+area[level<0],
+area[man_made!=bridge][layer<0]											{ skip:true;}

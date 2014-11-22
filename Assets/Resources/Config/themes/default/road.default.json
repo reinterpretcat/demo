@@ -1,0 +1,10 @@
+{
+	"name":["default"],
+	"roads":[
+		{
+			"path": "Materials/Roads/Road",
+			"textures":[
+				{"map":{"main":"0,0,1,1"}, "height":0, "width":0, "material": "", "color": ""}
+			]
+		}]
+}
