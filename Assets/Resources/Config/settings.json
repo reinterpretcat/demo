@@ -4,12 +4,12 @@
 	"theme":"Config/themes/default/theme.json",
 	"mapcss":"Config/themes/default/default.mapcss",
 	"tile": {
-		"size":3000,
-		"offset":500,
-		"heightmap":513,
+		"size":500,
+		"offset":50,
+		"heightmap":1025,
 		"autoclean":true,
 		"flat":false,
-		"position": {"latitude":55.7525376, "longitude":37.6214116}
+		"position": {"latitude":52.53176, "longitude":13.38702}
 	},
-	"sandbox": true
+	"sandbox": false
 }
