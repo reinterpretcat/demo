@@ -16,7 +16,7 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-            <a id="demo_forkme_banner" href="https://github.com/ActionStreetMap/demo">Unity project</a>
+            <a id="demo_forkme_banner" href="https://github.com/ActionStreetMap/demo">Source on github</a>
             <!--<a id="fwk_forkme_banner" href="https://github.com/ActionStreetMap/framework">Framework</a>-->
             <a id="demo_banner" href="demo_list.html">Online demo</a>
 
@@ -36,10 +36,24 @@
         <h3>
         <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-asm" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's Action Street Map?</h3>
 
-          <p>Action Street Map (ASM) is an engine for building real city environment dynamically using OSM data.</p>
-
+          
+		<p>Action Street Map (ASM) is an engine for building real city environment dynamically using  <a href="http://www.openstreetmap.org/"> OSM (Open Street Map) </a> data. 
+		  <br> It works pretty simple; you download the map data from Open Street Maps, provide it to the engine and voila! 
+		  It generates you a 3D environment with almost every data available on the map; buildings, roads, traffic lights, bus stops etc. </p>
+		  
+		  
+		 <p> After getting your real 3D city environment (maybe your neighbourhood) than sky is the limit. 
+		 Since it's in <a href="http://unity3d.com/ ">unity</a>, you can port it to almost every platform. 
+		 Build a game based on ASM engine, that can run on mobile, web and desktop. 
+		 You can even go further and build a Virtual Reality environment of your neighbourhood using the engine. 
+		 Although you can create pretty nice 3D city for your own use; the engine is not flawless and it's in alpha stage. 
+		 There are a lot to be done and we need contributors. </p>
+		 
+		 <p> Below is an example screenshot from Moscow, Red Square. <p>
           <a href="demo_list.html"><img src="images/Moscow_redsquare.png" class="inner" /></a>
 
+		  
+		  
           <p>The main goal is to simulate a real city, including following options:</p>
           <ul>
               <li>rendering of different models (e.g. buildings, roads, parks, rivers, etc.) using OSM data for given location and using terrain tiling approach (DONE partially)</li>
@@ -51,20 +65,51 @@
 
           </ul>
 
-          <p>The engine can be used to build different 3D-games (like car simulations or GTA 2/3 ) or for some map tools on top of this framework (target is mobile devices). Actually, in this case the game world can be limited only by OSM maps which means that it will cover almost entire Earth.</p> 
+           
+          <p>NOTE: Project is still in alpha stage! There are too many things to be done and many ways to contribute to this project. We appreciate any kind of contribution. </p>
           
-          <p>NOTE: development is still in progress!</p>
-          
-          <p>
+        
+      </section>
+	  
+	   <section id="how_to" class="inner">
+        <h3><a id="welcome-to-github-pages" class="anchor" href="#faq_title" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to build your neighbourhood..</h3>
+		
+          <ul>
+            
+                  <ol>
+                      <li>Download pbf file of desired place from any source (e.g. <a href="http://download.geofabrik.de">geofabrik</a>) </li>
+                      <li> Split it using splitter tool. This tool splits big osm file to smaller ones and creates index file which helps to increase performance.</li>
+                      <p>
+                          NOTE: this tool is committed to project repository: Tools\Splitter. Please read the corresponding README file. Actually, all you need is to run bat file with arguments.
+                          Newest version of original tool can be downloaded <a href="http://www.mkgmap.org.uk/download/splitter.html">here</a>.
+                      </p>
+                      <li>
+                          Download elevation data file (SRTM) of given area from <a href="http://dds.cr.usgs.gov/srtm/version2_1/SRTM3">here</a> and unpack it.
+                          <p>NOTE: probably, you have to change y-position of your character in editor before launch. it depends on elevation in your place.</p>
+                          <p>NOTE: Later, this step can be skipped as ASM will support "flat world" mode.</p>
+                      </li>
+
+                      <li>
+                          Modify Assets\Resources\Config\settings.json config:
+                          <ul>
+                              <li>"mapdata" should be set to folder which contains split result of pbf file.</li>
+                              <li>"elevationdata" should be set to folder which contains downloaded SRTM files with .hgt extension</li>
+                              <li>"position" should be set to geo coordinate of desired place</li>
+                          </ul>
+                      </li>
+                  </ol>
+            
+          </ul>
+		  <p>
              <a href="faq.html">FAQ</a>
-          </p>
-          <p>
-              <a href="howto.html">How to</a>
           </p>
           <p>
               <a href="content/api/index.html">API docs</a>
           </p>
       </section>
+	  
+	  
+	  
     </div>
 
     <!-- FOOTER  -->
