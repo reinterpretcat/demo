@@ -1,0 +1,5 @@
+Extract splitter.zip to splitter directory and run:
+	osm_splitter.bat <SourceFilePath> <DestinationFolder>
+
+Used this tool:
+	http://www.mkgmap.org.uk/doc/splitter.html
