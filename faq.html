@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="ActionStreetMap : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>ActionStreetMap</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+            <a id="demo_forkme_banner" href="https://github.com/ActionStreetMap/demo">Unity project</a>
+            <!--<a id="fwk_forkme_banner" href="https://github.com/ActionStreetMap/framework">Framework</a>-->
+            <a id="demo_banner" href="demo_list.html">Online demo</a>
+
+          <h1 id="project_title">ActionStreetMap</h1>
+          <h2 id="project_tagline">Build your neighbourhood..</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ActionStreetMap/framework/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ActionStreetMap/framework/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3><a id="welcome-to-github-pages" class="anchor" href="#faq_title" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frequently Asked Questions</h3>
+		
+          <ul>
+              <li>I don't like building/roads textures. Is it possible to use custom ones?
+                  <p>Yes, it's possible. ASM engine provides the way to customize rendered models using themes depending on OSM data. By default, demo app uses <a href="http://en.wikipedia.org/wiki/RAL_colour_standard">RAL</a> atlas texture which allows to use different colors. However, you can write your own theme which will use real facade textures for buildings.</p></li>
+              <li>I don't like terrain textures. Is it possible to change them?
+                  <p>Yes, it's possible. <a href="http://wiki.openstreetmap.org/wiki/MapCSS">MapCSS</a> file is responsible for that.</p></li>
+              <li>I got empty terrain
+                  <p>Reason: Index file (areas.list) cannot be found. <br />
+                      Fix: Follow "Use map of different places" section from <a href="howto.html">HOW TO</a>.</p></li>
+              <li>Strange buildings, terrain...
+                  <p>
+                      Reason: bugs in ASM framework or mapCSS rules<br />
+                      Fix: Check bug list and report bug if it's something new. Please provides steps how to reproduce.
+                  </p></li>
+              <li>I got exception like "Exception: SRTM data cell not found: Maps/elevation\N52E013.hgt"
+                  <p>
+                      Reason: application cannot find elevation data file of given area.<br />
+                      Fix: Download N52E013 (use filename from your error message!) from <a href="http://dds.cr.usgs.gov/srtm/version2_1/SRTM3/">here</a>. Then ensure that "elevationdata" is set to folder which contains that file.
+                  </p></li>
+              <li>I got exception like "FileNotFoundException: Could not find file "...\Demo\Assets\Resources\Maps\osm\berlin\00000013.osm.pbf""
+                  <p>
+                      Reason: areas.list is an index file and it represents a result of splitting pbf file. So, it contains record for given area and this record says that 00000013.osm.pbf contains data
+                      for it. However, this file cannot be found <br />
+                      Fix: Check whether all files which are described in areas.list present on disk.
+                  </p></li>
+          </ul>
+		
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+          <a href="index.html">Home</a>
+          <p>Have questions? <a href="mailto:actionstreetmap@gmail.com">Ask me</a>!</p>
+      </footer>
+    </div>
+  </body>
+</html>
