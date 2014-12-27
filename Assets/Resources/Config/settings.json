@@ -1,15 +1,15 @@
 {
-	"mapdata":"Maps/osm",
-	"elevationdata":"Maps/elevation",
+	"mapdata":"g:/__ASM/__repository/framework/Tests/ActionStreetMap.Tests/bin/Debug/Index",
+	"elevationdata":"f:/___elevation/TestData/",
 	"theme":"Config/themes/default/theme.json",
 	"mapcss":"Config/themes/default/default.mapcss",
 	"tile": {
 		"size":500,
-		"offset":50,
+		"offset":10,
 		"heightmap":1025,
 		"autoclean":true,
 		"flat":false,
-		"position": {"latitude":52.53176, "longitude":13.38702}
+		"position": {"latitude":55.7537315, "longitude":37.6198537}
 	},
 	"sandbox": false
 }

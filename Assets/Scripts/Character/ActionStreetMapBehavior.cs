@@ -1,4 +1,5 @@
 ﻿using System;
+using ActionStreetMap.Explorer.Commands;
 using Assets.Scripts.Console;
 using Assets.Scripts.Console.Utils;
 using Assets.Scripts.Demo;
@@ -69,7 +70,6 @@ namespace Assets.Scripts.Character
 
                 // boot plugins
                 container.Register(Component.For<IBootstrapperPlugin>().Use<InfrastructureBootstrapper>().Named("infrastructure"));
-                container.Register(Component.For<IBootstrapperPlugin>().Use<OsmBootstrapper>().Named("osm"));
                 container.Register(Component.For<IBootstrapperPlugin>().Use<TileBootstrapper>().Named("tile"));
                 container.Register(Component.For<IBootstrapperPlugin>().Use<SceneBootstrapper>().Named("scene"));
                 container.Register(Component.For<IBootstrapperPlugin>().Use<DemoBootstrapper>().Named("demo"));
@@ -99,9 +99,11 @@ namespace Assets.Scripts.Character
             var consoleGameObject = new GameObject("_DebugConsole_");
             _console = consoleGameObject.AddComponent<DebugConsole>();
             container.RegisterInstance(_console);
+            // that is not nice, but we need to use commands registered in DI with their dependencies
+            _console.Container = container; 
             _trace = new DebugConsoleTrace(_console);
 
-            //_console.CommandManager.Register("scene", new SceneCommand(container));
+            //_console._controller.Register("scene", new SceneCommand(container));
         }
 
         #endregion

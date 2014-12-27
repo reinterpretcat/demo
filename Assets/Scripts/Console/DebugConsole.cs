@@ -22,6 +22,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using ActionStreetMap.Explorer.Commands;
+using ActionStreetMap.Infrastructure.Dependencies;
 using Assets.Scripts.Console.Commands;
 using Assets.Scripts.Console.Utils;
 using Assets.Scripts.Console.Watchers;
@@ -33,16 +35,16 @@ namespace Assets.Scripts.Console
 
     public class DebugConsole : MonoBehaviour
     {
-        private const string Version = "0.1";
+        private const string Version = "0.2";
         private const string EntryField = "DebugConsoleEntryField";
 
         public VarWatcher Watcher { get; private set; }
-        public CommandManager CommandManager { get; private set; }
+        private CommandController _controller;
 
         /// <summary>
         /// How many lines of text this console will display.
         /// </summary>
-        public int maxLinesForDisplay = 500;
+        public int MaxLinesForDisplay = 500;
 
         /// <summary>
         /// Used to check (or toggle) the open state of the console.
@@ -50,9 +52,14 @@ namespace Assets.Scripts.Console
         public bool IsOpen { get; set; }
 
         /// <summary>
+        ///     Keep reference to DI container to support commands registered in it.
+        /// </summary>
+        public IContainer Container { get; set; }
+
+        /// <summary>
         /// Key to press to toggle the visibility of the console.
         /// </summary>
-        public static KeyCode toggleKey = KeyCode.BackQuote;
+        public static KeyCode ToggleKey = KeyCode.BackQuote;
 
         private string _inputString = string.Empty;
         private Rect _windowRect;
@@ -71,11 +78,11 @@ namespace Assets.Scripts.Console
         private Vector2 _rawLogScrollPos = Vector2.zero;
         private Vector2 _watchVarsScrollPos = Vector2.zero;
         private Vector3 _guiScale = Vector3.one;
-        private Matrix4x4 restoreMatrix = Matrix4x4.identity;
-        private bool _scaled = false;
-        private StringBuilder _displayString = new StringBuilder();
-        private FPSCounter fps;
-        private bool dirty;
+        private Matrix4x4 _restoreMatrix = Matrix4x4.identity;
+        private bool _scaled;
+        private readonly StringBuilder _displayString = new StringBuilder();
+        private FPSCounter _fps;
+        private bool _dirty;
 
         #region GUI position values
 
@@ -100,14 +107,13 @@ namespace Assets.Scripts.Console
 
         #endregion
 
-        private List<ConsoleMessage> _messages = new List<ConsoleMessage>();
-        private History _history = new History();
+        private readonly List<ConsoleMessage> _messages = new List<ConsoleMessage>();
+        private readonly History _history = new History();
         private Regex _regex = null;
 
         public DebugConsole()
         {
             Watcher = new VarWatcher();
-            CommandManager = new CommandManager();
         }
 
         private void OnEnable()
@@ -122,8 +128,8 @@ namespace Assets.Scripts.Console
 
             windowMethods = new GUI.WindowFunction[] {LogWindow, CopyLogWindow, WatchVarWindow};
 
-            fps = new FPSCounter();
-            StartCoroutine(fps.Update());
+            _fps = new FPSCounter();
+            StartCoroutine(_fps.Update());
 
             nameRect = messageLine;
             valueRect = messageLine;
@@ -137,27 +143,26 @@ namespace Assets.Scripts.Console
             _windowRect = new Rect(30.0f, 30.0f, 300.0f, 450.0f);
 #endif
 
-            LogMessage(ConsoleMessage.System(string.Format(" Mercraft Engine, version {0}", Version)));
+            LogMessage(ConsoleMessage.System(string.Format(" ActionStreetMap Engine, version {0}", Version)));
             LogMessage(ConsoleMessage.System(" type '/?' for available commands."));
             LogMessage(ConsoleMessage.System(""));
 
-            CommandManager.RegisterDefaults();
-            RegisterTerminalCommands();
+            //RegisterTerminalCommands();
         }
 
         private void RegisterTerminalCommands()
         {
-            CommandManager.Register("close", new Command("closes console", _ =>
+            _controller.Register(new Command("close", "closes console", _ =>
             {
                 IsOpen = false;
                 return "opened";
             }));
-            CommandManager.Register("clear", new Command("clears console", _ =>
+            _controller.Register(new Command("clear", "clears console", _ =>
             {
                 ClearLog();
                 return "clear";
             }));
-            CommandManager.Register("filter", new Command("filter console items", args =>
+            _controller.Register(new Command("filter","filter console items", args =>
             {
                 const string enabledStr = "-e:";
                 const string disabledStr = "-d";
@@ -181,7 +186,9 @@ namespace Assets.Scripts.Console
                 return "";
             }));
 
-            CommandManager.Register("grep", new GrepCommand(_messages));
+            // NOTE grep is special command and cannot be registered as normal command
+            _controller.Register(new GrepCommand(_messages));
+            _controller.Register(new SysCommand());
         }
 
         [Conditional("DEBUG_CONSOLE"),
@@ -193,18 +200,17 @@ namespace Assets.Scripts.Console
 
             if (_scaled)
             {
-                restoreMatrix = GUI.matrix;
-
+                _restoreMatrix = GUI.matrix;
                 GUI.matrix = GUI.matrix*Matrix4x4.Scale(_guiScale);
             }
 
-            while (_messages.Count > maxLinesForDisplay)
+            while (_messages.Count > MaxLinesForDisplay)
             {
                 _messages.RemoveAt(0);
             }
 #if (!MOBILE && DEBUG) || UNITY_EDITOR
             // Toggle key shows the console in non-iOS dev builds
-            if (evt.keyCode == toggleKey && evt.type == EventType.KeyUp)
+            if (evt.keyCode == ToggleKey && evt.type == EventType.KeyUp)
                 IsOpen = !IsOpen;
 #endif
 #if MOBILE
@@ -279,17 +285,12 @@ namespace Assets.Scripts.Console
       dragging = false;
     }
 #endif
-            if (!IsOpen)
-            {
-                return;
-            }
-
+            if (!IsOpen) return;
             labelStyle = GUI.skin.label;
-
             innerRect.width = messageLine.width;
 #if !MOBILE
             _windowRect = GUI.Window(-1111, _windowRect, windowMethods[toolbarIndex],
-                string.Format("Debug Console \tfps: {0:00.0}", fps.current));
+                string.Format("Debug Console \tfps: {0:00.0}", _fps.current));
             GUI.BringWindowToFront(-1111);
 #else
     if (windowStyle == null) {
@@ -339,16 +340,16 @@ namespace Assets.Scripts.Console
 
             if (_scaled)
             {
-                GUI.matrix = restoreMatrix;
+                GUI.matrix = _restoreMatrix;
             }
 
-            if (dirty && evt.type == EventType.Repaint)
+            if (_dirty && evt.type == EventType.Repaint)
             {
                 _logScrollPos.y = 50000.0f;
                 _rawLogScrollPos.y = 50000.0f;
 
                 BuildDisplayString();
-                dirty = false;
+                _dirty = false;
             }
         }
 
@@ -534,12 +535,10 @@ namespace Assets.Scripts.Console
         public void LogMessage(ConsoleMessage msg)
         {
             if (_regex != null && !_regex.IsMatch(msg.Text))
-            {
                 return;
-            }
 
             _messages.Add(msg);
-            dirty = true;
+            _dirty = true;
         }
 
         //--- Local version. Use the static version above instead.
@@ -561,20 +560,20 @@ namespace Assets.Scripts.Console
             _history.Add(inputString);
             LogMessage(ConsoleMessage.Input(inputString));
 
-            var input =
-                new List<string>(inputString.Split(new char[] {' '}, System.StringSplitOptions.RemoveEmptyEntries));
+            var input = new List<string>(inputString.Split(new [] {' '}, System.StringSplitOptions.RemoveEmptyEntries));
 
             input = input.Select(low => low.ToLower()).ToList();
             var cmd = input[0];
 
-            if (CommandManager.Contains(cmd))
+            if (_controller == null)
             {
-                LogMessage(ConsoleMessage.Output(CommandManager[cmd].Execute(input.ToArray())));
+                _controller = Container.Resolve<CommandController>();
+                RegisterTerminalCommands();
             }
-            else
-            {
-                LogMessage(ConsoleMessage.Output(string.Format("*** Unknown Command: {0} ***", cmd)));
-            }
+
+            LogMessage(_controller.Contains(cmd)
+                ? ConsoleMessage.Output(_controller[cmd].Execute(input.ToArray()))
+                : ConsoleMessage.Output(string.Format("*** Unknown Command: {0} ***", cmd)));
         }
 
         #endregion

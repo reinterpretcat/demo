@@ -1,4 +1,7 @@
 ﻿using System;
+using ActionStreetMap.Explorer.Commands;
+using ActionStreetMap.Infrastructure.Dependencies;
+using Assets.Scripts.Console.Commands;
 using Assets.Scripts.Map;
 using ActionStreetMap.Core.Scene;
 using ActionStreetMap.Explorer.Interactions;
