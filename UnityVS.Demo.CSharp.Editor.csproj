@@ -106,7 +106,7 @@
     <Compile Include="Assets\Scripts\TouchKit\Editor\TouchKitEditor.cs" />
     <Compile Include="Assets\Scripts\TouchKit\Editor\TouchKitMenuItem.cs" />
     <None Include="Assets\Resources\Models\ParticleEffects\Shaders\Add_Layer.shader" />
-    <None Include="Assets\Shaders\Diffuse_RoadOffset.shader" />
+    <None Include="Assets\Resources\Shaders\RoadDefault.shader" />
     <None Include="Assets\Shaders\FX-Water Simple.shader" />
     <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
     <None Include="Assets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll" />
