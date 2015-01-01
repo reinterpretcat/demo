@@ -171,6 +171,8 @@ area[roof:shape=dome]									{ roof-style: dome;}
 area[roof:shape=pyramidal]								{ roof-style: pyramidal;}
 area[roof:shape=gabled]									{ roof-style: gabled;}
 area[roof:shape=hipped]									{ roof-style: hipped;}
+/* checked on Eiffel tower, Paris */
+area[building:shape=pyramidal]							{ roof-style: pyramidal; height:0; roof-height: eval(num(tag('height')));}
 
 area[roof:height]										{roof-height: eval(num(tag('roof:height')))}
 
