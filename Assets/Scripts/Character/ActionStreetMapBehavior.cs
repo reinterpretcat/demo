@@ -26,7 +26,7 @@ namespace Assets.Scripts.Character
 
         private ITrace _trace;
 
-        private Vector2 _position2D;
+        private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
         
         private DebugConsole _console;
 
@@ -39,13 +39,11 @@ namespace Assets.Scripts.Character
         // Update is called once per frame
         private void Update()
         {
-            // NOTE we do no want to call ASM logic on every small position change
-            // However, Delta should be less than defined offset value in configuration
-            if (Math.Abs(transform.position.x - _position2D.x) > Delta
-                || Math.Abs(transform.position.z - _position2D.y) > Delta)
+            if (_position != transform.position)
             {
-                _position2D = new Vector2(transform.position.x, transform.position.z);
-                _gameRunner.OnMapPositionChanged(new MapPoint(transform.position.x, transform.position.z));
+                _gameRunner.OnMapPositionChanged(
+                    new MapPoint(transform.position.x, transform.position.z, transform.position.y));
+                _position = transform.position;
             }
         }
 

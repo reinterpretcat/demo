@@ -258,36 +258,36 @@ way[waterway][name]										{ z-index: 9; fill-color: #a3c3ec; builder: water; 
 /*way[barrier] :closed									{ z-index: 10; builder:flat; fill-color: #444444; width: 0.4;}*/
 
 /* roads */
-way[highway]											{ z-index: 10; builder:road; width:2 }
+way[highway]											{ z-index: 10; builder:road; width:3; type:pedestrian; }
 
 way[highway=tertiary],
 way[highway=residential],
 way[highway=service],
 way[highway=unclassified],
-way[highway=road]										{ fill-color: #bbbbbb; width:12; }
-way[highway=living_street]								{ fill-color: #000000; width:10.5; }
+way[highway=road]										{ fill-color: #bbbbbb; width:12; type:car;}
+way[highway=living_street]								{ fill-color: #000000; width:10.5; type:car; }
 
 way[highway=trunk],
 way[highway=trunk_link],
 way[highway=primary],
 way[highway=primary_link],
 way[highway=motorway],
-way[highway=motorway_link]								{ fill-color: #e7c930; width:11; }
+way[highway=motorway_link]								{ fill-color: #e7c930; width:11; type:car;}
 
 
 			
 way[highway=secondary],
-way[highway=secondary_link]								{ fill-color: #a37b48; width:9; }
+way[highway=secondary_link]								{ fill-color: #a37b48; width:9; type:car;}
 
 way[highway=tertiary],
-way[highway=tertiary_link]								{ fill-color: #e7c930; width:11; }
+way[highway=tertiary_link]								{ fill-color: #e7c930; width:11; type:car;}
 
 
-way[highway=path][foot=designated]						{ fill-color: #FA8072; width:3.5; }
+way[highway=path][foot=designated]						{ fill-color: #FA8072; width:3.5; type:pedestrian; }
 
-way[highway=service]									{ fill-color: #FFFFFF; width:3; }
+way[highway=service]									{ fill-color: #FFFFFF; width:3; type:pedestrian; }
 
-way[highway=footway] 									{width:2;}
+way[highway=footway] 									{width:2; type:pedestrian;}
 
 way[barrier]											{ builder: barrier; material: Roads/Road; texture:Roads/Road; height:2; width:0.2;  }
 
