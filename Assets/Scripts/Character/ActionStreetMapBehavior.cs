@@ -100,6 +100,7 @@ namespace Assets.Scripts.Character
             // that is not nice, but we need to use commands registered in DI with their dependencies
             _console.Container = container; 
             _trace = new DebugConsoleTrace(_console);
+            _console.IsOpen = true;
 
             //_console._controller.Register("scene", new SceneCommand(container));
         }

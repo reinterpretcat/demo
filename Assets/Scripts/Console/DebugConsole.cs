@@ -313,7 +313,7 @@ namespace Assets.Scripts.Console
       prevMousePos = Input.mousePosition;
     }
 #endif
-    GUI.Box(_fakeWindowRect, string.Format("Debug Console v{0}\tfps: {1:00.0}", Version, fps.current), dragging ? windowOnStyle : windowStyle);
+    GUI.Box(_fakeWindowRect, string.Format("Debug Console v{0}\tfps: {1:00.0}", Version, _fps.current), dragging ? windowOnStyle : windowStyle);
     windowMethods[toolbarIndex](0);
     GUI.EndGroup();
 #endif
