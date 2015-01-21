@@ -67,39 +67,46 @@
 
            
           <p>NOTE: Project is still in alpha stage! There are too many things to be done and many ways to contribute to this project. We appreciate any kind of contribution. </p>
-          
-        
-      </section>
-	  
-	   <section id="how_to" class="inner">
+		  
         <h3><a id="welcome-to-github-pages" class="anchor" href="#faq_title" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to build your neighbourhood..</h3>
-		
+			<p>NOTE: The steps will be changed once next framework version is released (see change list below).</p>
           <ul>
-            
-                  <ol>
-                      <li>Download pbf file of desired place from any source (e.g. <a href="http://download.geofabrik.de">geofabrik</a>) </li>
-                      <li> Split it using splitter tool. This tool splits big osm file to smaller ones and creates index file which helps to increase performance.</li>
-                      <p>
-                          NOTE: this tool is committed to project repository: Tools\Splitter. Please read the corresponding README file. Actually, all you need is to run bat file with arguments.
-                          Newest version of original tool can be downloaded <a href="http://www.mkgmap.org.uk/download/splitter.html">here</a>.
-                      </p>
-                      <li>
-                          Download elevation data file (SRTM) of given area from <a href="http://dds.cr.usgs.gov/srtm/version2_1/SRTM3">here</a> and unpack it.
-                          <p>NOTE: probably, you have to change y-position of your character in editor before launch. it depends on elevation in your place.</p>
-                          <p>NOTE: Later, this step can be skipped as ASM will support "flat world" mode.</p>
-                      </li>
+			  <ol>
+				  <li>Download pbf file of desired place from any source (e.g. <a href="http://download.geofabrik.de">geofabrik</a>) </li>
+				  <li> Split it using splitter tool. This tool splits big osm file to smaller ones and creates index file which helps to increase performance.</li>
+				  <p>
+					  NOTE: this tool is committed to project repository: Tools\Splitter. Please read the corresponding README file. Actually, all you need is to run bat file with arguments.
+					  Newest version of original tool can be downloaded <a href="http://www.mkgmap.org.uk/download/splitter.html">here</a>.
+				  </p>
+				  <li>
+					  Download elevation data file (SRTM) of given area from <a href="http://dds.cr.usgs.gov/srtm/version2_1/SRTM3">here</a> and unpack it.
+					  <p>NOTE: probably, you have to change y-position of your character in editor before launch. it depends on elevation in your place.</p>
+					  <p>NOTE: Later, this step can be skipped as ASM will support "flat world" mode.</p>
+				  </li>
 
-                      <li>
-                          Modify Assets\Resources\Config\settings.json config:
-                          <ul>
-                              <li>"mapdata" should be set to folder which contains split result of pbf file.</li>
-                              <li>"elevationdata" should be set to folder which contains downloaded SRTM files with .hgt extension</li>
-                              <li>"position" should be set to geo coordinate of desired place</li>
-                          </ul>
-                      </li>
-                  </ol>
-            
+				  <li>
+					  Modify Assets\Resources\Config\settings.json config:
+					  <ul>
+						  <li>"mapdata" should be set to folder which contains split result of pbf file.</li>
+						  <li>"elevationdata" should be set to folder which contains downloaded SRTM files with .hgt extension</li>
+						  <li>"position" should be set to geo coordinate of desired place</li>
+					  </ul>
+				  </li>
+			  </ol>
           </ul>
+		  
+		  <h3>Upcoming changes in framework:</h3>
+			<ul>
+				<li>Reimplemented logic of processing map data: use custom spatial index inside and no need to use splitter tool.</li>
+				<li>Support import of o5m and pbf format.</li>
+				<li>Reimplemented logic of interpolating height map for elevation mode: it's more accurate now (bilinear interpolation is used).</li>
+				<li>Added support flat map mode: rendering is faster in ~30% and no need in elevation data.</li>
+				<li>Fixed issues with missing elements crossing tile borders: limitation of old map data processing logic.</li>
+				<li>Added simple search for elements with given tag's key/value pair: you can find the nearest bars, places, etc.</li>
+				<li>Smart road processing: build road graph, detect road junctions in order to simplify further AI logic.</li>
+				<li>Switch to usage of Reactive Extensions (Rx) unity port: now support async processing.</li>
+				<li>Async loading by Rx: dynamically load tile without blocking UI thread.</li>
+			</ul>
 		  <p>
              <a href="faq.html">FAQ</a>
           </p>
@@ -107,9 +114,6 @@
               <a href="content/api/index.html">API docs</a>
           </p>
       </section>
-	  
-	  
-	  
     </div>
 
     <!-- FOOTER  -->
