@@ -1,5 +1,6 @@
 ﻿using System;
 using ActionStreetMap.Explorer.Commands;
+using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts.Console;
 using Assets.Scripts.Console.Utils;
 using Assets.Scripts.Demo;
@@ -41,9 +42,9 @@ namespace Assets.Scripts.Character
         {
             if (_position != transform.position)
             {
-                _gameRunner.OnMapPositionChanged(
-                    new MapPoint(transform.position.x, transform.position.z, transform.position.y));
                 _position = transform.position;
+                Scheduler.ThreadPool.Schedule(() => _gameRunner.OnMapPositionChanged(
+                    new MapPoint(_position.x, _position.z, _position.y)));
             }
         }
 
@@ -51,6 +52,7 @@ namespace Assets.Scripts.Character
 
         private void Initialize()
         {
+            Scheduler.MainThread = new UnityMainThreadScheduler();
             // create and register DebugConsole inside Container
             var container = new Container();
             var messageBus = new MessageBus();
