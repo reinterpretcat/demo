@@ -22,6 +22,7 @@ namespace Assets.Scripts.Character
         public float Delta = 10;
 
         private GameRunner _gameRunner;
+        private IPositionObserver<MapPoint> _positionObserver;
 
         private DemoTileListener _messageListener;
 
@@ -43,7 +44,7 @@ namespace Assets.Scripts.Character
             if (_position != transform.position)
             {
                 _position = transform.position;
-                Scheduler.ThreadPool.Schedule(() => _gameRunner.OnMapPositionChanged(
+                Scheduler.ThreadPool.Schedule(() => _positionObserver.OnNext(
                     new MapPoint(_position.x, _position.z, _position.y)));
             }
         }
@@ -85,7 +86,8 @@ namespace Assets.Scripts.Character
                 //container.AddGlobalBehavior(new TraceBehavior(_trace));
 
                 _gameRunner = new GameRunner(container, messageBus);
-                _gameRunner.RunGame();
+                _positionObserver = _gameRunner;
+                _gameRunner.RunGame(new GeoCoordinate(52.53176, 13.38702));
             }
             catch (Exception ex)
             {

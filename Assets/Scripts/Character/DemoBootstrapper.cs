@@ -1,9 +1,6 @@
 ﻿using System;
-using ActionStreetMap.Explorer.Commands;
-using ActionStreetMap.Infrastructure.Dependencies;
-using Assets.Scripts.Console.Commands;
+using ActionStreetMap.Core.Tiling;
 using Assets.Scripts.Map;
-using ActionStreetMap.Core.Scene;
 using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Infrastructure.Bootstrap;
 

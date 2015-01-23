@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using ActionStreetMap.Core;
-using ActionStreetMap.Core.Scene;
-using ActionStreetMap.Core.Scene.Models;
+using ActionStreetMap.Core.Tiling;
+using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
 

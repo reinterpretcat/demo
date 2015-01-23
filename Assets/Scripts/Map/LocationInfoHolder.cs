@@ -1,7 +1,7 @@
 ﻿using System;
 using ActionStreetMap.Core.Scene;
-using ActionStreetMap.Core.Scene.Models;
-using ActionStreetMap.Core.Scene.World;
+using ActionStreetMap.Core.Tiling;
+using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Core.Unity;
 using ActionStreetMap.Osm.Helpers;
 using UnityEngine;
