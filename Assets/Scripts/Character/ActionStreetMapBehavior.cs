@@ -29,6 +29,8 @@ namespace Assets.Scripts.Character
 
         private ITrace _trace;
 
+        private bool _isInitialized = false;
+
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
         
         private DebugConsole _console;
@@ -42,11 +44,11 @@ namespace Assets.Scripts.Character
         // Update is called once per frame
         private void Update()
         {
-            if (_position != transform.position)
+            if (_isInitialized && _position != transform.position)
             {
                 _position = transform.position;
-                Scheduler.ThreadPool.Schedule(() => _positionObserver.OnNext(
-                    new MapPoint(_position.x, _position.z, _position.y)));
+                Scheduler.ThreadPool.Schedule(() => 
+                    _positionObserver.OnNext(new MapPoint(_position.x, _position.z, _position.y)));
             }
         }
 
@@ -81,14 +83,13 @@ namespace Assets.Scripts.Character
                 // this class will listen messages about tile processing from ASM engine
                 _messageListener = new DemoTileListener(messageBus, _trace);
 
-                // interception
-                //container.AllowProxy = true;
-                //container.AutoGenerateProxy = true;
-                //container.AddGlobalBehavior(new TraceBehavior(_trace));
-
                 _gameRunner = new GameRunner(container, messageBus);
                 _positionObserver = _gameRunner;
-                _gameRunner.RunGame(new GeoCoordinate(52.53176, 13.38702));
+                Scheduler.MainThread.Schedule(() =>
+                {
+                    _gameRunner.RunGame(new GeoCoordinate(52.53176, 13.38702));
+                    _isInitialized = true;
+                });
             }
             catch (Exception ex)
             {
@@ -106,8 +107,6 @@ namespace Assets.Scripts.Character
             _console.Container = container; 
             _trace = new DebugConsoleTrace(_console);
             _console.IsOpen = true;
-
-            //_console._controller.Register("scene", new SceneCommand(container));
         }
 
         #endregion
