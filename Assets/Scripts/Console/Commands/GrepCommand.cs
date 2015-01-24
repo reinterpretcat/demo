@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ActionStreetMap.Explorer.Commands;
+using ActionStreetMap.Infrastructure.Utilities;
 using Assets.Scripts.Console.Utils;
 
 namespace Assets.Scripts.Console.Commands
