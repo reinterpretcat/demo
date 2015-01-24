@@ -60,7 +60,7 @@ namespace Assets.Scripts.Character
             // create and register DebugConsole inside Container
             var container = new Container();
             var messageBus = new MessageBus();
-            var pathResolver = new WinPathResolver();
+            var pathResolver = new WebPathResolver();
             InitializeConsole(container);
             try
             {
