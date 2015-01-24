@@ -61,14 +61,14 @@
     <Reference Include="ActionStreetMap.Osm">
       <HintPath>Assets\Plugins\ActionStreetMap.Osm.dll</HintPath>
     </Reference>
+	<Reference Include="ActionStreetMap.Unity">
+      <HintPath>Assets\Plugins\ActionStreetMap.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Antlr3.Runtime">
       <HintPath>Assets\Plugins\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
       <HintPath>Assets\Plugins\protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive">
-      <HintPath>Assets\Plugins\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="Zlib">
       <HintPath>Assets\Plugins\Zlib.dll</HintPath>
