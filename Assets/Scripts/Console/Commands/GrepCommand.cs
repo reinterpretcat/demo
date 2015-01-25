@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ActionStreetMap.Explorer.Commands;
+using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Infrastructure.Utilities;
 using Assets.Scripts.Console.Utils;
 
@@ -41,35 +42,44 @@ namespace Assets.Scripts.Console.Commands
         }
 
         /// <inheritdoc />
-        public string Execute(params string[] args)
+        public IObservable<string> Execute(params string[] args)
         {
-            var response = new StringBuilder();
-            var grep = new ConsoleGrep(response);
-            var commandLine = new Arguments(args);
-            if (commandLine["h"] != null || commandLine["H"] != null)
+            return Observable.Create<string>(o =>
             {
-                grep.PrintHelp();
-                return response.ToString();
-            }
-            // The arguments /e and /f are mandatory
-            if (commandLine["e"] != null)
-                grep.RegEx = commandLine["e"];
-            else
-            {
-                response.AppendLine("Error: No Regular Expression specified!");
-                response.AppendLine();
-                grep.PrintHelp();
-                return response.ToString();
-            }
+                var response = new StringBuilder();
+                var grep = new ConsoleGrep(response);
+                var commandLine = new Arguments(args);
+                if (commandLine["h"] != null || commandLine["H"] != null)
+                {
+                    grep.PrintHelp();
+                    o.OnNext(response.ToString());
+                    o.OnCompleted();
+                    return Disposable.Empty;
+                }
+                // The arguments /e and /f are mandatory
+                if (commandLine["e"] != null)
+                    grep.RegEx = commandLine["e"];
+                else
+                {
+                    response.AppendLine("Error: No Regular Expression specified!");
+                    response.AppendLine();
+                    grep.PrintHelp();
+                    o.OnNext(response.ToString());
+                    o.OnCompleted();
+                    return Disposable.Empty;
+                }
 
-            grep.IgnoreCase = (commandLine["i"] != null);
-            grep.LineNumbers = (commandLine["n"] != null);
-            grep.CountLines = (commandLine["c"] != null);
+                grep.IgnoreCase = (commandLine["i"] != null);
+                grep.LineNumbers = (commandLine["n"] != null);
+                grep.CountLines = (commandLine["c"] != null);
 
-            // Do the search
-            grep.Search(Messages.Take(Messages.Count - 1).ToList());
+                // Do the search
+                grep.Search(Messages.Take(Messages.Count - 1).ToList());
 
-            return response.ToString();
+                o.OnNext(response.ToString());
+                o.OnCompleted();
+                return Disposable.Empty;
+            });
         }
 
         #region Nested classes

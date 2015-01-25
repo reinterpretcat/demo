@@ -87,7 +87,7 @@ namespace Assets.Scripts.Character
                 _positionObserver = _gameRunner;
                 Scheduler.MainThread.Schedule(() =>
                 {
-                    _gameRunner.RunGame(new GeoCoordinate(52.53176, 13.38702));
+                    _gameRunner.RunGame(new GeoCoordinate(55.7537315, 37.6198537));
                     _isInitialized = true;
                 });
             }

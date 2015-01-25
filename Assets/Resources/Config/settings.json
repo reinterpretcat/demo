@@ -1,5 +1,5 @@
 {
-	"mapdata":"g:/__ASM/__repository/framework/Tests/ActionStreetMap.Tests/bin/Debug/Index_Berlin",
+	"mapdata":"g:/__ASM/__repository/framework/Tests/ActionStreetMap.Tests/bin/Debug/Index_Moscow",
 	"elevationdata":"f:/___elevation/TestData/",
 	"theme":"Config/themes/default/theme.json",
 	"mapcss":"Config/themes/default/default.mapcss",
@@ -9,7 +9,5 @@
 		"heightmap":1025,
 		"autoclean":true,
 		"flat":false,
-        "position": {"latitude":52.53176, "longitude":13.38702}
-	},
-	"sandbox": false
+	}
 }

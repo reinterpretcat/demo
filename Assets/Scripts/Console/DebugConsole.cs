@@ -24,6 +24,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ActionStreetMap.Explorer.Commands;
 using ActionStreetMap.Infrastructure.Dependencies;
+using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Infrastructure.Utilities;
 using ActionStreetMap.Unity.Utils;
 using Assets.Scripts.Console.Commands;
@@ -146,7 +147,7 @@ namespace Assets.Scripts.Console
 #endif
 
             LogMessage(ConsoleMessage.System(string.Format(" ActionStreetMap Engine, version {0}", Version)));
-            LogMessage(ConsoleMessage.System(" type '/?' for available commands."));
+            LogMessage(ConsoleMessage.System(" type 'help' for available commands."));
             LogMessage(ConsoleMessage.System(""));
 
             //RegisterTerminalCommands();
@@ -573,9 +574,15 @@ namespace Assets.Scripts.Console
                 RegisterTerminalCommands();
             }
 
-            LogMessage(_controller.Contains(cmd)
-                ? ConsoleMessage.Output(_controller[cmd].Execute(input.ToArray()))
-                : ConsoleMessage.Output(string.Format("*** Unknown Command: {0} ***", cmd)));
+            if (_controller.Contains(cmd))
+            {
+                _controller[cmd].Execute(input.ToArray())
+                    .ObserveOnMainThread()
+                    .Subscribe(r => LogMessage(ConsoleMessage.Output(r)));
+
+            }
+            else
+                LogMessage(ConsoleMessage.Output(string.Format("*** Unknown Command: {0} ***", cmd)));
         }
 
         #endregion
