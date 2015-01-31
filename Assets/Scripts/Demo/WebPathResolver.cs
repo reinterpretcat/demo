@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using ActionStreetMap.Infrastructure.IO;
+using UnityEngine;
 
 namespace Assets.Scripts.Demo
 {
@@ -9,15 +10,15 @@ namespace Assets.Scripts.Demo
         public string Resolve(string path)
         {
             var lowerCase = path.ToLower();
-            if (lowerCase.StartsWith("config") || lowerCase.StartsWith("maps"))
-                path = "Assets//Resources//" + path;
+            //if (lowerCase.StartsWith("config") || lowerCase.StartsWith("maps"))
+            //    path = "Assets//Resources//" + path;
 
             // WEB
             if (lowerCase.EndsWith(".mapcss"))
-                return path+ ".txt";
+                path  += ".txt";
 
-            return path.Replace(@"\", @"/");
-            //return Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path)).Replace(@"\",@"/");
+           // return path.Replace(@"\", @"/");
+            return Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path)).Replace(@"\",@"/");
         }
     }
 }

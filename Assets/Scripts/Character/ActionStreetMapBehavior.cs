@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using ActionStreetMap.Explorer.Commands;
 using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Unity.IO;
@@ -57,45 +58,48 @@ namespace Assets.Scripts.Character
         private void Initialize()
         {
             Scheduler.MainThread = new UnityMainThreadScheduler();
+            UnityMainThreadDispatcher.RegisterUnhandledExceptionCallback(Debug.LogError);
             // create and register DebugConsole inside Container
             var container = new Container();
             var messageBus = new MessageBus();
             var pathResolver = new WinPathResolver();
             InitializeConsole(container);
-            try
+
+            Scheduler.ThreadPool.Schedule(() =>
             {
-                var fileSystemService = new FileSystemService(pathResolver);
-                container.RegisterInstance(typeof(IPathResolver), pathResolver);
-                container.RegisterInstance(typeof (IFileSystemService), fileSystemService);
-                container.RegisterInstance<IConfigSection>(new ConfigSection(@"Config/settings.json", fileSystemService));
-
-                // actual boot service
-                container.Register(Component.For<IBootstrapperService>().Use<BootstrapperService>());
-
-                // boot plugins
-                container.Register(Component.For<IBootstrapperPlugin>().Use<InfrastructureBootstrapper>().Named("infrastructure"));
-                container.Register(Component.For<IBootstrapperPlugin>().Use<TileBootstrapper>().Named("tile"));
-                container.Register(Component.For<IBootstrapperPlugin>().Use<SceneBootstrapper>().Named("scene"));
-                container.Register(Component.For<IBootstrapperPlugin>().Use<DemoBootstrapper>().Named("demo"));
-
-                container.RegisterInstance(_trace);
-
-                // this class will listen messages about tile processing from ASM engine
-                _messageListener = new DemoTileListener(messageBus, _trace);
-
-                _gameRunner = new GameRunner(container, messageBus);
-                _positionObserver = _gameRunner;
-                Scheduler.MainThread.Schedule(() =>
+                try
                 {
+                    var fileSystemService = new FileSystemService(pathResolver);
+                    container.RegisterInstance(typeof (IPathResolver), pathResolver);
+                    container.RegisterInstance(typeof (IFileSystemService), fileSystemService);
+                    container.RegisterInstance<IConfigSection>(new ConfigSection(@"Config/settings.json", fileSystemService));
+
+                    // actual boot service
+                    container.Register(Component.For<IBootstrapperService>().Use<BootstrapperService>());
+
+                    // boot plugins
+                    container.Register(Component.For<IBootstrapperPlugin>().Use<InfrastructureBootstrapper>().Named("infrastructure"));
+                    container.Register(Component.For<IBootstrapperPlugin>().Use<TileBootstrapper>().Named("tile"));
+                    container.Register(Component.For<IBootstrapperPlugin>().Use<SceneBootstrapper>().Named("scene"));
+                    container.Register(Component.For<IBootstrapperPlugin>().Use<DemoBootstrapper>().Named("demo"));
+
+                    container.RegisterInstance(_trace);
+
+                    // this class will listen messages about tile processing from ASM engine
+                    _messageListener = new DemoTileListener(messageBus, _trace);
+
+                    _gameRunner = new GameRunner(container, messageBus);
+                    _positionObserver = _gameRunner;
+
                     _gameRunner.RunGame(new GeoCoordinate(55.7537315, 37.6198537));
                     _isInitialized = true;
-                });
-            }
-            catch (Exception ex)
-            {
-                _console.LogMessage(new ConsoleMessage("Error running game:" + ex.ToString(), RecordType.Error, Color.red));
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    _console.LogMessage(new ConsoleMessage("Error running game:" + ex, RecordType.Error, Color.red));
+                    throw;
+                }
+            });
         }
 
         private void InitializeConsole(IContainer container)
