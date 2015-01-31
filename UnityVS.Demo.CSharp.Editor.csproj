@@ -102,6 +102,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\TouchKit\Editor\TouchKitEditor.cs" />
     <Compile Include="Assets\Scripts\TouchKit\Editor\TouchKitMenuItem.cs" />
+    <None Include="Assets\Resources\Config\srtm.schema.txt" />
     <None Include="Assets\Resources\Maps\osm\berlin\header.txt" />
     <None Include="Assets\Resources\Models\ParticleEffects\Shaders\Add_Layer.shader" />
     <None Include="Assets\Resources\Shaders\RoadDefault.shader" />

@@ -125,6 +125,7 @@
     <Compile Include="Assets\Scripts\TouchKit\Recognizers\TKTapRecognizer.cs" />
     <Compile Include="Assets\Scripts\TouchKit\TouchKit.cs" />
     <Compile Include="Assets\Scripts\TouchKit\TouchKitEditorSupport.cs" />
+    <None Include="Assets\Resources\Config\srtm.schema.txt" />
     <None Include="Assets\Resources\Maps\osm\berlin\header.txt" />
     <None Include="Assets\Resources\Models\ParticleEffects\Shaders\Add_Layer.shader" />
     <None Include="Assets\Resources\Shaders\RoadDefault.shader" />

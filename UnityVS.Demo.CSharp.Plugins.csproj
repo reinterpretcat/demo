@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
     <Compile Include="Assets\Standard Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
+    <None Include="Assets\Resources\Config\srtm.schema.txt" />
     <None Include="Assets\Resources\Maps\osm\berlin\header.txt" />
     <None Include="Assets\Resources\Models\ParticleEffects\Shaders\Add_Layer.shader" />
     <None Include="Assets\Resources\Shaders\RoadDefault.shader" />

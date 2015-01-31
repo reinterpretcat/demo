@@ -1,0 +1,30 @@
+﻿{
+	"spatial":{
+		"rtree_max_entries":65,
+		"include": {
+		  "all":[],
+			"nodes":[
+				"addr:housenumber","addr:housename","addr:street","addr:place","addr:postcode","addr:flats",
+				"addr:city","addr:country","addr:full","addr:hamlet","addr:suburb","addr:subdistrict",
+				"addr:district","addr:province","addr:state","addr:interpolation","addr:inclusion","addr:door",
+				"amenity","tourism","barrier","place","shop","landuse","religion","boundary",
+				"military","historic","power","sport","leisure","information","aeroway","emergency",
+				"transport","junction","waterway","power_source","wood","education","food","man_made",
+				"waste","leisure","railway","highway","natural"
+			],
+			"ways":[],
+			"relations":[],
+		},
+		"exclude": {
+			"all":[],
+			"nodes":[],
+			"ways":[],
+			"relations":[],
+		},
+		"remove_tags":["fixme", "note"]
+	},
+	"search":{
+		"prefix_length": 4,
+		"keyvalue_index_capacity": 300000,
+	}
+}

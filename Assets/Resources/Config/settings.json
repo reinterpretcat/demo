@@ -1,8 +1,21 @@
 {
-	"mapdata":"g:/__ASM/__repository/framework/Tests/ActionStreetMap.Tests/bin/Debug/Index_Moscow",
-	"elevationdata":"f:/___elevation/TestData/",
+	"data": {
+		"map": {
+			"local":"Maps/osm",
+			"index.settings": "Config/themes/default/index.json",
+			"remote.server":"http://api.openstreetmap.org/api/0.6/map?bbox=",
+			"remote.query":"{0},{1},{2},{3}",
+			"remote.format":"xml"
+		},
+		"elevation": {
+			"local":"Maps/elevation",
+			"remote.server":"http://dds.cr.usgs.gov/srtm/version2_1/SRTM3",
+			"remote.schema": "Config/srtm.schema.txt"
+		}
+	},
 	"theme":"Config/themes/default/theme.json",
 	"mapcss":"Config/themes/default/default.mapcss",
+	"geocoding":"http://nominatim.openstreetmap.org/search",
 	"tile": {
 		"size":1000,
 		"offset":300,
