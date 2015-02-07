@@ -3,6 +3,7 @@ using System.Text;
 using Assets.Scripts.Console.Utils;
 using ActionStreetMap.Infrastructure.Diagnostic;
 
+
 namespace Assets.Scripts.Console
 {
     public class DebugConsoleTrace: DefaultTrace
@@ -27,22 +28,18 @@ namespace Assets.Scripts.Console
             {
                 case RecordType.Error:
                     return ConsoleMessage.Error(String.Format("[{0}] {1}:{2}. Exception: {3}", type, category, text, exception));
-                case RecordType.Warning:
+                case RecordType.Warn:
                     return ConsoleMessage.Warning(String.Format("[{0}] {1}:{2}", type, category, text));
-                case RecordType.Output:
+                case RecordType.Info:
                     var lines = text.Trim('\n').Split('\n');
                     var output = new StringBuilder();
                     foreach (var line in lines)
                     {
                         output.AppendFormat("= {0}\n", line);
                     }
-                    return ConsoleMessage.Output(output.ToString());
-                case RecordType.Input:
-                    return ConsoleMessage.Input(String.Format(">>> {0}", text));
-                case RecordType.System:
-                    return ConsoleMessage.System(String.Format("# {0}", text));
+                    return ConsoleMessage.Info(output.ToString());
                 default:
-                    return ConsoleMessage.Normal(String.Format("[{0}] {1}:{2}", type, category, text));
+                    return ConsoleMessage.Debug(text);
             }
         }
     }

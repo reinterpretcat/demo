@@ -31,7 +31,6 @@ using Assets.Scripts.Console.Commands;
 using Assets.Scripts.Console.Utils;
 using Assets.Scripts.Console.Watchers;
 using UnityEngine;
-
 namespace Assets.Scripts.Console
 {
 #if DEBUG_CONSOLE
@@ -146,9 +145,9 @@ namespace Assets.Scripts.Console
             _windowRect = new Rect(30.0f, 30.0f, 300.0f, 450.0f);
 #endif
 
-            LogMessage(ConsoleMessage.System(string.Format(" ActionStreetMap Engine, version {0}", Version)));
-            LogMessage(ConsoleMessage.System(" type 'help' for available commands."));
-            LogMessage(ConsoleMessage.System(""));
+            LogMessage(ConsoleMessage.Info(string.Format(" ActionStreetMap Engine, version {0}", Version)));
+            LogMessage(ConsoleMessage.Info(" type 'help' for available commands."));
+            LogMessage(ConsoleMessage.Info(""));
 
             //RegisterTerminalCommands();
         }
@@ -185,7 +184,7 @@ namespace Assets.Scripts.Console
                         return "filter disabled";
                     }
                 }
-                LogMessage(ConsoleMessage.Output("Wrong syntax: \n\tfilter -e:<regex> \n\tfilter -d"));
+                LogMessage(ConsoleMessage.Info("Wrong syntax: \n\tfilter -e:<regex> \n\tfilter -d"));
                 return "";
             }));
 
@@ -556,12 +555,12 @@ namespace Assets.Scripts.Console
 
             if (string.IsNullOrEmpty(inputString))
             {
-                LogMessage(ConsoleMessage.Input(string.Empty));
+                LogMessage(ConsoleMessage.Debug(string.Empty));
                 return;
             }
 
             _history.Add(inputString);
-            LogMessage(ConsoleMessage.Input(inputString));
+            LogMessage(ConsoleMessage.Debug(inputString));
 
             var input = new List<string>(inputString.Split(new [] {' '}, System.StringSplitOptions.RemoveEmptyEntries));
 
@@ -578,11 +577,11 @@ namespace Assets.Scripts.Console
             {
                 _controller[cmd].Execute(input.ToArray())
                     .ObserveOnMainThread()
-                    .Subscribe(r => LogMessage(ConsoleMessage.Output(r)));
+                    .Subscribe(r => LogMessage(ConsoleMessage.Info(r)));
 
             }
             else
-                LogMessage(ConsoleMessage.Output(string.Format("*** Unknown Command: {0} ***", cmd)));
+                LogMessage(ConsoleMessage.Info(string.Format("*** Unknown Command: {0} ***", cmd)));
         }
 
         #endregion

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using ActionStreetMap.Explorer.Commands;
 using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Unity.IO;
 using Assets.Scripts.Console;
@@ -16,6 +14,7 @@ using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.IO;
 using UnityEngine;
 using Component = ActionStreetMap.Infrastructure.Dependencies.Component;
+using RecordType = ActionStreetMap.Infrastructure.Diagnostic.DefaultTrace.RecordType;
 
 namespace Assets.Scripts.Character
 {
@@ -91,7 +90,7 @@ namespace Assets.Scripts.Character
                     _gameRunner = new GameRunner(container, messageBus);
                     _positionObserver = _gameRunner;
 
-                    _gameRunner.RunGame(new GeoCoordinate(55.7537315, 37.6198537));
+                    _gameRunner.RunGame(new GeoCoordinate(52.52033,13.38748));
                     _isInitialized = true;
                 }
                 catch (Exception ex)

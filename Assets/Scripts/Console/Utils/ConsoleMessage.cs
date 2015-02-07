@@ -1,5 +1,6 @@
-﻿using ActionStreetMap.Infrastructure.Diagnostic;
-using UnityEngine;
+﻿using UnityEngine;
+
+using RecordType = ActionStreetMap.Infrastructure.Diagnostic.DefaultTrace.RecordType;
 
 namespace Assets.Scripts.Console.Utils
 {
@@ -17,41 +18,29 @@ namespace Assets.Scripts.Console.Utils
             Color = color;
         }
 
-        private static Color DefaultColor = Color.white;
+        private static Color DebugColor = Color.white;
         private static Color WarningColor = Color.yellow;
         private static Color ErrorColor = Color.red;
-        private static Color SystemColor = Color.green;
-        private static Color InputColor = Color.green;
-        private static Color OutputColor = Color.cyan;
+        private static Color InfoColor = Color.blue;
 
-        public static ConsoleMessage Normal(string message)
+        public static ConsoleMessage Debug(string message)
         {
-            return new ConsoleMessage(message, RecordType.Normal, DefaultColor);
+            return new ConsoleMessage(message, RecordType.Debug, DebugColor);
         }
 
-        public static ConsoleMessage System(string message)
+        public static ConsoleMessage Info(string message)
         {
-            return new ConsoleMessage(message, RecordType.System, SystemColor);
+            return new ConsoleMessage(message, RecordType.Info, InfoColor);
         }
 
         public static ConsoleMessage Warning(string message)
         {
-            return new ConsoleMessage(message, RecordType.Warning,  WarningColor);
+            return new ConsoleMessage(message, RecordType.Warn,  WarningColor);
         }
 
         public static ConsoleMessage Error(string message)
         {
             return new ConsoleMessage(message, RecordType.Error,  ErrorColor);
-        }
-
-        public static ConsoleMessage Output(string message)
-        {
-            return new ConsoleMessage(message, RecordType.Output, OutputColor);
-        }
-
-        public static ConsoleMessage Input(string message)
-        {
-            return new ConsoleMessage(message, RecordType.Input,  InputColor);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Assets.Scripts.Demo
     /// </summary>
     public class DemoTileListener
     {
-        private const string LogTag = "Tile";
+        private const string LogTag = "tile";
 
         private readonly ITrace _trace;
 
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Demo
 
         private void OnTileDestroyed(Tile tile)
         {
-            _trace.Normal(LogTag, String.Format("Tile destroyed: center:{0}", tile.MapCenter));
+            _trace.Debug(LogTag, "Tile destroyed: center:{0}", tile.MapCenter);
         }
 
         public void OnTileFound(Tile tile, MapPoint position)
@@ -42,25 +42,25 @@ namespace Assets.Scripts.Demo
         public void OnTileBuildStarted(MapPoint center)
         {
             _stopwatch.Start();
-            _trace.Normal(LogTag, String.Format("Tile build begin: center:{0}", center));
+            _trace.Debug(LogTag, "Tile build begin: center:{0}", center);
         }
 
         public void OnTileBuildFinished(Tile tile)
         {
             _stopwatch.Stop();
-            _trace.Normal(LogTag, String.Format("Tile of size {0} is loaded in {1} ms. Trigger GC.", tile.Size, _stopwatch.ElapsedMilliseconds));
+            _trace.Debug(LogTag, "Tile of size {0} is loaded in {1} ms. Trigger GC.", tile.Size, _stopwatch.ElapsedMilliseconds);
             GC.Collect();
             _stopwatch.Reset();
         }
 
         private void OnTileActivated(Tile tile)
         {
-            _trace.Normal(LogTag, String.Format("Tile activated: center:{0}", tile.MapCenter));
+            _trace.Debug(LogTag, "Tile activated: center:{0}", tile.MapCenter);
         }
 
         private void OnTileDeactivated(Tile tile)
         {
-            _trace.Normal(LogTag, String.Format("Tile deactivated: center:{0}", tile.MapCenter));
+            _trace.Debug(LogTag, "Tile deactivated: center:{0}", tile.MapCenter);
         }
     }
 }
