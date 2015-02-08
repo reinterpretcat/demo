@@ -21,7 +21,7 @@ namespace Assets.Scripts.Console.Utils
         private static Color DebugColor = Color.white;
         private static Color WarningColor = Color.yellow;
         private static Color ErrorColor = Color.red;
-        private static Color InfoColor = Color.blue;
+        private static Color InfoColor = Color.cyan;
 
         public static ConsoleMessage Debug(string message)
         {

@@ -33,13 +33,12 @@ namespace Assets.Scripts.Console
                 case RecordType.Info:
                     var lines = text.Trim('\n').Split('\n');
                     var output = new StringBuilder();
-                    foreach (var line in lines)
-                    {
-                        output.AppendFormat("= {0}\n", line);
-                    }
+                    output.Append(String.Format("[{0}] {1}:", type, category));
+                    for(int i=0; i < lines.Length; i++)
+                        output.AppendFormat("{0}{1}", lines[i], i != lines.Length - 1 ? "\n" : "");
                     return ConsoleMessage.Info(output.ToString());
                 default:
-                    return ConsoleMessage.Debug(text);
+                    return ConsoleMessage.Debug(String.Format("[{0}] {1}: {2}", type, category, text));
             }
         }
     }

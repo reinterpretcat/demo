@@ -1,19 +1,15 @@
 ﻿using System;
+using ActionStreetMap.Infrastructure.IO;
 using ActionStreetMap.Infrastructure.Reactive;
-using ActionStreetMap.Unity.IO;
 using Assets.Scripts.Console;
 using Assets.Scripts.Console.Utils;
 using Assets.Scripts.Demo;
 using ActionStreetMap.Core;
 using ActionStreetMap.Explorer;
-using ActionStreetMap.Explorer.Bootstrappers;
-using ActionStreetMap.Infrastructure.Bootstrap;
-using ActionStreetMap.Infrastructure.Config;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
-using ActionStreetMap.Infrastructure.IO;
 using UnityEngine;
-using Component = ActionStreetMap.Infrastructure.Dependencies.Component;
+
 using RecordType = ActionStreetMap.Infrastructure.Diagnostic.DefaultTrace.RecordType;
 
 namespace Assets.Scripts.Character
@@ -22,10 +18,7 @@ namespace Assets.Scripts.Character
     {
         public float Delta = 10;
 
-        private GameRunner _gameRunner;
         private IPositionObserver<MapPoint> _positionObserver;
-
-        private DemoTileListener _messageListener;
 
         private ITrace _trace;
 
@@ -57,40 +50,26 @@ namespace Assets.Scripts.Character
         private void Initialize()
         {
             Scheduler.MainThread = new UnityMainThreadScheduler();
-            UnityMainThreadDispatcher.RegisterUnhandledExceptionCallback(Debug.LogError);
             // create and register DebugConsole inside Container
             var container = new Container();
-            var messageBus = new MessageBus();
-            var pathResolver = new WinPathResolver();
+            
             InitializeConsole(container);
 
             Scheduler.ThreadPool.Schedule(() =>
             {
                 try
                 {
-                    var fileSystemService = new FileSystemService(pathResolver);
-                    container.RegisterInstance(typeof (IPathResolver), pathResolver);
-                    container.RegisterInstance(typeof (IFileSystemService), fileSystemService);
-                    container.RegisterInstance<IConfigSection>(new ConfigSection(@"Config/settings.json", fileSystemService));
-
-                    // actual boot service
-                    container.Register(Component.For<IBootstrapperService>().Use<BootstrapperService>());
-
-                    // boot plugins
-                    container.Register(Component.For<IBootstrapperPlugin>().Use<InfrastructureBootstrapper>().Named("infrastructure"));
-                    container.Register(Component.For<IBootstrapperPlugin>().Use<TileBootstrapper>().Named("tile"));
-                    container.Register(Component.For<IBootstrapperPlugin>().Use<SceneBootstrapper>().Named("scene"));
-                    container.Register(Component.For<IBootstrapperPlugin>().Use<DemoBootstrapper>().Named("demo"));
-
+                    IMessageBus messageBus = new MessageBus();
+                    // these services should be registered inside container before GameRunner is constructed.
                     container.RegisterInstance(_trace);
+                    container.RegisterInstance<IPathResolver>(new WinPathResolver());
+                    container.RegisterInstance(messageBus);
 
-                    // this class will listen messages about tile processing from ASM engine
-                    _messageListener = new DemoTileListener(messageBus, _trace);
+                    var gameRunner = new GameRunner(container, @"Config/settings.json")
+                        .RegisterPlugin<DemoBootstrapper>("demo", messageBus, _trace);
+                    _positionObserver = gameRunner;
+                    gameRunner.RunGame(new GeoCoordinate(52.52033, 13.38748));
 
-                    _gameRunner = new GameRunner(container, messageBus);
-                    _positionObserver = _gameRunner;
-
-                    _gameRunner.RunGame(new GeoCoordinate(52.52033,13.38748));
                     _isInitialized = true;
                 }
                 catch (Exception ex)
@@ -110,6 +89,9 @@ namespace Assets.Scripts.Character
             _console.Container = container; 
             _trace = new DebugConsoleTrace(_console);
             _console.IsOpen = true;
+
+            UnityMainThreadDispatcher.RegisterUnhandledExceptionCallback(ex => 
+                _trace.Error("fatal", ex, "Unhandled exception"));
         }
 
         #endregion

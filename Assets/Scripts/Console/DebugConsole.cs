@@ -538,15 +538,17 @@ namespace Assets.Scripts.Console
         {
             if (_regex != null && !_regex.IsMatch(msg.Text))
                 return;
+            lock(_messages)
+                _messages.Add(msg);
 
-            _messages.Add(msg);
             _dirty = true;
         }
 
         //--- Local version. Use the static version above instead.
         private void ClearLog()
         {
-            _messages.Clear();
+            lock (_messages)
+                _messages.Clear();
         }
 
         private void EvalInputString(string inputString)
