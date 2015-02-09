@@ -25,8 +25,6 @@ namespace Assets.Scripts.Demo
 
             messageBus.AsObservable<TileLoadStartMessage>().Do(m => OnTileBuildStarted(m.TileCenter)).Subscribe();
             messageBus.AsObservable<TileLoadFinishMessage>().Do(m => OnTileBuildFinished(m.Tile)).Subscribe();
-            messageBus.AsObservable<TileActivateMessage>().Do(m => OnTileActivated(m.Tile)).Subscribe();
-            messageBus.AsObservable<TileDeactivateMessage>().Do(m => OnTileDeactivated(m.Tile)).Subscribe();
             messageBus.AsObservable<TileDestroyMessage>().Do(m => OnTileDestroyed(m.Tile)).Subscribe();
         }
 
@@ -51,16 +49,6 @@ namespace Assets.Scripts.Demo
             _trace.Debug(LogTag, "Tile of size {0} is loaded in {1} ms. Trigger GC.", tile.Size, _stopwatch.ElapsedMilliseconds);
             GC.Collect();
             _stopwatch.Reset();
-        }
-
-        private void OnTileActivated(Tile tile)
-        {
-            _trace.Debug(LogTag, "Tile activated: center:{0}", tile.MapCenter);
-        }
-
-        private void OnTileDeactivated(Tile tile)
-        {
-            _trace.Debug(LogTag, "Tile deactivated: center:{0}", tile.MapCenter);
         }
     }
 }
