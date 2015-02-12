@@ -1,9 +1,8 @@
 canvas { 
 	z-index: 0; 
 
-	pixelMapError: 1;
+	pixelMapError: 30;
 	resolution: 512;
-	heightmapsize: 513;
 	
 	splat: 0, Asphalt_background, 5, 5;
 	splat: 1, Grass, 5, 5;
