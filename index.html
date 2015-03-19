@@ -49,7 +49,7 @@
 		 Although you can create pretty nice 3D city for your own use; the engine is not flawless and it's in alpha stage. 
 		 There are a lot to be done and we need contributors. </p>
 		 
-		 <p> Below is an example screenshot from Moscow, Red Square. <p>
+		 <p> Below is an example screenshot from Moscow, Red Square (outdated, read information below). <p>
           <a href="demo_list.html"><img src="images/Moscow_redsquare.png" class="inner" /></a>
 
 		  
@@ -67,34 +67,8 @@
 
            
           <p>NOTE: Project is still in alpha stage! There are too many things to be done and many ways to contribute to this project. We appreciate any kind of contribution. </p>
-		  
-        <h3><a id="welcome-to-github-pages" class="anchor" href="#faq_title" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to build your neighbourhood..</h3>
-			<p>NOTE: The steps will be changed once next framework version is released (see change list below).</p>
-          <ul>
-			  <ol>
-				  <li>Download pbf file of desired place from any source (e.g. <a href="http://download.geofabrik.de">geofabrik</a>) </li>
-				  <li> Split it using splitter tool. This tool splits big osm file to smaller ones and creates index file which helps to increase performance.</li>
-				  <p>
-					  NOTE: this tool is committed to project repository: Tools\Splitter. Please read the corresponding README file. Actually, all you need is to run bat file with arguments.
-					  Newest version of original tool can be downloaded <a href="http://www.mkgmap.org.uk/download/splitter.html">here</a>.
-				  </p>
-				  <li>
-					  Download elevation data file (SRTM) of given area from <a href="http://dds.cr.usgs.gov/srtm/version2_1/SRTM3">here</a> and unpack it.
-					  <p>NOTE: probably, you have to change y-position of your character in editor before launch. it depends on elevation in your place.</p>
-					  <p>NOTE: Later, this step can be skipped as ASM will support "flat world" mode.</p>
-				  </li>
-
-				  <li>
-					  Modify Assets\Resources\Config\settings.json config:
-					  <ul>
-						  <li>"mapdata" should be set to folder which contains split result of pbf file.</li>
-						  <li>"elevationdata" should be set to folder which contains downloaded SRTM files with .hgt extension</li>
-						  <li>"position" should be set to geo coordinate of desired place</li>
-					  </ul>
-				  </li>
-			  </ol>
-          </ul>
-		  
+		  <p>Read about how to use <a href="howto.html">map of different place</a>.</p>
+			
 		  <h3>Upcoming changes in framework:</h3>
 			Future version of framework will use flat shading style (work in progress):
 			<img src="images/FlatShading_Pic1.png" class="inner" />
