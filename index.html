@@ -96,16 +96,22 @@
           </ul>
 		  
 		  <h3>Upcoming changes in framework:</h3>
+			Future version of framework will use flat shading style (work in progress):
+			<img src="images/FlatShading_Pic1.png" class="inner" />
+			<img src="images/FlatShading_Pic2.png" class="inner" />
+			Current progress (will be updated):
 			<ul>
 				<li>Reimplemented logic of processing map data: use custom spatial index inside and no need to use splitter tool.</li>
-				<li>Support import of o5m and pbf format.</li>
+				<li>Added import support of o5m, xml and pbf formats.</li>
 				<li>Reimplemented logic of interpolating height map for elevation mode: it's more accurate now (bilinear interpolation is used).</li>
 				<li>Added support flat map mode: rendering is faster in ~30% and no need in elevation data.</li>
 				<li>Fixed issues with missing elements crossing tile borders: limitation of old map data processing logic.</li>
 				<li>Added simple search for elements with given tag's key/value pair: you can find the nearest bars, places, etc.</li>
-				<li>Smart road processing: build road graph, detect road junctions in order to simplify further AI logic.</li>
-				<li>Switch to usage of Reactive Extensions (Rx) unity port: now support async processing.</li>
+				<li>Switched to usage of Reactive Extensions (Rx) unity port: now support async processing.</li>
 				<li>Async loading by Rx: dynamically load tile without blocking UI thread.</li>
+				<li>Made flat shading be default show case style.</li>
+				<li>Implemented custom mesh terrain instead of unity built-in to support flat shading style.</li>
+				<li>Reimplemented road rendering approach.</li>
 			</ul>
 		  <p>
              <a href="faq.html">FAQ</a>
