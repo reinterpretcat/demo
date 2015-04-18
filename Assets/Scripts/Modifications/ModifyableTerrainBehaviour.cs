@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using ActionStreetMap.Core;
-using ActionStreetMap.Core.Geometry.Triangle.Geometry;
-using ActionStreetMap.Core.Geometry.Triangle.Meshing.Algorithm;
-using ActionStreetMap.Explorer.Scene;
+using ActionStreetMap.Explorer.Geometry;
+using ActionStreetMap.Explorer.Scene.Behaviours;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Modifications
 {
-    public class ModifyableBehaviour: MonoBehaviour
+    public class ModifyableTerrainBehaviour: MonoBehaviour
     {
-        private MeshBehaviour _triangleSource; 
+        private IMeshIndex _meshIndex; 
         void Start()
         {
-            Debug.Log("Start is called");
-            _triangleSource = gameObject.GetComponent<MeshBehaviour>();
+            _meshIndex = gameObject.GetComponent<MeshIndexBehaviour>().Index;
         }
 
         private void OnMouseDown()
@@ -43,7 +41,8 @@ namespace Assets.Scripts
             var radius = 5;
             var epicenter = new Vector3(center.X, center.Elevation, center.Y);
 
-            var indecies = _triangleSource.GetAffectedIndices(center, radius + 15f);
+            MapPoint direction;
+            var indecies = _meshIndex.Query(center, radius + 15f, out direction);
 
             ModifyVertices(indecies, vertices, epicenter, radius);
 
