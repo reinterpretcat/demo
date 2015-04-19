@@ -5,6 +5,8 @@ using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
+using Assets.Scripts.Modifications;
+using UnityEngine;
 
 namespace Assets.Scripts.Demo
 {
@@ -46,9 +48,32 @@ namespace Assets.Scripts.Demo
         public void OnTileBuildFinished(Tile tile)
         {
             _stopwatch.Stop();
-            _trace.Debug(LogTag, "Tile of size {0} is loaded in {1} ms. Trigger GC.", tile.Size, _stopwatch.ElapsedMilliseconds);
+            _trace.Debug(LogTag, "Tile of size {0}x{1} is loaded in {2} ms. Trigger GC.", tile.Width, tile.Height, _stopwatch.ElapsedMilliseconds);
             GC.Collect();
             _stopwatch.Reset();
+
+            Scheduler.MainThread.Schedule(() =>
+            {
+                foreach (Transform child in tile.GameObject.GetComponent<GameObject>().transform)
+                {
+                    var name = child.gameObject.name;
+                    if (name == "terrain")
+                    {
+                        foreach (Transform cell in child.gameObject.transform)
+                            cell.gameObject.AddComponent<ModifyableTerrainBehaviour>();
+                    }
+                    else if (name.StartsWith("building"))
+                    {
+                        foreach (Transform buildingPart in child.gameObject.transform)
+                            if (buildingPart.name == "facade")
+                                buildingPart.gameObject.AddComponent<ModifyableFacadeBehaviour>();
+                    }
+                    else if(name.StartsWith("tree"))
+                    {
+                        child.gameObject.AddComponent<DestroyableMeshBehaviour>();
+                    }
+                }
+            });
         }
     }
 }
