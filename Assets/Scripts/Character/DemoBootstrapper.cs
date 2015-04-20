@@ -7,6 +7,7 @@ using Assets.Scripts.Demo;
 using Assets.Scripts.Map;
 using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Infrastructure.Bootstrap;
+using ActionStreetMap.Infrastructure.IO;
 
 namespace Assets.Scripts.Character
 {
@@ -37,6 +38,9 @@ namespace Assets.Scripts.Character
                 { typeof (LocationInfoHolder) });
 
             Container.RegisterInstance<IModelBehaviour>(_solidModelBehavior, "solid");
+
+            // NOTE Use this for web builds:
+            //Container.Register(Component.For<IFileSystemService>().Use<WebFileSystemService>().Singleton());
 
             // this class will listen messages about tile processing from ASM engine
             _messageListener = new DemoTileListener(_messageBus, _trace);
