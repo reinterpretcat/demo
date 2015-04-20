@@ -67,6 +67,15 @@
     <Reference Include="protobuf-net">
       <HintPath>Assets\Plugins\protobuf-net.dll</HintPath>
     </Reference>
+    <Reference Include="ActionStreetMap.Explorer">
+      <HintPath>Assets\Plugins\WEB\ActionStreetMap.Explorer.dll</HintPath>
+    </Reference>
+    <Reference Include="ActionStreetMap.Maps">
+      <HintPath>Assets\Plugins\WEB\ActionStreetMap.Maps.dll</HintPath>
+    </Reference>
+    <Reference Include="ActionStreetMap.Unity">
+      <HintPath>Assets\Plugins\WEB\ActionStreetMap.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="Zlib">
       <HintPath>Assets\Plugins\Zlib.dll</HintPath>
     </Reference>
@@ -87,6 +96,9 @@
     <None Include="Assets\Plugins\ActionStreetMap.Unity.dll" />
     <None Include="Assets\Plugins\Antlr3.Runtime.dll" />
     <None Include="Assets\Plugins\protobuf-net.dll" />
+    <None Include="Assets\Plugins\WEB\ActionStreetMap.Explorer.dll" />
+    <None Include="Assets\Plugins\WEB\ActionStreetMap.Maps.dll" />
+    <None Include="Assets\Plugins\WEB\ActionStreetMap.Unity.dll" />
     <None Include="Assets\Plugins\Zlib.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
