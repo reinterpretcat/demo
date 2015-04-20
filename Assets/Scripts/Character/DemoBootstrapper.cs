@@ -16,7 +16,6 @@ namespace Assets.Scripts.Character
         private IMessageBus _messageBus;
         private readonly ITrace _trace;
         private CompositeModelBehaviour _solidModelBehavior;
-        private CompositeModelBehaviour _waterModelBehavior;
         private DemoTileListener _messageListener;
 
         public override string Name { get { return "demo"; } }
@@ -32,15 +31,12 @@ namespace Assets.Scripts.Character
         public override bool Run()
         {
             // NOTE we should keep reference to prevent GC as RegisterInstance uses WeakReference
-            // TODO add ability to register object without this trick
+
+            // NOTE Obsolete implementation: address processing will be changed
             _solidModelBehavior = new CompositeModelBehaviour("solid", new [] 
-                { typeof (DestroyableObject), typeof (LocationInfoHolder) });
+                { typeof (LocationInfoHolder) });
 
             Container.RegisterInstance<IModelBehaviour>(_solidModelBehavior, "solid");
-
-            _waterModelBehavior = new CompositeModelBehaviour("water", new [] { typeof(WaterSimple) });
-
-            Container.RegisterInstance<IModelBehaviour>(_waterModelBehavior, "water");
 
             // this class will listen messages about tile processing from ASM engine
             _messageListener = new DemoTileListener(_messageBus, _trace);

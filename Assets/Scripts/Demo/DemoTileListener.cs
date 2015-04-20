@@ -5,7 +5,7 @@ using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
-using Assets.Scripts.Modifications;
+using Assets.Scripts.Map;
 using UnityEngine;
 
 namespace Assets.Scripts.Demo

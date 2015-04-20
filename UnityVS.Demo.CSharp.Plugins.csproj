@@ -73,17 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
-    <Compile Include="Assets\Standard Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
     <None Include="Assets\Plugins\nunit.framework.xml" />
     <None Include="Assets\Resources\Config\srtm.schema.txt" />
-    <None Include="Assets\Resources\Models\ParticleEffects\Shaders\Add_Layer.shader" />
     <None Include="Assets\Resources\Shaders\QT_Cubemaps.cginc" />
-    <None Include="Assets\Resources\Shaders\RoadDefault.shader" />
     <None Include="Assets\Resources\Shaders\VertexColorsIBLReflective.shader" />
     <None Include="Assets\Resources\Shaders\VertexLitIBL.cginc" />
-    <None Include="Assets\Shaders\FX-Water Simple.shader" />
     <None Include="Assets\Shaders\VertexLit Colored.shader" />
-    <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
     <None Include="Assets\Plugins\ActionStreetMap.Core.dll" />
     <None Include="Assets\Plugins\ActionStreetMap.Explorer.dll" />
     <None Include="Assets\Plugins\ActionStreetMap.Infrastructure.dll" />
