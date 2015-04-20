@@ -19,7 +19,18 @@ namespace Assets.Scripts.Console
         {
             var logMessage = ToLogMessage(type, category, message, exception);
             _console.LogMessage(logMessage);
-            UnityEngine.Debug.Log(logMessage.Text);
+            switch (type)
+            {
+                 case RecordType.Error:
+                    UnityEngine.Debug.LogError(logMessage.Text);
+                    break;
+                 case RecordType.Warn:
+                    UnityEngine.Debug.LogWarning(logMessage.Text);
+                    break;
+                default:
+                    UnityEngine.Debug.Log(logMessage.Text);
+                    break;
+            }
         }
 
         private ConsoleMessage ToLogMessage(RecordType type, string category, string text, Exception exception)

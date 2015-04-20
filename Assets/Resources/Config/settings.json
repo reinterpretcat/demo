@@ -1,8 +1,8 @@
 {
 	"data": {
 		"map": {
-			"local":"Maps/osm",
-			"index.settings": "Config/themes/default/index.json",
+            "local":"g:/__ASM/__repository/_index/Index_Berlin",
+			"index.settings": "Config/index.json",
 			"remote.server":"http://api.openstreetmap.org/api/0.6/map?bbox=",
 			"remote.query":"{0},{1},{2},{3}",
 			"remote.format":"xml"
@@ -13,14 +13,10 @@
 			"remote.schema": "Config/srtm.schema.txt"
 		}
 	},
-	"theme":"Config/themes/default/theme.json",
-	"mapcss":"Config/themes/default/default.mapcss",
+	"mapcss":"Config/default.mapcss",
 	"geocoding":"http://nominatim.openstreetmap.org/search",
 	"tile": {
-		"size":1000,
-		"offset":300,
-		"heightmap":1025,
-		"autoclean":true,
-		"flat":false,
+		"size":300,
+		"offset":50,
 	}
 }

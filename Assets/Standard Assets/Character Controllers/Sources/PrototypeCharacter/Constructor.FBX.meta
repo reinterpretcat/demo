@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 449b48f7eb5d87a4baaa5fb73f875a59
 ModelImporter:
-  serializedVersion: 15
+  serializedVersion: 16
   fileIDToRecycleName:
     100000: Bip001 R Finger1
     100002: Bip001 R Finger21
@@ -137,6 +137,7 @@ ModelImporter:
     legacyGenerateAnimations: 3
     bakeSimulation: 0
     optimizeGameObjects: 0
+    motionNodeName: 
     animationCompression: 0
     animationRotationError: .5
     animationPositionError: .5
@@ -284,4 +285,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 1
+  additionalBone: 0
   userData: 
