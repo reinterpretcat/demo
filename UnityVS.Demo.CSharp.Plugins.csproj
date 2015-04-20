@@ -75,6 +75,7 @@
     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
     <None Include="Assets\Plugins\nunit.framework.xml" />
     <None Include="Assets\Resources\Config\srtm.schema.txt" />
+    <None Include="Assets\Resources\Maps\osm\berlin\header.txt" />
     <None Include="Assets\Resources\Shaders\QT_Cubemaps.cginc" />
     <None Include="Assets\Resources\Shaders\VertexColorsIBLReflective.shader" />
     <None Include="Assets\Resources\Shaders\VertexLitIBL.cginc" />

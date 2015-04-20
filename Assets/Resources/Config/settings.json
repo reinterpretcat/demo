@@ -1,7 +1,7 @@
 {
 	"data": {
 		"map": {
-            "local":"g:/__ASM/__repository/_index/Index_Berlin",
+            "local":"Maps/osm",
 			"index.settings": "Config/index.json",
 			"remote.server":"http://api.openstreetmap.org/api/0.6/map?bbox=",
 			"remote.query":"{0},{1},{2},{3}",
@@ -17,6 +17,6 @@
 	"geocoding":"http://nominatim.openstreetmap.org/search",
 	"tile": {
 		"size":300,
-		"offset":50,
+		"offset":80,
 	}
 }
