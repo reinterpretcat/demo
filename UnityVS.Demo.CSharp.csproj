@@ -67,15 +67,6 @@
     <Reference Include="protobuf-net">
       <HintPath>Assets\Plugins\protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="ActionStreetMap.Explorer">
-      <HintPath>Assets\Plugins\WEB\ActionStreetMap.Explorer.dll</HintPath>
-    </Reference>
-    <Reference Include="ActionStreetMap.Maps">
-      <HintPath>Assets\Plugins\WEB\ActionStreetMap.Maps.dll</HintPath>
-    </Reference>
-    <Reference Include="ActionStreetMap.Unity">
-      <HintPath>Assets\Plugins\WEB\ActionStreetMap.Unity.dll</HintPath>
-    </Reference>
     <Reference Include="Zlib">
       <HintPath>Assets\Plugins\Zlib.dll</HintPath>
     </Reference>
