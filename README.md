@@ -2,15 +2,13 @@
 
 <p>This repository contains demo application which is built using debug version of ActionStreetMap framework for unity editor (with UNITY_EDITOR and DEBUG compilation symbols). For other platforms, you need different binaries which are not committed yet.</p> 
 
-<p>ActionStreetMap (ASM) is an engine for building real city environment dynamically using OSM data.</p>
-<p>The main goal is to simulate a real city, including the following:</p>
+<p>ActionStreetMap (ASM) is an engine for building real city environment dynamically using OSM data. The main goal is to simulate a real city, including the following:</p>
 <ul>
-<li>rendering of different models (e.g. buildings, roads, parks, rivers, etc.) using OSM data for given location by terrain tiling approach.</li>
-<li>customization of rendered models using mapcss file.</li>
-<li>modification of city environment (terrain craters, corrupt/destroy buildings, etc..).</li>
+<li>rendering of different models (e.g. buildings, roads, parks, rivers, POI, etc.) using OSM data for given location on the fly by terrain tiling approach.</li>
+<li>easy customization of rendered models using mapcss file.</li>
+<li>modification of city environment (terrain craters, corrupt buildings, etc..).</li>
 <li>non-flat terrain by using Data Elevation Model (DEM) files.</li>
-<li>adding a character to the scene, which makes it capable to interact with the environment.</li>
-<li>filling environment with people, cars, animals, which have realistic behaviour (not started yet).</li>
+<li>filling environment with people, cars, animals which have realistic behaviour (not started yet).</li>
 <li>using some external services to extend environment (e.g. weather, famous places, events, public transport schedule, etc.) (not started yet).</li>
 <li>Multiplayer (not started yet).</li>
 </ul>
