@@ -1,3 +1,7 @@
+// Upgrade NOTE: commented out 'float4 unity_LightmapST', a built-in variable
+// Upgrade NOTE: commented out 'sampler2D unity_Lightmap', a built-in variable
+// Upgrade NOTE: replaced tex2D unity_Lightmap with UNITY_SAMPLE_TEX2D
+
 // Copyright © 2014 Laurens Mathot
 // Code Animo™ http://codeanimo.com
 // License terms can be found at the bottom of this file.
@@ -28,7 +32,7 @@
 	};
 	
 	#ifndef LIGHTMAP_OFF
-		float4 unity_LightmapST;
+		// float4 unity_LightmapST;
 	#endif
 	
 	void vert(vertexInput v, out vertex2Fragment o){
@@ -63,7 +67,7 @@
 	}
 	
 	#ifndef LIGHTMAP_OFF
-	sampler2D unity_Lightmap;
+	// sampler2D unity_Lightmap;
 	#endif
 	
 	float4 frag(vertex2Fragment IN) : COLOR {
@@ -75,7 +79,7 @@
 		#endif
 		
 		#ifndef LIGHTMAP_OFF
-		fixed4 lightmapTexture = tex2D(unity_Lightmap, IN.lmap);
+		fixed4 lightmapTexture = UNITY_SAMPLE_TEX2D(unity_Lightmap, IN.lmap);
 		fixed3 lightmapLight = DecodeLightmap(lightmapTexture);// Decode Lightmap automatically figures out whether it should use RGBM or DoubleLDR
 		outColor.rgb += lightmapLight * IN.albedo;	
 		#endif

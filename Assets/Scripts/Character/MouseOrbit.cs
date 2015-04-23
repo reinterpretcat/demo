@@ -28,8 +28,9 @@ namespace Assets.Scripts.Character
 
             zoomDistance = -distance;
             // Make the rigid body not change rotation
-            if (rigidbody)
-                rigidbody.freezeRotation = true;
+            var rigidBody = GetComponent<Rigidbody>();
+            if (rigidBody)
+                rigidBody.freezeRotation = true;
         }
         private float ZoomAmount = 10; //With Positive and negative values
         private float MaxToClamp = 10;
