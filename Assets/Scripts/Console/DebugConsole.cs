@@ -398,7 +398,12 @@ namespace Assets.Scripts.Console
 
                 messageLine.y = 0;
 
-                foreach (ConsoleMessage m in _messages)
+                // NOTE make copy
+                List<ConsoleMessage> messages = null;
+                lock (_messages)
+                    messages = _messages.ToList();
+
+                foreach (ConsoleMessage m in messages)
                 {
                     foreach (var line in m.Text.Split('\n'))
                     {
@@ -410,10 +415,12 @@ namespace Assets.Scripts.Console
 
                         messageLine.y += (messageLine.height + lineOffset);
 
-                        innerHeight = messageLine.y > scrollRect.height ? (int)messageLine.y : (int)scrollRect.height;
+                        innerHeight = messageLine.y > scrollRect.height
+                            ? (int) messageLine.y
+                            : (int) scrollRect.height;
                     }
-                
                 }
+
                 GUI.contentColor = oldColor;
             }
 
@@ -436,10 +443,12 @@ namespace Assets.Scripts.Console
         {
             _displayString.Length = 0;
 
-            foreach (ConsoleMessage m in _messages)
+            lock (_messages)
             {
-                _displayString.AppendLine(m.Text);
+                foreach (ConsoleMessage m in _messages)
+                    _displayString.AppendLine(m.Text);
             }
+
         }
 
         private void CopyLogWindow(int windowID)
