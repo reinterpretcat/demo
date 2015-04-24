@@ -37,62 +37,31 @@
         <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-asm" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's Action Street Map?</h3>
 
           
-		<p>Action Street Map (ASM) is an engine for building real city environment dynamically using  <a href="http://www.openstreetmap.org/"> OSM (Open Street Map) </a> data. 
-		  <br> It works pretty simple; you download the map data from Open Street Maps, provide it to the <a href="https://github.com/ActionStreetMap/framework">engine</a> and voila! 
-		  It generates you a 3D environment with almost every data available on the map; buildings, roads, traffic lights, bus stops etc. </p>
-		  
-		  
-		 <p> After getting your real 3D city environment (maybe your neighbourhood) than sky is the limit. 
-		 Since it's in <a href="http://unity3d.com/ ">unity</a>, you can port it to almost every platform. 
-		 Build a game based on ASM engine, that can run on mobile, web and desktop. 
-		 You can even go further and build a Virtual Reality environment of your neighbourhood using the engine. 
-		 Although you can create pretty nice 3D city for your own use; the engine is not flawless and it's in alpha stage. 
-		 There are a lot to be done and we need contributors. </p>
-		 
-		 <p> Below is an example screenshot from Moscow, Red Square. <p>
-          <a href="demo_list.html"><img src="images/Moscow_redsquare.png" class="inner" /></a>
-
-		  
-		  
-          <p>The main goal is to simulate a real city, including following options:</p>
+		<p>Action Street Map (ASM) is an engine for building real city environment dynamically using Unity3d and <a href="http://www.openstreetmap.org/"> OpenStreetMap (OSM) </a> data. 
+		 The main goal is to simulate a real city, including the following:</p>
           <ul>
-              <li>rendering of different models (e.g. buildings, roads, parks, rivers, etc.) using OSM data for given location and using terrain tiling approach (DONE partially)</li>
-              <li>rendering of non-flat world by using Data Elevation Model (DEM) files (DONE partially)</li>
-              <li>adding a character to the scene, which makes it capable to interact with the environment (DONE partially)</li>
-              <li>filling environment with people, cars, animals, which have realistic behaviour (Not started)</li>
-              <li>using some external services to extend environment (e.g. weather, famous places, events, public transport schedule, etc.) (Not started)</li>
-              <li>Multiplayer (Not started)</li>
-
+              <li>Create dynamically buildings, roads, parks, rivers, etc. using OSM data for given location by terrain tiling approach.</li>
+              <li>Create non-flat world by using Data Elevation Model (DEM) files.</li>
+              <li>Filling environment with people, cars, animals, which have realistic behaviour.</li>
+              <li>Extend environment by additional external services (e.g. weather, famous places, events, public transport schedule, etc.).</li>
+			  <li>Work offline.</li>
+			  <li>Work on all popular platforms including mobile and web player.</li>
+              <li>Multiplayer.</li>
           </ul>
-
-           
-          <p>NOTE: Project is still in alpha stage! There are too many things to be done and many ways to contribute to this project. We appreciate any kind of contribution. </p>
-		  <p>Read about how to use <a href="howto.html">map of different place</a>.</p>
-			
-		  <h3>Upcoming changes in framework:</h3>
-			Future version of framework will use flat shading style (work in progress):
-			<img src="images/FlatShading_Pic1.png" class="inner" />
-			<img src="images/FlatShading_Pic2.png" class="inner" />
-			Current progress (will be updated):
+          <p><b>NOTE:</b> Project is still in alpha stage! There are too many things to be done and many ways to contribute to this project. I appreciate any kind of contribution. </p>		
+		 <p> Below is a demo build for Moscow, Red Square: </p>
+          <a href="demo_list.html"><img src="images/Moscow_redsquare.png" class="inner" /></a>
+         
+		  <h3>Framework features:</h3>
 			<ul>
-				<li>Reimplemented logic of processing map data: use custom spatial index inside and no need to use splitter tool.</li>
-				<li>Added import support of o5m, xml and pbf formats.</li>
-				<li>Reimplemented logic of interpolating height map for elevation mode: it's more accurate now (bilinear interpolation is used).</li>
-				<li>Added support flat map mode: rendering is faster in ~30% and no need in elevation data.</li>
-				<li>Fixed issues with missing elements crossing tile borders: limitation of old map data processing logic.</li>
-				<li>Added simple search for elements with given tag's key/value pair: you can find the nearest bars, places, etc.</li>
-				<li>Switched to usage of Reactive Extensions (Rx) unity port: now support async processing.</li>
-				<li>Async loading by Rx: dynamically load tile without blocking UI thread.</li>
-				<li>Made flat shading be default show case style.</li>
-				<li>Implemented custom mesh terrain instead of unity built-in to support flat shading style.</li>
-				<li>Reimplemented road rendering approach.</li>
+				<li>Flat shading as default show case rendering style.</li>
+				<li>Custom spatial index inside which speedups queries and supports searches for places (bars, shops, etc.).</li>
+				<li>Support import from o5m, xml and pbf formats.</li>
+				<li>Auto downloading of map data from OpenStreetMap server and SRTM elevation from NASA server.</li>
+				<li>Asynchronous processing.</li>
+				<li>Ability to modify map objects (e.g. make craters on terrain, corrupt facade of building, etc.).</li>
 			</ul>
-		  <p>
-             <a href="faq.html">FAQ</a>
-          </p>
-          <p>
-              <a href="content/api/index.html">API docs</a>
-          </p>
+		  <p><a href="faq.html">FAQ</a></p>
       </section>
     </div>
 

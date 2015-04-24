@@ -35,19 +35,22 @@
         <section id="main_content" class="inner">
             <h3>
                 <a id="welcome-to-demo-list" class="anchor" href="#welcome-to-asm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demos</h3>
-          
             <p>
-                This page contains links to web player builds. Each build contains small map parts of different cities: Moscow, Berlin, New York. Scene is constructed dynamically by processing <a href="http://wiki.openstreetmap.org/wiki/PBF_Format">OSM data file</a> and creating game objects. Please note, that web builds below doesn't contain any logic to improve rendered objects (e.g. custom terrain shaders, special materials, etc.). Therefore, the visual representation is quite ugly.
+                This page contains links to web player builds.  Unfortunately, web player does not allow to download data from external servers dynamically (cross origin policy). That's why each build contains only small parts of selected city map. 
+			</p>
+			<p>
+				Unity scene is constructed dynamically by processing map data files and creating game objects for fixed tile size using rules defined in predefined mapcss file. Actually, visual appearance can be improved by writing more complex shaders, more carefully selecting colors for gradients, ...
+			</p>
+			<p>
+				But it's not a main focus for me so far.
             </p>
             <p>
                 <a href="content/demo/Moscow.html">Discover Red Square, Moscow.</a>
-                Tile size: 3km x 3km
                 <a href="content/demo/Moscow.html">
-                    <img src="images/Moscow_tower.png" class="inner" />
+                    <img src="images/Moscow_redsquare.png" class="inner" />
                 </a>
-
             </p>
-            <p>
+            <!--<p>
                 <a href="content/demo/Berlin.html">Discover Tiergarten, Berlin.</a>
                 Tile size: 0.5km x 0.5km
                 <a href="content/demo/Berlin.html">
@@ -61,7 +64,7 @@
                 <a href="content/demo/New_York_Manhattan.html">
                     <img src="images/New_York_Manhattan.png" class="inner" />
                 </a>
-            </p>
+            </p>-->
             
             <p>
                 Cannot run demo? See <a href="screenshots.html">screenshots</a>.
