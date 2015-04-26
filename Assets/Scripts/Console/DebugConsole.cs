@@ -41,7 +41,21 @@ namespace Assets.Scripts.Console
         private const string EntryField = "DebugConsoleEntryField";
 
         public VarWatcher Watcher { get; private set; }
-        private CommandController _controller;
+        private IContainer _container;
+
+        private CommandController _commandController;
+        public CommandController CommandController
+        {
+            get
+            {
+                if (_commandController == null)
+                {
+                    _commandController = _container.Resolve<CommandController>();
+                    RegisterTerminalCommands();
+                }
+                return _commandController;
+            }
+        }
 
         /// <summary>
         /// How many lines of text this console will display.
@@ -52,11 +66,6 @@ namespace Assets.Scripts.Console
         /// Used to check (or toggle) the open state of the console.
         /// </summary>
         public bool IsOpen { get; set; }
-
-        /// <summary>
-        ///     Keep reference to DI container to support commands registered in it.
-        /// </summary>
-        public IContainer Container { get; set; }
 
         /// <summary>
         /// Key to press to toggle the visibility of the console.
@@ -118,6 +127,11 @@ namespace Assets.Scripts.Console
             Watcher = new VarWatcher();
         }
 
+        public void SetContainer(IContainer container)
+        {
+            _container = container;
+        }
+
         private void OnEnable()
         {
             var scale = Screen.dpi/160.0f;
@@ -154,17 +168,17 @@ namespace Assets.Scripts.Console
 
         private void RegisterTerminalCommands()
         {
-            _controller.Register(new Command("close", "closes console", _ =>
+            CommandController.Register(new Command("close", "closes console", _ =>
             {
                 IsOpen = false;
                 return "opened";
             }));
-            _controller.Register(new Command("clear", "clears console", _ =>
+            CommandController.Register(new Command("clear", "clears console", _ =>
             {
                 ClearLog();
                 return "clear";
             }));
-            _controller.Register(new Command("filter","filter console items", args =>
+            CommandController.Register(new Command("filter","filter console items", args =>
             {
                 const string enabledStr = "-e:";
                 const string disabledStr = "-d";
@@ -189,8 +203,8 @@ namespace Assets.Scripts.Console
             }));
 
             // NOTE grep is special command and cannot be registered as normal command
-            _controller.Register(new GrepCommand(_messages));
-            _controller.Register(new SysCommand());
+            CommandController.Register(new GrepCommand(_messages));
+            CommandController.Register(new SysCommand());
         }
 
         [Conditional("DEBUG_CONSOLE"),
@@ -578,15 +592,9 @@ namespace Assets.Scripts.Console
             input = input.Select(low => low.ToLower()).ToList();
             var cmd = input[0];
 
-            if (_controller == null)
+            if (CommandController.Contains(cmd))
             {
-                _controller = Container.Resolve<CommandController>();
-                RegisterTerminalCommands();
-            }
-
-            if (_controller.Contains(cmd))
-            {
-                _controller[cmd].Execute(input.ToArray())
+                CommandController[cmd].Execute(input.ToArray())
                     .ObserveOnMainThread()
                     .Subscribe(r => LogMessage(ConsoleMessage.Info(r)));
 

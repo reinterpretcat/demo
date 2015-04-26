@@ -1,11 +1,8 @@
 ﻿using System;
 using ActionStreetMap.Core;
-using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using Assets.Scripts.Demo;
-using Assets.Scripts.Map;
-using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Infrastructure.Bootstrap;
 using ActionStreetMap.Infrastructure.IO;
 
@@ -16,7 +13,6 @@ namespace Assets.Scripts.Character
     {
         private IMessageBus _messageBus;
         private readonly ITrace _trace;
-        private CompositeModelBehaviour _solidModelBehavior;
         private DemoTileListener _messageListener;
 
         public override string Name { get { return "demo"; } }
@@ -31,14 +27,6 @@ namespace Assets.Scripts.Character
 
         public override bool Run()
         {
-            // NOTE we should keep reference to prevent GC as RegisterInstance uses WeakReference
-
-            // NOTE Obsolete implementation: address processing will be changed
-            _solidModelBehavior = new CompositeModelBehaviour("solid", new [] 
-                { typeof (LocationInfoHolder) });
-
-            Container.RegisterInstance<IModelBehaviour>(_solidModelBehavior, "solid");
-
             // NOTE Use this for web builds:
             //Container.Register(Component.For<IFileSystemService>().Use<WebFileSystemService>().Singleton());
 

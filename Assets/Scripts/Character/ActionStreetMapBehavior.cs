@@ -5,7 +5,9 @@ using Assets.Scripts.Console;
 using Assets.Scripts.Console.Utils;
 using Assets.Scripts.Demo;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Scene;
 using ActionStreetMap.Explorer;
+using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using UnityEngine;
@@ -26,8 +28,12 @@ namespace Assets.Scripts.Character
         private bool _isInitialized = false;
 
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-        
+
+        private IMessageBus _messageBus;
+
         private DebugConsole _console;
+
+        private Address _currentAddress;
 
         // Use this for initialization
         private void Start()
@@ -56,18 +62,21 @@ namespace Assets.Scripts.Character
             // Create and register DebugConsole inside Container
             var container = new Container();
 
+            // Create message bus class which is way to listen for ASM events
+            _messageBus = new MessageBus();
+
             // Console is way to debug/investigate app behavior on real devices when 
             // regular debugger is not applicable
             InitializeConsole(container);
+
+            // Attach address locator which provides the way to get current address
+            AttachAddressLocator();
 
             // ASM should be started from non-UI thread
             Scheduler.ThreadPool.Schedule(() =>
             {
                 try
                 {
-                    // Create message bus class which is way to listen for ASM events
-                    IMessageBus messageBus = new MessageBus();
-
                     // NOTE These services should be registered inside container before GameRunner is constructed.
 
                     // Trace implementation
@@ -75,12 +84,12 @@ namespace Assets.Scripts.Character
                     // Path resolver which knows about current platform
                     container.RegisterInstance<IPathResolver>(new WinPathResolver());
                     // Message bus
-                    container.RegisterInstance(messageBus);
+                    container.RegisterInstance(_messageBus);
 
                     // Create ASM entry point with settings provided and register custom plugin which adds 
                     // custom logic or replaces default one
                     var gameRunner = new GameRunner(container, @"Config/settings.json")
-                        .RegisterPlugin<DemoBootstrapper>("demo", messageBus, _trace);
+                        .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace);
                     
                     // Store position observer which will listen for character movements
                     _positionObserver = gameRunner;
@@ -105,14 +114,46 @@ namespace Assets.Scripts.Character
             _console = consoleGameObject.AddComponent<DebugConsole>();
             container.RegisterInstance(_console);
             // that is not nice, but we need to use commands registered in DI with their dependencies
-            _console.Container = container; 
+            _console.SetContainer(container);
+           
             _trace = new DebugConsoleTrace(_console);
             _console.IsOpen = true;
 
             UnityMainThreadDispatcher.RegisterUnhandledExceptionCallback(ex => 
-                _trace.Error("fatal", ex, "Unhandled exception"));
+                _trace.Error("FATAL", ex, "Unhandled exception"));
+        }
+
+        private void AttachAddressLocator()
+        {
+            _messageBus
+                .AsObservable<GameStarted>()
+                .ObserveOnMainThread()
+                .Subscribe(_ =>
+                {
+                    gameObject.AddComponent<AddressLocatorBehaviour>()
+                        .SetCommandController(_console.CommandController)
+                        .GetObservable()
+                        .Subscribe(address => { _currentAddress = address; });
+                });
         }
 
         #endregion
+
+        private void OnGUI()
+        {
+            var address = _currentAddress;
+            if (address != null)
+            {
+                String addressString = address.Street;
+
+                if (!String.IsNullOrEmpty(address.Name))
+                    addressString += String.Format(", {0}", address.Name);
+
+                if (!String.IsNullOrEmpty(address.Code))
+                    addressString += String.Format(", {0}", address.Code);
+
+                GUI.Box(new Rect(0, 0, 400, 30), addressString);
+            }
+        }
     }
 }

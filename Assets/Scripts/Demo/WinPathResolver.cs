@@ -2,9 +2,7 @@
 
 namespace Assets.Scripts.Demo
 {
-    /// <summary>
-    ///     Resolves path on Windows OS
-    /// </summary>
+    /// <summary> Resolves path on Windows OS. </summary>
     public class WinPathResolver : IPathResolver
     {
         public string Resolve(string path)

@@ -10,9 +10,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Demo
 {
-    /// <summary>
-    ///     Listens for tile specific messages
-    /// </summary>
+    /// <summary> Listens for tile specific messages. </summary>
     public class DemoTileListener
     {
         private const string LogTag = "tile";
