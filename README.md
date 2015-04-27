@@ -1,6 +1,6 @@
 <h2>Description</h2>
 
-<p>This repository contains demo application which is built using debug version of ActionStreetMap framework (ASM) for Unity Editor platform (with UNITY_EDITOR and DEBUG compilation symbols). For other platforms, you need different binaries which are not committed yet. ASM is an engine for building real city environment dynamically using OSM data. It includes:</p>
+<p>This repository contains demo application which is built using debug version of ActionStreetMap framework (ASM) for Unity Editor platform (with UNITY_EDITOR and DEBUG compilation symbols). For other platforms, you need different binaries which are not committed yet. In short, ASM is an engine for building real city environment dynamically using OSM data. It includes:</p>
 <ul>
 <li>rendering of different models (e.g. buildings, roads, parks, rivers, POI, etc.) using OSM data for given location on the fly by terrain tiling approach.</li>
 <li>easy customization of rendered models using mapcss file.</li>
