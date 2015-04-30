@@ -1,5 +1,7 @@
 ﻿using System;
-using UnityEngine;
+using ActionStreetMap.Infrastructure.Reactive;
+using ActionStreetMap.Maps.Geocoding;
+using ActionStreetMap.Maps.GeoCoding;
 using UnityEngine.UI;
 
 namespace Assets.Scripts
@@ -10,7 +12,11 @@ namespace Assets.Scripts
         public InputField CoordinateInputField;
         public Button SearchButton;
 
-        private string[] _results = new string[2]{"Berlin Hauptbahnhof", "Berlin Naturkundemuseum"};
+        // TODO it's not nice to create geocoder directly here: better to use
+        // DI container the same as for ASM because it knows about configuration
+        private readonly NominatimGeocoder _geoCoder = new NominatimGeocoder();
+
+        private GeocoderResult[] _results;
         private int _currentIndex = 0;
         private bool _isSearchClick = true;
 
@@ -29,9 +35,15 @@ namespace Assets.Scripts
             {
                 _currentIndex = 0;
                 _isSearchClick = false;
-                Debug.Log("Launch search for:" + NameInputField.text);
-                // NOTE should be done from different thread
-                ShowResult();
+                _geoCoder.Search(NameInputField.text)
+                    .ToArray()
+                    .SubscribeOnMainThread()  // have to run on UI threads on web builds
+                    .ObserveOnMainThread()
+                    .Subscribe(results =>
+                    {
+                        _results = results;
+                        ShowResult();
+                    });                
             }
             else
             {
@@ -51,8 +63,8 @@ namespace Assets.Scripts
             SearchButton.GetComponentInChildren<Text>().text =
                 String.Format("Result {0} of {1}", _currentIndex + 1, _results.Length);
 
-            NameInputField.text = _results[_currentIndex];
-            CoordinateInputField.text = _results[_currentIndex];
+            NameInputField.text = _results[_currentIndex].DisplayName;
+            CoordinateInputField.text = _results[_currentIndex].Coordinate.ToString();
         }
     }
 }

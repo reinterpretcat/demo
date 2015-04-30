@@ -121,7 +121,6 @@
     <None Include="Assets\Resources\Shaders\VertexColorsIBLReflective.shader" />
     <None Include="Assets\Resources\Shaders\VertexLitIBL.cginc" />
     <None Include="Assets\Scenes\MenuAssets\Fonts\Jupiter\LICENSE.txt" />
-    <None Include="Assets\Scenes\MenuAssets\Textures and Sprites\Background\LICENSE.txt" />
     <None Include="Assets\Shaders\VertexLit Colored.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
