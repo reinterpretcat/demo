@@ -54,6 +54,8 @@ namespace Assets.Scripts.Character
             _trace = appManager.GetService<ITrace>();
             _messageBus = appManager.GetService<IMessageBus>();
 
+            appManager.CreateConsole(true);
+
             // ASM should be started from non-UI thread
             Scheduler.ThreadPool.Schedule(() =>
             {
@@ -63,6 +65,7 @@ namespace Assets.Scripts.Character
                     AttachAddressLocator();
 
                     _positionObserver = appManager.GetService<ITilePositionObserver>();
+
                     appManager.RunGame();
 
                     _isInitialized = true;
