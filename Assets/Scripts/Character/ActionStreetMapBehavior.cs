@@ -20,6 +20,7 @@ namespace Assets.Scripts.Character
         private ITrace _trace;
 
         private bool _isInitialized = false;
+        private float _initialGravity;
 
         private Address _currentAddress;
 
@@ -44,12 +45,30 @@ namespace Assets.Scripts.Character
 
         private void Initialize()
         {
+            // wait for loading..
+            //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            var thirdPersonControll = gameObject.GetComponent<ThirdPersonController>();
+            _initialGravity = thirdPersonControll.gravity;
+            thirdPersonControll.gravity = 0;
+
             var appManager = ApplicationManager.Instance;
 
             _trace = appManager.GetService<ITrace>();
             _messageBus = appManager.GetService<IMessageBus>();
 
             appManager.CreateConsole(true);
+
+            _messageBus.AsObservable<TileLoadFinishMessage>()
+                .Take(1)
+                .ObserveOnMainThread()
+                .Subscribe(_ =>
+                {
+                    var position = transform.position;
+                    var elevation = appManager.GetService<IElevationProvider>()
+                        .GetElevation(new MapPoint(position.x, position.z));
+                    transform.position = new Vector3(position.x, elevation + 30, position.z);
+                    thirdPersonControll.gravity = _initialGravity;
+                });
 
             // ASM should be started from non-UI thread
             Scheduler.ThreadPool.Schedule(() =>
