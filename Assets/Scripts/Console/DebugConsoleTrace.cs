@@ -3,14 +3,13 @@ using System.Text;
 using Assets.Scripts.Console.Utils;
 using ActionStreetMap.Infrastructure.Diagnostic;
 
-
 namespace Assets.Scripts.Console
 {
     public class DebugConsoleTrace: DefaultTrace
     {
-        private readonly DebugConsole _console;
+        private DebugConsole _console;
 
-        public DebugConsoleTrace(DebugConsole console)
+        public void SetConsole(DebugConsole console)
         {
             _console = console;
         }

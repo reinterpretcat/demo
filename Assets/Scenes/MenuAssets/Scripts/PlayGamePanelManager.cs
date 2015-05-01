@@ -12,9 +12,7 @@ namespace Assets.Scripts
         public InputField CoordinateInputField;
         public Button SearchButton;
 
-        // TODO it's not nice to create geocoder directly here: better to use
-        // DI container the same as for ASM because it knows about configuration
-        private readonly NominatimGeocoder _geoCoder = new NominatimGeocoder();
+        private IGeocoder _geoCoder;
 
         private GeocoderResult[] _results;
         private int _currentIndex = 0;
@@ -29,13 +27,20 @@ namespace Assets.Scripts
             });
         }
 
+        private IGeocoder GetGeocoder()
+        {
+            if (_geoCoder == null)
+                _geoCoder = ApplicationManager.Instance.GetService<IGeocoder>();
+            return _geoCoder;
+        }
+
         public void OnSearch()
         {
             if (_isSearchClick)
             {
                 _currentIndex = 0;
                 _isSearchClick = false;
-                _geoCoder.Search(NameInputField.text)
+                GetGeocoder().Search(NameInputField.text)
                     .ToArray()
                     .SubscribeOnMainThread()  // have to run on UI threads on web builds
                     .ObserveOnMainThread()
