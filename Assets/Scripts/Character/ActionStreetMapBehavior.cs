@@ -18,7 +18,6 @@ namespace Assets.Scripts.Character
     public class ActionStreetMapBehavior : MonoBehaviour
     {
         /// <summary> This is start coordinate corresponds to World (0,0,0). </summary>
-        private GeoCoordinate StartPosition = new GeoCoordinate(52.53208,13.38775);//(55.75282, 37.62259);
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
         private IPositionObserver<MapPoint> _positionObserver;
@@ -64,7 +63,6 @@ namespace Assets.Scripts.Character
                     AttachAddressLocator();
 
                     _positionObserver = appManager.GetService<ITilePositionObserver>();
-                    appManager.Coordinate = StartPosition;
                     appManager.RunGame();
 
                     _isInitialized = true;

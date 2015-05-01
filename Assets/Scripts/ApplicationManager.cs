@@ -13,7 +13,10 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    /// <summary> Maintains application flow. This class should be only one singleton in application. </summary>
+    /// <summary>
+    ///     Maintains application flow, provides service location logic.
+    ///     This class should be only one singleton in application.
+    /// </summary>
     public class ApplicationManager
     {
         private const string FatalCategoryName = "Fatal";
@@ -24,20 +27,21 @@ namespace Assets.Scripts
         private GameRunner _gameRunner;
 
         #region Singleton implementation
-        
+
         private ApplicationManager()
         {
             Initialize();
         }
 
-        public static ApplicationManager Instance { get { return Nested.instance; } }
+        public static ApplicationManager Instance { get { return Nested.Instance; } }
 
         private class Nested
         {
             // Explicit static constructor to tell C# compiler
             // not to mark type as beforefieldinit
             static Nested() { }
-            internal static readonly ApplicationManager instance = new ApplicationManager();
+
+            internal static readonly ApplicationManager Instance = new ApplicationManager();
         }
 
         #endregion
@@ -76,15 +80,16 @@ namespace Assets.Scripts
                 // Message bus
                 _container.RegisterInstance(_messageBus);
 
-                // Create ASM entry point with settings provided,  register custom plugin which adds 
-                // custom logic or replaces default one then run bootstrapping process
+                // Create ASM entry point with settings provided, register custom plugin which adds 
+                // custom logic or replaces default one. Then run bootstrapping process which populates container
+                // with defined implementations.
                 _gameRunner = new GameRunner(_container, @"Config/settings.json")
                     .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
                     .Bootstrap();
             }
             catch (Exception ex)
             {
-                _trace.Error(FatalCategoryName, ex, "Cannot initialize framework");
+                _trace.Error(FatalCategoryName, ex, "Cannot initialize ASM framework");
                 throw;
             }
         }
@@ -95,8 +100,8 @@ namespace Assets.Scripts
             // NOTE DebugConsole is based on some adapted solution found in Internet
             var consoleGameObject = new GameObject("_DebugConsole_");
             var console = consoleGameObject.AddComponent<DebugConsole>();
-            // that is not nice, but we need to use commands registered in DI with their dependencies
             _trace.SetConsole(console);
+            // that is not nice, but we need to use commands registered in DI with their dependencies
             console.SetContainer(_container);
             console.IsOpen = isOpen;
         }
@@ -130,11 +135,11 @@ namespace Assets.Scripts
 
         public void Quit()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-            #else
+#else
 		    Application.Quit();
-            #endif
+#endif
         }
 
         #endregion
