@@ -28,8 +28,8 @@ namespace Assets.Scripts
             _trace = ApplicationManager.Instance.GetService<ITrace>();
             _geoCoder = ApplicationManager.Instance.GetService<IGeocoder>();
 
-            NameInputField.text = "Berlin, Invalidenstr.";
-            CoordinateInputField.text = new GeoCoordinate(52.53208, 13.38775).ToString();
+            NameInputField.text = "Moscow, Red Square";
+            CoordinateInputField.text = ApplicationManager.Instance.Coordinate.ToString();
 
             NameInputField.onEndEdit.AddListener((_) =>
             {

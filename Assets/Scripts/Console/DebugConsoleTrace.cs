@@ -2,6 +2,7 @@
 using System.Text;
 using Assets.Scripts.Console.Utils;
 using ActionStreetMap.Infrastructure.Diagnostic;
+using UnityEngine;
 
 namespace Assets.Scripts.Console
 {
@@ -11,6 +12,9 @@ namespace Assets.Scripts.Console
 
         public void SetConsole(DebugConsole console)
         {
+            if (_console != null)
+               GameObject.Destroy(_console);
+
             _console = console;
         }
 

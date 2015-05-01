@@ -1,9 +1,5 @@
 ﻿using System;
-using ActionStreetMap.Infrastructure.IO;
 using ActionStreetMap.Infrastructure.Reactive;
-using Assets.Scripts.Console;
-using Assets.Scripts.Console.Utils;
-using Assets.Scripts.Demo;
 using ActionStreetMap.Core;
 using ActionStreetMap.Core.Scene;
 using ActionStreetMap.Core.Tiling;
@@ -17,7 +13,6 @@ namespace Assets.Scripts.Character
 {
     public class ActionStreetMapBehavior : MonoBehaviour
     {
-        /// <summary> This is start coordinate corresponds to World (0,0,0). </summary>
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
         private IPositionObserver<MapPoint> _positionObserver;

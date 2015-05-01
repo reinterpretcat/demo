@@ -31,6 +31,7 @@ namespace Assets.Scripts
         private ApplicationManager()
         {
             Initialize();
+            Coordinate = new GeoCoordinate(55.75282, 37.62259);
         }
 
         public static ApplicationManager Instance { get { return Nested.Instance; } }
