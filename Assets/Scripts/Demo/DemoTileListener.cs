@@ -6,6 +6,7 @@ using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts.Map;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Demo
@@ -72,6 +73,31 @@ namespace Assets.Scripts.Demo
                     }
                 }
             });
+        }
+
+        private void SaveAsPrefab(GameObject gameObject)
+        {
+            // The paths to the mesh/prefab assets.
+            string meshPath = String.Format("Assets/{0}.mesh", gameObject.name);
+            string prefabPath = String.Format("Assets/{0}.prefab", gameObject.name);
+
+            // Delete the assets if they already exist.
+            AssetDatabase.DeleteAsset(meshPath);
+            AssetDatabase.DeleteAsset(prefabPath);
+
+            // Create the mesh somehow.
+            Mesh mesh = gameObject.GetComponent<MeshFilter>().mesh;
+
+            // Save the mesh as an asset.
+            AssetDatabase.CreateAsset(mesh, meshPath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            // Create a transform somehow, using the mesh that was previously saved.
+            Transform trans = gameObject.transform;
+
+            // Save the transform's GameObject as a prefab asset.
+            PrefabUtility.CreatePrefab(prefabPath, trans.gameObject);
         }
     }
 }
