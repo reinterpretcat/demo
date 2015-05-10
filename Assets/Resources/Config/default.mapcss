@@ -3,7 +3,7 @@ canvas {
     material_water: Water/TerrainWater;
     
     ele_noise_freq:                                         0.15;
-    color_noise_freq:                                       0.2;
+    color_noise_freq:                                       0.05;
     
     background_color_noise_freq:                            0.1;
     background_ele_noise_freq:                              0.13;
@@ -12,8 +12,8 @@ canvas {
     water_color_noise_freq:                                 0.1;
     water_ele_noise_freq:                                   0.2;
     water_gradient:                                         gradient(#87cefa, #1e90ff);
-    water_surface_level:                                    2.5;
-    water_bottom_level:                                     5;  
+    water_surface_level:                                    1.5;
+    water_bottom_level:                                     3;  
     
     car_color_noise_freq:                                   0.1;
     car_ele_noise_freq:                                     0.0;
@@ -51,6 +51,7 @@ area[building:height][roof:height]                        { height: eval(num(tag
 area[building:min_height]                                { min_height: eval(num(tag('building:min_height'))); }
 area[min_height]                                            { min_height: eval(num(tag('min_height'))); }
 
+area[building=yes],
 area[building:part]                                        { part: true; }    
 
 area[building=residential],
@@ -223,8 +224,7 @@ area[landuse=railway]                                    { builder: surface; fil
 area[leisure=park]                                       { builder: surface; fill-color: gradient(#98fb98, #adff2f 5%, #006400 10%, #556b2f 80%, #b8860b); }
 
 area[natural=wood],    
-area[landuse=forest]                                      { builder: surface; forest:true; fill-color: gradient(#98fb98, #064807 10%, #032804 50%, #b8860b); foliage-color: gradient(#80c34c, #406126 50%, #101809);         
-                                                          trunk-color: gradient(#f4a460, #614126 50%, #302013); material: Materials/Buildings/Building; }
+area[landuse=forest]                                      { builder: surface; forest:true; fill-color: gradient(#98fb98, #064807 10%, #032804 50%, #b8860b); foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); tree-freq:0.05; material: Materials/Buildings/Building; }
 
 area[landuse=farmland],
 area[landuse=scrub]                                       { builder: surface; fill-color:gradient(#adff2f, #006400 30%, #556b2f 90%, #b8860b); }
@@ -246,8 +246,6 @@ area[waterway=dock]                                        { fill-color: gradien
 way[waterway],
 way[waterway][name]                                        { fill-color: gradient(#1a9fa4, #0a3c3e 50%, #000000); builder: water; }
                                                         
-/*way[barrier] :closed                                    { builder:flat; fill-color: gradient(#0aaaaa, #044444 50%, #000000); width: 0.4;}*/
-
 /* roads */
 way[highway]                                            { builder:road; width:3; type:pedestrian; }
 
@@ -280,7 +278,7 @@ way[highway=service]                                    { fill-color: gradient(#
 
 way[highway=footway]                                     { width:2; type:pedestrian; }
 
-way[barrier]                                            { builder: barrier; fill-color: gradient(#0aaaaa, #044444 50%, #000000); material: Materials/Buildings/Building; height:2; width:0.2;  }
+way[barrier]                                            { builder: barrier; fill-color: gradient(#a0a0a0, #808080); material: Materials/Buildings/Building; height:2; width:0.2;  }
 
 
 /************************************************** NODES ********************************************/
