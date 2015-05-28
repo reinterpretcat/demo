@@ -8,6 +8,7 @@ using ActionStreetMap.Explorer.Commands;
 using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using UnityEngine;
+using RenderMode = ActionStreetMap.Core.RenderMode;
 
 namespace Assets.Scripts.Character
 {
@@ -58,7 +59,8 @@ namespace Assets.Scripts.Character
 
             appManager.CreateConsole(true);
 
-            _messageBus.AsObservable<TileLoadFinishMessage>()
+            _messageBus.AsObservable<GameRunner.GameStartedMessage>()
+                .Where(msg => msg.Tile.RenderMode == RenderMode.Scene)
                 .Take(1)
                 .ObserveOnMainThread()
                 .Subscribe(_ =>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ActionStreetMap.Core;
 using ActionStreetMap.Explorer;
+using ActionStreetMap.Explorer.Infrastructure;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.IO;
@@ -31,6 +32,7 @@ namespace Assets.Scripts
         private ApplicationManager()
         {
             Initialize();
+            //Coordinate = new GeoCoordinate(52.53192, 13.38736);
             Coordinate = new GeoCoordinate(55.75282, 37.62259);
         }
 
@@ -80,11 +82,14 @@ namespace Assets.Scripts
                 _container.RegisterInstance<IPathResolver>(new WinPathResolver());
                 // Message bus
                 _container.RegisterInstance(_messageBus);
+                // Build config with default settings
+                var config = ConfigBuilder.GetDefault()
+                    .Build();
 
                 // Create ASM entry point with settings provided, register custom plugin which adds 
                 // custom logic or replaces default one. Then run bootstrapping process which populates container
                 // with defined implementations.
-                _gameRunner = new GameRunner(_container, @"Config/settings.json")
+                _gameRunner = new GameRunner(_container, config)
                     .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
                     .Bootstrap();
             }

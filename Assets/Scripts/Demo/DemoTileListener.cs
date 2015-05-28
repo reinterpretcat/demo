@@ -8,6 +8,7 @@ using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts.Map;
 using UnityEditor;
 using UnityEngine;
+using RenderMode = ActionStreetMap.Core.RenderMode;
 
 namespace Assets.Scripts.Demo
 {
@@ -47,9 +48,13 @@ namespace Assets.Scripts.Demo
         public void OnTileBuildFinished(Tile tile)
         {
             _stopwatch.Stop();
-            _trace.Debug(LogTag, "Tile of size {0}x{1} is loaded in {2} ms. Trigger GC.", tile.Width, tile.Height, _stopwatch.ElapsedMilliseconds);
+            _trace.Debug(LogTag, "{0} tile of size {1}x{2} is loaded in {3} ms. Trigger GC.", 
+                tile.RenderMode, tile.Width, tile.Height, _stopwatch.ElapsedMilliseconds);
             GC.Collect();
             _stopwatch.Reset();
+
+            if (tile.RenderMode == RenderMode.Overview)
+                return;
 
             Scheduler.MainThread.Schedule(() =>
             {
