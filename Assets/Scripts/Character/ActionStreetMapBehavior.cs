@@ -14,6 +14,9 @@ namespace Assets.Scripts.Character
 {
     public class ActionStreetMapBehavior : MonoBehaviour
     {
+        public Camera CameraScene;
+        public Camera CameraOverview;
+
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
         private IPositionObserver<MapPoint> _positionObserver;
@@ -21,6 +24,7 @@ namespace Assets.Scripts.Character
         private ITrace _trace;
 
         private bool _isInitialized = false;
+        private bool _isStarted = false;
         private float _initialGravity;
 
         private Address _currentAddress;
@@ -29,6 +33,8 @@ namespace Assets.Scripts.Character
         private void Start()
         {
             Initialize();
+            CameraScene.enabled = true;
+            CameraOverview.enabled = false;
         }
 
         // Update is called once per frame
@@ -104,6 +110,7 @@ namespace Assets.Scripts.Character
                 .ObserveOnMainThread()
                 .Subscribe(_ =>
                 {
+                    _isStarted = true;
                     gameObject.AddComponent<AddressLocatorBehaviour>()
                         .SetCommandController(commandController)
                         .GetObservable()
@@ -114,6 +121,14 @@ namespace Assets.Scripts.Character
         #endregion
 
         private void OnGUI()
+        {
+            DrawAddressInfo();
+            DrawOverviewButton();
+        }
+
+        #region UI controls
+
+        private void DrawAddressInfo()
         {
             var address = _currentAddress;
             if (address != null)
@@ -129,5 +144,28 @@ namespace Assets.Scripts.Character
                 GUI.Box(new Rect(0, 0, 400, 30), addressString);
             }
         }
+
+        private void DrawOverviewButton()
+        {
+            const int width = 200;
+            var buttonLabel = CameraScene.enabled ? "2D Overview" : "3D Scene";
+            if (_isStarted && GUI.Button(new Rect(Screen.width - width, 0, width, 30), buttonLabel))
+            {
+                bool isScene = !CameraScene.enabled;
+
+                CameraScene.enabled = isScene;
+                CameraOverview.enabled = !isScene;
+                gameObject.GetComponent<ThirdPersonController>().enabled = isScene;
+
+                if (!isScene)
+                {
+                    var cameraPosition = CameraOverview.transform.position;
+                    cameraPosition.y += gameObject.transform.position.y;
+                    CameraOverview.transform.position = cameraPosition;
+                }
+            }
+        }
+
+        #endregion
     }
 }
