@@ -15,11 +15,11 @@ namespace Assets.Scripts.Character
     public class ActionStreetMapBehavior : MonoBehaviour
     {
         public Camera CameraScene;
-        public Camera CameraOverview;
-
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
+        private ITileController _tileController;
         private IPositionObserver<MapPoint> _positionObserver;
+
         private IMessageBus _messageBus;
         private ITrace _trace;
 
@@ -34,7 +34,6 @@ namespace Assets.Scripts.Character
         {
             Initialize();
             CameraScene.enabled = true;
-            CameraOverview.enabled = false;
         }
 
         // Update is called once per frame
@@ -86,10 +85,10 @@ namespace Assets.Scripts.Character
                     // Attach address locator which provides the way to get current address
                     AttachAddressLocator();
 
-                    _positionObserver = appManager.GetService<ITilePositionObserver>();
+                    _tileController = appManager.GetService<ITileController>();
+                    _positionObserver = _tileController;
 
                     appManager.RunGame();
-
                     _isInitialized = true;
                 }
                 catch (Exception ex)
@@ -151,18 +150,26 @@ namespace Assets.Scripts.Character
             var buttonLabel = CameraScene.enabled ? "2D Overview" : "3D Scene";
             if (_isStarted && GUI.Button(new Rect(Screen.width - width, 0, width, 30), buttonLabel))
             {
-                bool isScene = !CameraScene.enabled;
+                bool isToOverview = !CameraScene.orthographic;
+                CameraScene.orthographic = isToOverview;
 
-                CameraScene.enabled = isScene;
-                CameraOverview.enabled = !isScene;
-                gameObject.GetComponent<ThirdPersonController>().enabled = isScene;
+                // disable MouseOrbit script to prevent interference with animation
+                if (isToOverview)
+                    CameraScene.GetComponent<MouseOrbit>().enabled = false;
 
-                if (!isScene)
+                var cameraAnimation = CameraScene.GetComponent<CameraAnimation>();
+                cameraAnimation.Play(2, isToOverview);
+
+                cameraAnimation.Finished += (sender, args) =>
                 {
-                    var cameraPosition = CameraOverview.transform.position;
-                    cameraPosition.y += gameObject.transform.position.y;
-                    CameraOverview.transform.position = cameraPosition;
-                }
+                    // TODO determine value for overview mode based on screen viewport
+                    var viewportSize = isToOverview ? 2000 : 1200;
+                    _tileController.Mode = isToOverview ? RenderMode.Overview : RenderMode.Scene;
+                    _tileController.Viewport = new MapRectangle(0, 0, viewportSize, viewportSize);
+                    Scheduler.ThreadPool.Schedule(() =>
+                        _positionObserver.OnNext(new MapPoint(_position.x, _position.z, _position.y)));
+                    CameraScene.GetComponent<MouseOrbit>().enabled = !isToOverview;
+                };  
             }
         }
 
