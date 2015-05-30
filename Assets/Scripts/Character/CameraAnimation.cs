@@ -85,8 +85,6 @@ namespace Assets.Scripts.Character
             Camera.transform.position = targetPos;
             Camera.transform.rotation = targetRot;
 
-            Debug.Log(String.Format("zoom: {0} pos:{1} rot:{2}", zoom, targetPos, targetRot));
-
             if (isLastAnimationFrame)
                 OnFinished();
         }

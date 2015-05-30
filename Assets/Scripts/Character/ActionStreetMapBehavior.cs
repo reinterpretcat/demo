@@ -26,7 +26,6 @@ namespace Assets.Scripts.Character
         private bool _isInitialized = false;
         private bool _isStarted = false;
         private float _initialGravity;
-
         private Address _currentAddress;
 
         // Use this for initialization
@@ -146,31 +145,56 @@ namespace Assets.Scripts.Character
 
         private void DrawOverviewButton()
         {
+            if (!_isStarted) return;
+
             const int width = 200;
-            var buttonLabel = CameraScene.enabled ? "2D Overview" : "3D Scene";
-            if (_isStarted && GUI.Button(new Rect(Screen.width - width, 0, width, 30), buttonLabel))
+            bool isToOverview = !CameraScene.orthographic;
+            var buttonLabel = isToOverview ? "3D Scene" : "2D Overview";
+            if (GUI.Button(new Rect(Screen.width - width, 0, width, 30), buttonLabel))
             {
-                bool isToOverview = !CameraScene.orthographic;
                 CameraScene.orthographic = isToOverview;
 
-                // disable MouseOrbit script to prevent interference with animation
+                // disable MouseOrbit/ThirdPersonController script to prevent interference with animation
                 if (isToOverview)
+                {
                     CameraScene.GetComponent<MouseOrbit>().enabled = false;
+                    gameObject.GetComponent<ThirdPersonController>().enabled = false;
+                }
 
+                // NOTE workarounds to keep overview north oriented
+                gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+                CameraScene.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+                // setup animation
                 var cameraAnimation = CameraScene.GetComponent<CameraAnimation>();
                 cameraAnimation.Play(2, isToOverview);
-
-                cameraAnimation.Finished += (sender, args) =>
-                {
-                    // TODO determine value for overview mode based on screen viewport
-                    var viewportSize = isToOverview ? 2000 : 1200;
-                    _tileController.Mode = isToOverview ? RenderMode.Overview : RenderMode.Scene;
-                    _tileController.Viewport = new MapRectangle(0, 0, viewportSize, viewportSize);
-                    Scheduler.ThreadPool.Schedule(() =>
-                        _positionObserver.OnNext(new MapPoint(_position.x, _position.z, _position.y)));
-                    CameraScene.GetComponent<MouseOrbit>().enabled = !isToOverview;
-                };  
+                Observable.FromEvent<EventHandler>(
+                    g => OnFinishAnimation,
+                    h => cameraAnimation.Finished += h,
+                    h => cameraAnimation.Finished -= h)
+                    .Take(1)
+                    .Subscribe();
             }
+        }
+
+        private void OnFinishAnimation(object sender, EventArgs args)
+        {
+            var viewportHeight = 1200f;
+            var viewportWidth = 1200f;
+            var isToOverview = CameraScene.orthographic;
+            if (isToOverview)
+            {
+                viewportHeight = CameraScene.orthographicSize * 2;
+                viewportWidth = CameraScene.aspect * viewportHeight;
+            }
+            // restore back scripts
+            CameraScene.GetComponent<MouseOrbit>().enabled = !isToOverview;
+            gameObject.GetComponent<ThirdPersonController>().enabled = !isToOverview;
+            // Force to load tiles
+            _tileController.Mode = isToOverview ? RenderMode.Overview : RenderMode.Scene;
+            _tileController.Viewport = new MapRectangle(0, 0, viewportWidth, viewportHeight);
+            Scheduler.ThreadPool.Schedule(() =>
+                _positionObserver.OnNext(new MapPoint(_position.x, _position.z, _position.y)));
         }
 
         #endregion
