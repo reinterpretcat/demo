@@ -2,7 +2,6 @@
 using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Core;
 using ActionStreetMap.Core.Scene;
-using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer;
 using ActionStreetMap.Explorer.Commands;
 using ActionStreetMap.Explorer.Interactions;
@@ -17,9 +16,7 @@ namespace Assets.Scripts.Character
         public Camera CameraScene;
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
-        private ITileController _tileController;
-        private IPositionObserver<MapPoint> _positionObserver;
-
+        private ApplicationManager _appManager;
         private IMessageBus _messageBus;
         private ITrace _trace;
 
@@ -41,8 +38,7 @@ namespace Assets.Scripts.Character
             if (_isInitialized && _position != transform.position)
             {
                 _position = transform.position;
-                Scheduler.ThreadPool.Schedule(() => 
-                    _positionObserver.OnNext(new MapPoint(_position.x, _position.z, _position.y)));
+                _appManager.Move(new MapPoint(_position.x, _position.z, _position.y));
             }
         }
 
@@ -56,12 +52,12 @@ namespace Assets.Scripts.Character
             _initialGravity = thirdPersonControll.gravity;
             thirdPersonControll.gravity = 0;
 
-            var appManager = ApplicationManager.Instance;
+            _appManager = ApplicationManager.Instance;
 
-            _trace = appManager.GetService<ITrace>();
-            _messageBus = appManager.GetService<IMessageBus>();
+            _trace = _appManager.GetService<ITrace>();
+            _messageBus = _appManager.GetService<IMessageBus>();
 
-            appManager.CreateConsole(true);
+            _appManager.CreateConsole(true);
 
             _messageBus.AsObservable<GameRunner.GameStartedMessage>()
                 .Where(msg => msg.Tile.RenderMode == RenderMode.Scene)
@@ -70,7 +66,7 @@ namespace Assets.Scripts.Character
                 .Subscribe(_ =>
                 {
                     var position = transform.position;
-                    var elevation = appManager.GetService<IElevationProvider>()
+                    var elevation = _appManager.GetService<IElevationProvider>()
                         .GetElevation(new MapPoint(position.x, position.z));
                     transform.position = new Vector3(position.x, elevation + 30, position.z);
                     thirdPersonControll.gravity = _initialGravity;
@@ -83,11 +79,7 @@ namespace Assets.Scripts.Character
                 {
                     // Attach address locator which provides the way to get current address
                     AttachAddressLocator();
-
-                    _tileController = appManager.GetService<ITileController>();
-                    _positionObserver = _tileController;
-
-                    appManager.RunGame();
+                    _appManager.RunGame();
                     _isInitialized = true;
                 }
                 catch (Exception ex)
@@ -187,14 +179,13 @@ namespace Assets.Scripts.Character
                 viewportHeight = CameraScene.orthographicSize * 2;
                 viewportWidth = CameraScene.aspect * viewportHeight;
             }
-            CameraScene.GetComponent<MouseZoomPan>().enabled = isToOverview;
+            CameraScene.GetComponent<OverviewMousePan>().enabled = isToOverview;
             CameraScene.GetComponent<MouseOrbit>().enabled = !isToOverview;
             gameObject.GetComponent<ThirdPersonController>().enabled = !isToOverview;
-            // Force to load tiles
-            _tileController.Mode = isToOverview ? RenderMode.Overview : RenderMode.Scene;
-            _tileController.Viewport = new MapRectangle(0, 0, viewportWidth, viewportHeight);
-            Scheduler.ThreadPool.Schedule(() =>
-                _positionObserver.OnNext(new MapPoint(_position.x, _position.z, _position.y)));
+            
+            _appManager.SwitchMode(isToOverview ? RenderMode.Overview : RenderMode.Scene,
+                new MapRectangle(0, 0, viewportWidth, viewportHeight));
+           _appManager.Move(new MapPoint(_position.x, _position.z, _position.y));
         }
 
         #endregion

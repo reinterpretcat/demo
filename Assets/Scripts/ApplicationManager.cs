@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer;
 using ActionStreetMap.Explorer.Infrastructure;
 using ActionStreetMap.Infrastructure.Dependencies;
@@ -11,6 +12,7 @@ using Assets.Scripts.Character;
 using Assets.Scripts.Console;
 using Assets.Scripts.Demo;
 using UnityEngine;
+using RenderMode = ActionStreetMap.Core.RenderMode;
 
 namespace Assets.Scripts
 {
@@ -26,6 +28,9 @@ namespace Assets.Scripts
         private IMessageBus _messageBus;
         private DebugConsoleTrace _trace;
         private GameRunner _gameRunner;
+
+        private ITileController _tileController;
+        private IPositionObserver<MapPoint> _positionObserver;
 
         #region Singleton implementation
 
@@ -136,7 +141,20 @@ namespace Assets.Scripts
 
         public void RunGame()
         {
+            _tileController = GetService<ITileController>();
+            _positionObserver = _tileController;
             _gameRunner.RunGame(Coordinate);
+        }
+
+        public void Move(MapPoint point)
+        {
+            Scheduler.ThreadPool.Schedule(() => _positionObserver.OnNext(point));
+        }
+
+        public void SwitchMode(RenderMode renderMode, MapRectangle rectange)
+        {
+            _tileController.Mode = renderMode;
+            _tileController.Viewport = rectange;
         }
 
         #endregion
