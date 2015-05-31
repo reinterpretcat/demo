@@ -32,6 +32,7 @@ namespace Assets.Scripts
         private ITileController _tileController;
         private IPositionObserver<MapPoint> _positionObserver;
 
+
         #region Singleton implementation
 
         private ApplicationManager()
@@ -139,11 +140,22 @@ namespace Assets.Scripts
 
         public GeoCoordinate Coordinate { get; set; }
 
+        public bool IsInitialized { get; private set; }
+
         public void RunGame()
         {
-            _tileController = GetService<ITileController>();
-            _positionObserver = _tileController;
-            _gameRunner.RunGame(Coordinate);
+            try
+            {
+                _tileController = GetService<ITileController>();
+                _positionObserver = _tileController;
+                _gameRunner.RunGame(Coordinate);
+                IsInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                _trace.Error("FATAL", ex, "Error running game:");
+                throw;
+            }
         }
 
         public void Move(MapPoint point)

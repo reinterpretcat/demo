@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Character
 {
-    public class OverviewMousePan: MonoBehaviour
+    public class OverviewModeBehaviour: MonoBehaviour
     {
         public float PanSpeed = 50;		// Speed of the camera when being panned
 

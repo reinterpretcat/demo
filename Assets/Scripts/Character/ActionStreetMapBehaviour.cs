@@ -5,22 +5,19 @@ using ActionStreetMap.Core.Scene;
 using ActionStreetMap.Explorer;
 using ActionStreetMap.Explorer.Commands;
 using ActionStreetMap.Explorer.Interactions;
-using ActionStreetMap.Infrastructure.Diagnostic;
 using UnityEngine;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
 namespace Assets.Scripts.Character
 {
-    public class ActionStreetMapBehavior : MonoBehaviour
+    public class ActionStreetMapBehaviour : MonoBehaviour
     {
         public Camera CameraScene;
-        private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
+        private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
         private ApplicationManager _appManager;
         private IMessageBus _messageBus;
-        private ITrace _trace;
 
-        private bool _isInitialized = false;
         private bool _isStarted = false;
         private float _initialGravity;
         private Address _currentAddress;
@@ -35,7 +32,7 @@ namespace Assets.Scripts.Character
         // Update is called once per frame
         private void Update()
         {
-            if (_isInitialized && _position != transform.position)
+            if (_appManager.IsInitialized && _position != transform.position)
             {
                 _position = transform.position;
                 _appManager.Move(new MapPoint(_position.x, _position.z, _position.y));
@@ -54,7 +51,6 @@ namespace Assets.Scripts.Character
 
             _appManager = ApplicationManager.Instance;
 
-            _trace = _appManager.GetService<ITrace>();
             _messageBus = _appManager.GetService<IMessageBus>();
 
             _appManager.CreateConsole(true);
@@ -75,18 +71,8 @@ namespace Assets.Scripts.Character
             // ASM should be started from non-UI thread
             Scheduler.ThreadPool.Schedule(() =>
             {
-                try
-                {
-                    // Attach address locator which provides the way to get current address
-                    AttachAddressLocator();
-                    _appManager.RunGame();
-                    _isInitialized = true;
-                }
-                catch (Exception ex)
-                {
-                    _trace.Error("FATAL", ex, "Error running game:");
-                    throw;
-                }
+                AttachAddressLocator();
+                _appManager.RunGame();
             });
         }
 
@@ -179,7 +165,7 @@ namespace Assets.Scripts.Character
                 viewportHeight = CameraScene.orthographicSize * 2;
                 viewportWidth = CameraScene.aspect * viewportHeight;
             }
-            CameraScene.GetComponent<OverviewMousePan>().enabled = isToOverview;
+            CameraScene.GetComponent<OverviewModeBehaviour>().enabled = isToOverview;
             CameraScene.GetComponent<MouseOrbit>().enabled = !isToOverview;
             gameObject.GetComponent<ThirdPersonController>().enabled = !isToOverview;
             

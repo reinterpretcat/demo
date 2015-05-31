@@ -99,11 +99,11 @@
     <Compile Include="Assets\Scenes\MenuAssets\Scripts\PlayGamePanelManager.cs" />
     <Compile Include="Assets\Scenes\MenuAssets\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\Scripts\ApplicationManager.cs" />
-    <Compile Include="Assets\Scripts\Character\ActionStreetMapBehavior.cs" />
+    <Compile Include="Assets\Scripts\Character\ActionStreetMapBehaviour.cs" />
     <Compile Include="Assets\Scripts\Character\CameraAnimation.cs" />
     <Compile Include="Assets\Scripts\Character\DemoBootstrapper.cs" />
     <Compile Include="Assets\Scripts\Character\MouseOrbit.cs" />
-    <Compile Include="Assets\Scripts\Character\OverviewMousePan.cs" />
+    <Compile Include="Assets\Scripts\Character\OverviewModeBehaviour.cs" />
     <Compile Include="Assets\Scripts\Console\Commands\GrepCommand.cs" />
     <Compile Include="Assets\Scripts\Console\DebugConsole.cs" />
     <Compile Include="Assets\Scripts\Console\DebugConsoleTrace.cs" />
