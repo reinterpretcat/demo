@@ -187,7 +187,7 @@ namespace Assets.Scripts.Character
                 viewportHeight = CameraScene.orthographicSize * 2;
                 viewportWidth = CameraScene.aspect * viewportHeight;
             }
-            // restore back scripts
+            CameraScene.GetComponent<MouseZoomPan>().enabled = isToOverview;
             CameraScene.GetComponent<MouseOrbit>().enabled = !isToOverview;
             gameObject.GetComponent<ThirdPersonController>().enabled = !isToOverview;
             // Force to load tiles
