@@ -28,14 +28,9 @@
                     float4 color : COLOR;
                     LIGHTING_COORDS(3, 4)
                 };
-         
-                struct fragment_output {
-                    float4 color : COLOR;
-                };
-         
+                  
                 vertex_output vert(vertex_input v) {
-                    vertex_output o;
-                    // convert the local position to world position
+                    vertex_output o;                   
                     o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
              
                     // calculate the diffuse lighting
@@ -49,11 +44,8 @@
                     return o;
                 };
           
-                fragment_output frag(vertex_output IN) {
-                    fragment_output OUT;
-                    float atten = LIGHT_ATTENUATION(IN);
-                    OUT.color = IN.color * atten;
-                    return OUT;
+                float4 frag(vertex_output v) : COLOR {
+                    return v.color;
                 };
             ENDCG    
         }
