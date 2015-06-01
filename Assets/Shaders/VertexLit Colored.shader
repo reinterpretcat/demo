@@ -9,7 +9,6 @@
             CGPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
-                #pragma multi_compile_fwdadd_fullshadows
          
                 #include "UnityCG.cginc"
                 #include "Lighting.cginc"
@@ -38,6 +37,7 @@
                     float3 light_dir = normalize(float4(_WorldSpaceLightPos0));
                     float3 diffuse_reflection = float4(_LightColor0) * float4(_Color) * max(0.0, dot(normal_dir, light_dir));
 
+                    //o.color = v.color + float4(diffuse_reflection, 1.0) * 0.5;
                     o.color = lerp(v.color, float4(diffuse_reflection, 1.0), 0.5);
                     TRANSFER_VERTEX_TO_FRAGMENT(o);
                     
