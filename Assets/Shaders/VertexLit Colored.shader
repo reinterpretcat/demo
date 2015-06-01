@@ -9,25 +9,25 @@
             CGPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
-         
+
                 #include "UnityCG.cginc"
                 #include "Lighting.cginc"
                 #include "AutoLight.cginc"
-         
+
                 uniform float4 _Color;
-         
+
                 struct vertex_input {
                     float4 vertex : POSITION;
                     float4 color : COLOR;
                     float3 normal : NORMAL;
                 };
-         
+
                 struct vertex_output {
                     float4 pos : POSITION;
                     float4 color : COLOR;
                     LIGHTING_COORDS(3, 4)
                 };
-                  
+
                 vertex_output vert(vertex_input v) {
                     vertex_output o;                   
                     o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
@@ -40,10 +40,10 @@
                     //o.color = v.color + float4(diffuse_reflection, 1.0) * 0.5;
                     o.color = lerp(v.color, float4(diffuse_reflection, 1.0), 0.5);
                     TRANSFER_VERTEX_TO_FRAGMENT(o);
-                    
+
                     return o;
                 };
-          
+
                 float4 frag(vertex_output v) : COLOR {
                     return v.color;
                 };
