@@ -9,7 +9,7 @@ namespace Assets.Scripts.Character
     {
         public Camera Camera;
         public GameObject Target;
-        public float Distance = 600;
+        public float Distance = 300;
 
         public event EventHandler Finished;
 
