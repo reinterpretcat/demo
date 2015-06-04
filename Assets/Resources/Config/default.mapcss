@@ -1,5 +1,5 @@
 canvas { 
-    material_background: Terrain/TerrainColored;
+    material_background: Terrain/TerrainBase;
     material_water: Water/TerrainWater;
     
     ele_noise_freq:                                         0.15;

@@ -7,16 +7,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{394054B5-D498-0ACD-B65D-7305D961E9AF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.0.1f1</UnityVersion>
@@ -127,11 +125,9 @@
     <None Include="Assets\Resources\Config\srtm.schema.txt" />
     <None Include="Assets\Resources\Maps\osm\berlin\header.txt" />
     <None Include="Assets\Resources\Maps\osm\moscow\header.txt" />
-    <None Include="Assets\Resources\Shaders\QT_Cubemaps.cginc" />
-    <None Include="Assets\Resources\Shaders\VertexColorsIBLReflective.shader" />
-    <None Include="Assets\Resources\Shaders\VertexLitIBL.cginc" />
     <None Include="Assets\Scenes\MenuAssets\Fonts\Jupiter\LICENSE.txt" />
-    <None Include="Assets\Shaders\VertexLit Colored.shader" />
+    <None Include="Assets\Shaders\VertexColorGeneric.shader" />
+    <None Include="Assets\Shaders\VertexColorWater.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>
