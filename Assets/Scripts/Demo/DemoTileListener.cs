@@ -32,7 +32,7 @@ namespace Assets.Scripts.Demo
 
         private void OnTileDestroyed(Tile tile)
         {
-            _trace.Debug(LogTag, "Tile destroyed: center:{0}", tile.MapCenter);
+            _trace.Debug(LogTag, "Tile destroyed: center:{0}", tile.MapCenter.ToString());
         }
 
         public void OnTileFound(Tile tile, MapPoint position)
@@ -42,14 +42,14 @@ namespace Assets.Scripts.Demo
         public void OnTileBuildStarted(MapPoint center)
         {
             _stopwatch.Start();
-            _trace.Debug(LogTag, "Tile build begin: center:{0}", center);
+            _trace.Debug(LogTag, "Tile build begin: center:{0}", center.ToString());
         }
 
         public void OnTileBuildFinished(Tile tile)
         {
             _stopwatch.Stop();
-            _trace.Debug(LogTag, "{0} tile of size {1}x{2} is loaded in {3} ms. Trigger GC.", 
-                tile.RenderMode, tile.Width, tile.Height, _stopwatch.ElapsedMilliseconds);
+            _trace.Debug(LogTag, String.Format("{0} tile of size {1}x{2} is loaded in {3} ms. Trigger GC.", 
+                tile.RenderMode, tile.Width, tile.Height, _stopwatch.ElapsedMilliseconds));
             GC.Collect();
             _stopwatch.Reset();
 

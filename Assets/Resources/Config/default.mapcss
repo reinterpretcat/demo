@@ -1,10 +1,7 @@
 canvas { 
     material_background: Terrain/TerrainBase;
-    material_water: Water/TerrainWater;
-    
-    ele_noise_freq:                                         0.15;
-    color_noise_freq:                                       0.05;
-    
+    material_water: Terrain/TerrainWater;
+       
     background_color_noise_freq:                            0.1;
     background_ele_noise_freq:                              0.13;
     background_gradient:                                    gradient(#dcdcdc 0%, #c0c0c0 10%, #a9a9a9 50%, #808080);
@@ -277,6 +274,7 @@ way[highway=footway]                                     { width:2; type:pedestr
 
 way|z19[barrier]                                            { builder: barrier; fill-color: gradient(#a0a0a0, #808080); material: Materials/Buildings/Building; height:2; width:0.2;  }
 
+way|z19[height]                                                { height: eval(num(tag('height'))); }
 
 /************************************************** NODES ********************************************/
 node|z19[natural=tree]                                        { builder:tree; foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); material: Materials/Buildings/Building; }
