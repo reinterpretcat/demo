@@ -64,7 +64,7 @@ namespace Assets.Scripts.Character
                     var position = transform.position;
                     var elevation = _appManager.GetService<IElevationProvider>()
                         .GetElevation(new MapPoint(position.x, position.z));
-                    transform.position = new Vector3(position.x, elevation + 30, position.z);
+                    transform.position = new Vector3(position.x, elevation + 90, position.z);
                     thirdPersonControll.gravity = _initialGravity;
                 });
 

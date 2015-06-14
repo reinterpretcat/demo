@@ -6,7 +6,6 @@ using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts.Map;
-using UnityEditor;
 using UnityEngine;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
@@ -80,7 +79,7 @@ namespace Assets.Scripts.Demo
             });
         }
 
-        private void SaveAsPrefab(GameObject gameObject)
+        /*private void SaveAsPrefab(GameObject gameObject)
         {
             // The paths to the mesh/prefab assets.
             string meshPath = String.Format("Assets/{0}.mesh", gameObject.name);
@@ -103,6 +102,6 @@ namespace Assets.Scripts.Demo
 
             // Save the transform's GameObject as a prefab asset.
             PrefabUtility.CreatePrefab(prefabPath, trans.gameObject);
-        }
+        }*/
     }
 }

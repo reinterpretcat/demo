@@ -60,7 +60,7 @@ namespace Assets.Scripts
         private void Initialize()
         {
             // Setup main thread scheduler
-            Scheduler.MainThread = new UnityMainThreadScheduler();
+            Scheduler.MainThread = UnityMainThreadScheduler.MainThread;
 
             // Create and register DebugConsole inside Container
             _container = new Container();

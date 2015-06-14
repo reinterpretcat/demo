@@ -23,8 +23,13 @@ namespace Assets.Scripts.Demo
         {
             return new string[]
             {
-                PathResolver.Resolve(String.Format("{0}{1}header.txt", path, Path.DirectorySeparatorChar))
+                PathResolver.Resolve(String.Format("{0}{1}moscow{1}header.txt", path, Path.DirectorySeparatorChar))
             };
+        }
+
+        public override void CreateDirectory(string path)
+        {
+            Trace.Warn(LogTag, "Skip create directory for {0}", path);
         }
     }
 }
