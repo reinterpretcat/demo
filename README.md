@@ -10,7 +10,7 @@
 <li>multiplayer (not started).</li>
 <li>Fast 2D overview mode for large area.</li>
 </ul>
-<p>The engine can be used to build different 3D-games (like car simulations or GTA 2/3 ) or some map tools (target is mobile devices). Web demo build can be found <a href="http://actionstreetmap.github.io/demo_list.html">here</a>. More info will be published at <a href="http://actionstreetmap.github.io/demo/">github pages</a>.</p>
+<p>The engine can be used to build different 3D-games (like car simulations or GTA 2/3 ) or some map tools (target is mobile devices). Web demo build can be found <a href="http://actionstreetmap.github.io/demo/demo_list.html">here</a>. More info will be published at <a href="http://actionstreetmap.github.io/demo/">github pages</a>.</p>
 
 <h2>Screenshots</h2>
 <img src="http://actionstreetmap.github.io/demo/images/current/FlatShading_1.png"/>
