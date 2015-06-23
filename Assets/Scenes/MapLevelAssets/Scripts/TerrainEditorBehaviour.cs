@@ -13,7 +13,9 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
         public Color LineColor = new Color(1, 0, 0, 1);
 
         private float _heightError = 0.5f;
-        private List<Vector3> _markPoints = new List<Vector3>();
+        
+        // NOTE: Point buffer should be static to allow cross tile selection
+        private static readonly List<Vector3> MarkPoints = new List<Vector3>();
 
         private void OnMouseDown()
         {
@@ -24,28 +26,30 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
                 var point = hit.point;
                 if (IsPolygonClosedByPoint(point))
                 {
-                    _markPoints.Clear();
+                    MarkPoints.Clear();
                 }
                 else
-                    _markPoints.Add(point);
+                    MarkPoints.Add(point);
             }
         }
 
         private bool IsPolygonClosedByPoint(Vector3 point)
         {
-            return _markPoints.Count > 1 &&
-                _markPoints.Any(mark => Vector3.Distance(mark, point) <= SensivityRadius);
+            return MarkPoints.Count > 1 &&
+                MarkPoints.Any(mark => Vector3.Distance(mark, point) <= SensivityRadius);
         }
 
         void DrawConnectingLines()
         {
-            if (_markPoints.Count > 0)
+            if (MarkPoints.Count > 0)
             {
-                for (int i = 0; i < _markPoints.Count; i++)
+                var count = MarkPoints.Count;
+                var lastItemIndex = MarkPoints.Count - 1;
+                for (int i = 0; i < count; i++)
                 {
-                    var cur = _markPoints[i];
+                    var cur = MarkPoints[i];
                     Vector3 next;
-                    if (i == _markPoints.Count - 1)
+                    if (i == lastItemIndex)
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                         RaycastHit hit;
@@ -55,7 +59,7 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
                             return;
                     }
                     else
-                        next = _markPoints[i + 1];
+                        next = MarkPoints[i + 1];
 
                     GL.Begin(GL.LINES);
                     GL.Color(LineColor);
