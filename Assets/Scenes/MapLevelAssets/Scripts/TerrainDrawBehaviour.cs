@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets.Scenes.MapLevelAssets.Scripts
 {
     /// <summary> Provides the way to draw lines on game object. </summary>
-    public class TerrainEditorBehaviour : MonoBehaviour
+    public class TerrainDrawBehaviour : MonoBehaviour
     {
         /// <summary> Radius of last point detection logic. </summary>
         public float SensivityRadius = 0.5f;
@@ -17,6 +17,12 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
         // NOTE: Point buffer should be static to allow cross tile selection
         private static readonly List<Vector3> MarkPoints = new List<Vector3>();
 
+        void Update()
+        {
+            if (Input.GetKey(KeyCode.Escape))
+                Cancel();
+        }
+
         private void OnMouseDown()
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -25,9 +31,7 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
             {
                 var point = hit.point;
                 if (IsPolygonClosedByPoint(point))
-                {
-                    MarkPoints.Clear();
-                }
+                    Cancel();
                 else
                     MarkPoints.Add(point);
             }
@@ -80,6 +84,11 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
         void OnDrawGizmos()
         {
             DrawConnectingLines();
+        }
+
+        private void Cancel()
+        {
+            MarkPoints.Clear();
         }
     }
 }
