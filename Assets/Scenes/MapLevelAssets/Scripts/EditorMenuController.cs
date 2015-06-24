@@ -11,7 +11,8 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
     public class EditorMenuController : MonoBehaviour
     {
         public GameObject MainMenuContainer;
-        public GameObject SubMenuContainer;
+        public GameObject AddMenuContainer;
+        public GameObject EditMenuContainer;
 
         #region Main container
 
@@ -21,9 +22,9 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
 
         #endregion
 
-        #region Sub container
+        #region Add container
 
-        public Button BackButton;
+        public Button BackFromAddButton;
         public Button BuildingButton;
         public Button RoadButton;
         public Button TreeButton;
@@ -31,23 +32,43 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
 
         #endregion
 
+        #region Edit container
+
+        public Button BackFromEditButton;
+        public Button TerrainUp;
+        public Button TerrainDown;
+
+        #endregion
+
         private IMessageBus _messageBus;
 
         void Start ()
         {
+            _messageBus = ApplicationManager.Instance.MessageBus;
+
+            ListenMainMenu();
+            ListenAddMenu();
+            ListenEditMenu();
+        }
+
+        private void ListenMainMenu()
+        {
             AddButton.onClick.AsObservable().Subscribe(_ =>
             {
                 MainMenuContainer.SetActive(false);
-                SubMenuContainer.SetActive(true);
+                AddMenuContainer.SetActive(true);
             });
 
-            BackButton.onClick.AsObservable().Subscribe(_ =>
+            EditButton.onClick.AsObservable().Subscribe(_ =>
             {
-                MainMenuContainer.SetActive(true);
-                SubMenuContainer.SetActive(false);
-                _messageBus.Send(EditorActionMode.None);
-                _messageBus.Send(TerrainInputMode.None);
+                MainMenuContainer.SetActive(false);
+                EditMenuContainer.SetActive(true);
             });
+        }
+
+        private void ListenAddMenu()
+        {
+            BackFromAddButton.onClick.AsObservable().Subscribe(_ => GoBackToMainMenu());
 
             BuildingButton.onClick.AsObservable().Subscribe(_ =>
             {
@@ -66,8 +87,32 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
                 _messageBus.Send(EditorActionMode.AddTree);
                 _messageBus.Send(TerrainInputMode.SetPoint);
             });
+        }
 
-            _messageBus = ApplicationManager.Instance.MessageBus;
+        private void ListenEditMenu()
+        {
+            BackFromEditButton.onClick.AsObservable().Subscribe(_ => GoBackToMainMenu());
+
+            TerrainUp.onClick.AsObservable().Subscribe(_ =>
+            {
+                _messageBus.Send(EditorActionMode.TerrainUp);
+                _messageBus.Send(TerrainInputMode.None);
+            });
+
+            TerrainDown.onClick.AsObservable().Subscribe(_ =>
+            {
+                _messageBus.Send(EditorActionMode.TerrainDown);
+                _messageBus.Send(TerrainInputMode.None);
+            });
+        }
+
+        private void GoBackToMainMenu()
+        {
+            MainMenuContainer.SetActive(true);
+            AddMenuContainer.SetActive(false);
+            EditMenuContainer.SetActive(false);
+            _messageBus.Send(EditorActionMode.None);
+            _messageBus.Send(TerrainInputMode.None);
         }
     }
 }

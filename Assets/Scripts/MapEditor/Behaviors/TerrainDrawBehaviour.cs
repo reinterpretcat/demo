@@ -4,7 +4,7 @@ using ActionStreetMap.Core;
 using ActionStreetMap.Infrastructure.Reactive;
 using UnityEngine;
 
-namespace Assets.Scripts.MapEditor
+namespace Assets.Scripts.MapEditor.Behaviors
 {
     /// <summary> Provides the way to draw lines on game object. </summary>
     public class TerrainDrawBehaviour : MonoBehaviour

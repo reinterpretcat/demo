@@ -5,8 +5,8 @@ using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
-using Assets.Scripts.Map;
 using Assets.Scripts.MapEditor;
+using Assets.Scripts.MapEditor.Behaviors;
 using UnityEngine;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 

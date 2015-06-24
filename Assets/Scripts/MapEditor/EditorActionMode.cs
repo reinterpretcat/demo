@@ -8,6 +8,9 @@ namespace Assets.Scripts.MapEditor
         AddBarrier,
         AddTree,
 
+        TerrainUp,
+        TerrainDown,
+
         Remove
     }
 }

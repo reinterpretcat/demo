@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Map
+namespace Assets.Scripts.MapEditor.Behaviors
 {
     internal class DestroyableMeshBehaviour : MonoBehaviour
     {
