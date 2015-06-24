@@ -4,6 +4,7 @@ using ActionStreetMap.Core;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer;
 using ActionStreetMap.Explorer.Infrastructure;
+using ActionStreetMap.Explorer.Tiling;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.IO;
@@ -11,6 +12,7 @@ using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts.Character;
 using Assets.Scripts.Console;
 using Assets.Scripts.Demo;
+using Assets.Scripts.Editor;
 using UnityEngine;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
@@ -32,12 +34,12 @@ namespace Assets.Scripts
         private ITileController _tileController;
         private IPositionObserver<MapPoint> _positionObserver;
 
-
         #region Singleton implementation
 
         private ApplicationManager()
         {
-            Initialize();
+            InitializeFramework();
+            InitializeApplication();
             //Coordinate = new GeoCoordinate(52.53192, 13.38736);
             Coordinate = new GeoCoordinate(55.75282, 37.62259);
         }
@@ -57,7 +59,7 @@ namespace Assets.Scripts
 
         #region Initialization logic
 
-        private void Initialize()
+        private void InitializeFramework()
         {
             // Setup main thread scheduler
             Scheduler.MainThread = UnityMainThreadScheduler.MainThread;
@@ -104,6 +106,12 @@ namespace Assets.Scripts
                 _trace.Error(FatalCategoryName, ex, "Cannot initialize ASM framework");
                 throw;
             }
+        }
+
+        private void InitializeApplication()
+        {
+            var tileModelEditor = _container.Resolve<ITileModelEditor>();
+            EditorController.Subscribe(tileModelEditor, _messageBus);
         }
 
         /// <summary> Creates debug console in scene. </summary>

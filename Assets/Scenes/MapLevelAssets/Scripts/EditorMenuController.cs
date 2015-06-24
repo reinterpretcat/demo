@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ActionStreetMap.Infrastructure.Reactive;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scenes.MapLevelAssets.Scripts
@@ -28,25 +29,25 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
         #endregion
 
         // Use this for initialization
-        void Start () {
-	
+        void Start ()
+        {
+            AddButton.onClick.AsObservable().Subscribe(_ =>
+            {
+                MainMenuContainer.SetActive(false);
+                SubMenuContainer.SetActive(true);
+            });
+
+            BackButton.onClick.AsObservable().Subscribe(_ =>
+            {
+                MainMenuContainer.SetActive(true);
+                SubMenuContainer.SetActive(false);
+            });
         }
 	
         // Update is called once per frame
-        void Update () {
+        void Update () 
+        {
 	
-        }
-
-        public void ShowSubMenu()
-        {
-            MainMenuContainer.SetActive(false);
-            SubMenuContainer.SetActive(true);
-        }
-
-        public void ShowMainMenu()
-        {
-            MainMenuContainer.SetActive(true);
-            SubMenuContainer.SetActive(false);
         }
     }
 }

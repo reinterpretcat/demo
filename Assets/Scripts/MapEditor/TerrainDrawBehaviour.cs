@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ActionStreetMap.Core;
 using UnityEngine;
 
-namespace Assets.Scenes.MapLevelAssets.Scripts
+namespace Assets.Scripts.Editor
 {
     /// <summary> Provides the way to draw lines on game object. </summary>
     public class TerrainDrawBehaviour : MonoBehaviour
@@ -11,6 +12,9 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
         public float SensivityRadius = 0.5f;
         /// <summary> Line color. </summary>
         public Color LineColor = new Color(1, 0, 0, 1);
+
+        /// <summary> Messages bus. </summary>
+        public IMessageBus MessageBus;
 
         private float _heightError = 0.5f;
         
@@ -31,7 +35,10 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
             {
                 var point = hit.point;
                 if (IsPolygonClosedByPoint(point))
+                {
+                    MessageBus.Send(new TerrainPolygonMessage(MarkPoints.ToList()));
                     Cancel();
+                }
                 else
                     MarkPoints.Add(point);
             }

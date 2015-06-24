@@ -5,6 +5,7 @@ using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
+using Assets.Scripts.Editor;
 using Assets.Scripts.Map;
 using UnityEngine;
 using RenderMode = ActionStreetMap.Core.RenderMode;
@@ -16,17 +17,19 @@ namespace Assets.Scripts.Demo
     {
         private const string LogTag = "tile";
 
+        private readonly IMessageBus _messageBus;
         private readonly ITrace _trace;
 
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         public DemoTileListener(IMessageBus messageBus, ITrace trace)
         {
+            _messageBus = messageBus;
             _trace = trace;
 
-            messageBus.AsObservable<TileLoadStartMessage>().Do(m => OnTileBuildStarted(m.TileCenter)).Subscribe();
-            messageBus.AsObservable<TileLoadFinishMessage>().Do(m => OnTileBuildFinished(m.Tile)).Subscribe();
-            messageBus.AsObservable<TileDestroyMessage>().Do(m => OnTileDestroyed(m.Tile)).Subscribe();
+            _messageBus.AsObservable<TileLoadStartMessage>().Do(m => OnTileBuildStarted(m.TileCenter)).Subscribe();
+            _messageBus.AsObservable<TileLoadFinishMessage>().Do(m => OnTileBuildFinished(m.Tile)).Subscribe();
+            _messageBus.AsObservable<TileDestroyMessage>().Do(m => OnTileDestroyed(m.Tile)).Subscribe();
         }
 
         private void OnTileDestroyed(Tile tile)
@@ -63,7 +66,10 @@ namespace Assets.Scripts.Demo
                     if (name == "terrain")
                     {
                         foreach (Transform cell in child.gameObject.transform)
-                            cell.gameObject.AddComponent<ModifyableTerrainBehaviour>();
+                        {
+                            //cell.gameObject.AddComponent<ModifyableTerrainBehaviour>();
+                            cell.gameObject.AddComponent<TerrainDrawBehaviour>().MessageBus = _messageBus;
+                        }
                     }
                     else if (name.StartsWith("building"))
                     {
