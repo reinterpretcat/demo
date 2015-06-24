@@ -61,6 +61,12 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
                 _messageBus.Send(TerrainInputMode.DrawLine);
             });
 
+            TreeButton.onClick.AsObservable().Subscribe(_ =>
+            {
+                _messageBus.Send(EditorActionMode.AddTree);
+                _messageBus.Send(TerrainInputMode.SetPoint);
+            });
+
             _messageBus = ApplicationManager.Instance.MessageBus;
         }
     }

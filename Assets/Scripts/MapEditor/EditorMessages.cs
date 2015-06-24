@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Assets.Scripts.MapEditor
 {
-    internal sealed class TerrainPolygonMessage
+    internal sealed class TerrainPointMessage
     {
-        public readonly List<Vector3> Polygon;
+         public readonly Vector3 Point;
 
-        public TerrainPolygonMessage(List<Vector3> polygon)
+         public TerrainPointMessage(Vector3 point)
         {
-            Polygon = polygon;
+            Point = point;
         }
     }
 
@@ -20,6 +20,16 @@ namespace Assets.Scripts.MapEditor
         public TerrainPolylineMessage(List<Vector3> polygon)
         {
             Polyline = polygon;
+        }
+    }
+
+    internal sealed class TerrainPolygonMessage
+    {
+        public readonly List<Vector3> Polygon;
+
+        public TerrainPolygonMessage(List<Vector3> polygon)
+        {
+            Polygon = polygon;
         }
     }
 }

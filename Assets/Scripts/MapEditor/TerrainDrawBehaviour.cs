@@ -59,7 +59,9 @@ namespace Assets.Scripts.MapEditor
             if (Physics.Raycast(ray, out hit))
             {
                 var point = hit.point;
-                if (IsPolygonClosedByPoint(point))
+                if (_inputMode == TerrainInputMode.SetPoint)
+                    SendPoint(point);
+                else if (IsPolygonClosedByPoint(point))
                     SendPolygon();
                 else
                     MarkPoints.Add(point);
@@ -118,6 +120,12 @@ namespace Assets.Scripts.MapEditor
         private void Clear()
         {
             MarkPoints.Clear();
+        }
+
+        private void SendPoint(Vector3 point)
+        {
+            _messageBus.Send(new TerrainPointMessage(point));
+            Clear();
         }
 
         private void SendPolyline()

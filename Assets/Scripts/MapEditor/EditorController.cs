@@ -5,6 +5,7 @@ using ActionStreetMap.Core.Scene;
 using ActionStreetMap.Explorer.Tiling;
 using ActionStreetMap.Infrastructure.Reactive;
 using UnityEngine;
+using Tree = ActionStreetMap.Core.Scene.Tree;
 
 namespace Assets.Scripts.MapEditor
 {
@@ -19,23 +20,31 @@ namespace Assets.Scripts.MapEditor
         public EditorController(ITileModelEditor tileModelEditor, IMessageBus messageBus)
         {
             _tileModelEditor = tileModelEditor;
-           
-            messageBus.AsObservable<TerrainPolygonMessage>().Subscribe(HandlePolygonMessage);
+
+            messageBus.AsObservable<TerrainPointMessage>().Subscribe(HandlePointMessage);
             messageBus.AsObservable<TerrainPolylineMessage>().Subscribe(HandlePolylineMessage);
+            messageBus.AsObservable<TerrainPolygonMessage>().Subscribe(HandlePolygonMessage);
 
             messageBus.AsObservable<EditorActionMode>().Subscribe(a => _actionMode = a);
         }
 
-        private void HandlePolygonMessage(TerrainPolygonMessage msg)
+        private void HandlePointMessage(TerrainPointMessage msg)
         {
-            if (_actionMode == EditorActionMode.AddBuilding)
-                AddBuilding(msg.Polygon);
+            var point = msg.Point;
+            if (_actionMode == EditorActionMode.AddTree)
+                AddTree(new MapPoint(point.x, point.z, point.y));
         }
 
         private void HandlePolylineMessage(TerrainPolylineMessage msg)
         {
             if (_actionMode == EditorActionMode.AddBarrier)
                 AddBarrier(msg.Polyline);
+        }
+
+        private void HandlePolygonMessage(TerrainPolygonMessage msg)
+        {
+            if (_actionMode == EditorActionMode.AddBuilding)
+                AddBuilding(msg.Polygon);
         }
 
         /// <summary> Adds building with default properties using given foorprint. </summary>
@@ -55,6 +64,15 @@ namespace Assets.Scripts.MapEditor
             {
                 Height = 0,
                 Footprint = footPrint.Select(p => new MapPoint(p.x, p.z, p.y)).ToList()
+            });
+        }
+
+        /// <summary> Adds tree with default properties. </summary>
+        public void AddTree(MapPoint point)
+        {
+            _tileModelEditor.AddTree(new Tree()
+            {
+                Point = point
             });
         }
 
