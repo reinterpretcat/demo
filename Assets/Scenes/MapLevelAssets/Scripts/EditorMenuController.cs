@@ -1,4 +1,7 @@
-﻿using ActionStreetMap.Infrastructure.Reactive;
+﻿using ActionStreetMap.Core;
+using ActionStreetMap.Infrastructure.Reactive;
+using Assets.Scripts;
+using Assets.Scripts.MapEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +31,8 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
 
         #endregion
 
-        // Use this for initialization
+        private IMessageBus _messageBus;
+
         void Start ()
         {
             AddButton.onClick.AsObservable().Subscribe(_ =>
@@ -41,13 +45,23 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
             {
                 MainMenuContainer.SetActive(true);
                 SubMenuContainer.SetActive(false);
+                _messageBus.Send(EditorActionMode.None);
+                _messageBus.Send(TerrainInputMode.None);
             });
-        }
-	
-        // Update is called once per frame
-        void Update () 
-        {
-	
+
+            BuildingButton.onClick.AsObservable().Subscribe(_ =>
+            {
+                _messageBus.Send(EditorActionMode.AddBuilding);
+                _messageBus.Send(TerrainInputMode.DrawLine);
+            });
+
+            BarrierButton.onClick.AsObservable().Subscribe(_ =>
+            {
+                _messageBus.Send(EditorActionMode.AddBarrier);
+                _messageBus.Send(TerrainInputMode.DrawLine);
+            });
+
+            _messageBus = ApplicationManager.Instance.MessageBus;
         }
     }
 }

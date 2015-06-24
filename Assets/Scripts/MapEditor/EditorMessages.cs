@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Editor
+namespace Assets.Scripts.MapEditor
 {
     internal sealed class TerrainPolygonMessage
     {
@@ -13,6 +10,16 @@ namespace Assets.Scripts.Editor
         public TerrainPolygonMessage(List<Vector3> polygon)
         {
             Polygon = polygon;
+        }
+    }
+
+    internal sealed class TerrainPolylineMessage
+    {
+        public readonly List<Vector3> Polyline;
+
+        public TerrainPolylineMessage(List<Vector3> polygon)
+        {
+            Polyline = polygon;
         }
     }
 }

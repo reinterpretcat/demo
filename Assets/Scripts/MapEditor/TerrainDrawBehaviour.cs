@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ActionStreetMap.Core;
+using ActionStreetMap.Infrastructure.Reactive;
 using UnityEngine;
 
-namespace Assets.Scripts.Editor
+namespace Assets.Scripts.MapEditor
 {
     /// <summary> Provides the way to draw lines on game object. </summary>
     public class TerrainDrawBehaviour : MonoBehaviour
@@ -13,8 +14,18 @@ namespace Assets.Scripts.Editor
         /// <summary> Line color. </summary>
         public Color LineColor = new Color(1, 0, 0, 1);
 
+        private TerrainInputMode _inputMode = TerrainInputMode.None;
+
+        private IMessageBus _messageBus;
         /// <summary> Messages bus. </summary>
-        public IMessageBus MessageBus;
+        public IMessageBus MessageBus
+        {
+            set
+            {
+                _messageBus = value;
+                _messageBus.AsObservable<TerrainInputMode>().Subscribe(m => _inputMode = m );
+            }
+        }
 
         private float _heightError = 0.5f;
         
@@ -23,22 +34,33 @@ namespace Assets.Scripts.Editor
 
         void Update()
         {
+            if (_inputMode == TerrainInputMode.None)
+            {
+                Clear();
+                return;
+            }
+
             if (Input.GetKey(KeyCode.Escape))
-                Cancel();
+                MarkPoints.Clear();
+            if (Input.GetKey(KeyCode.Return))
+                SendPolyline();
         }
 
         private void OnMouseDown()
         {
+            if (_inputMode == TerrainInputMode.None)
+            {
+                Clear();
+                return;
+            }
+
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
                 var point = hit.point;
                 if (IsPolygonClosedByPoint(point))
-                {
-                    MessageBus.Send(new TerrainPolygonMessage(MarkPoints.ToList()));
-                    Cancel();
-                }
+                    SendPolygon();
                 else
                     MarkPoints.Add(point);
             }
@@ -93,9 +115,23 @@ namespace Assets.Scripts.Editor
             DrawConnectingLines();
         }
 
-        private void Cancel()
+        private void Clear()
         {
             MarkPoints.Clear();
+        }
+
+        private void SendPolyline()
+        {
+            if (MarkPoints.Count > 1)
+                _messageBus.Send(new TerrainPolylineMessage(MarkPoints.ToList()));
+            Clear();
+        }
+
+        private void SendPolygon()
+        {
+            if (MarkPoints.Count > 2)
+                _messageBus.Send(new TerrainPolygonMessage(MarkPoints.ToList()));
+            Clear();
         }
     }
 }

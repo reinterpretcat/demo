@@ -12,7 +12,7 @@ using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts.Character;
 using Assets.Scripts.Console;
 using Assets.Scripts.Demo;
-using Assets.Scripts.Editor;
+using Assets.Scripts.MapEditor;
 using UnityEngine;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
@@ -149,6 +149,8 @@ namespace Assets.Scripts
         public GeoCoordinate Coordinate { get; set; }
 
         public bool IsInitialized { get; private set; }
+
+        public IMessageBus MessageBus { get { return _messageBus; } }
 
         public void RunGame()
         {
