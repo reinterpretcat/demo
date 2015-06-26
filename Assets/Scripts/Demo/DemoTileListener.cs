@@ -67,7 +67,7 @@ namespace Assets.Scripts.Demo
                     {
                         foreach (Transform cell in child.gameObject.transform)
                         {
-                            //cell.gameObject.AddComponent<ModifyableTerrainBehaviour>();
+                            cell.gameObject.AddComponent<ModifyableTerrainBehaviour>().MessageBus = _messageBus;
                             cell.gameObject.AddComponent<TerrainDrawBehaviour>().MessageBus = _messageBus;
                         }
                     }
