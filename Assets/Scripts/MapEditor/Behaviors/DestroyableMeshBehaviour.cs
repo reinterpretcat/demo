@@ -1,14 +1,17 @@
 ﻿using System.Collections;
+using ActionStreetMap.Core.Tiling;
+using ActionStreetMap.Core.Tiling.Models;
+using ActionStreetMap.Core.Unity;
 using UnityEngine;
 
 namespace Assets.Scripts.MapEditor.Behaviors
 {
-    internal class DestroyableMeshBehaviour : MonoBehaviour
+    internal class DestroyableMeshBehaviour : MonoBehaviour, IModelBehaviour
     {
         private int maxClickCount = 1;
         private int _count = 0;
 
-        private void OnMouseDown()
+        void OnMouseDown()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -71,5 +74,17 @@ namespace Assets.Scripts.MapEditor.Behaviors
             Time.timeScale = 1.0f;
             Destroy(gameObject);
         }
+
+        #region IModelBehaviour implementation
+
+        /// <inheritdoc />
+        public string Name { get { return "mesh_destroy"; } }
+
+        /// <inheritdoc />
+        public void Apply(IGameObject go, Model model)
+        {
+        }
+
+        #endregion
     }
 }

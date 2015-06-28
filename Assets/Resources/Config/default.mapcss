@@ -1,11 +1,14 @@
 canvas { 
+    
+    behaviours: terrain_modify, terrain_draw;
+    
     material_background: Terrain/TerrainBase;
     material_water: Terrain/TerrainWater;
        
     background_color_noise_freq:                            0.1;
-    background_ele_noise_freq:                              0.13;
-    background_gradient:                                    gradient(#dcdcdc 0%, #c0c0c0 10%, #a9a9a9 50%, #808080);
+    background_ele_noise_freq:                              0.05;
     
+    background_gradient:                                    gradient(#dcdcdc 0%, #c0c0c0 10%, #a9a9a9 50%, #808080);
     water_color_noise_freq:                                 0.1;
     water_ele_noise_freq:                                   0.2;
     water_gradient:                                         gradient(#87cefa, #1e90ff);
@@ -31,7 +34,7 @@ area|z19[man_made=tower],
 area|z19[building:levels],
 area|z19[building:shape],
 area|z19[building:part],
-area|z19[building]                                            { builder: building;  height:12; min_height: 0; levels: 5;
+area|z19[building]                                            { builder: building;  height:12; min_height: 0; levels: 5; behaviours: building_modify_facade;
                                                           fill-color:gradient(#c0c0c0, #a9a9a9 50%, #808080); facade-builder:empty; material:Materials/Buildings/Building;
                                                           roof-color:gradient(#808080, #606060 50%, #505050); roof-builder:flat; roof-material:Materials/Buildings/Building; }
 
@@ -277,7 +280,7 @@ way|z19[barrier]                                            { builder: barrier; 
 way|z19[height]                                                { height: eval(num(tag('height'))); }
 
 /************************************************** NODES ********************************************/
-node|z19[natural=tree]                                        { builder:tree; foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); material: Materials/Buildings/Building; }
+node|z19[natural=tree]                                        { builder:tree; behaviours: mesh_destroy; foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); material: Materials/Buildings/Building; }
 
 /* Info */
 node|z19[tourism=alpinehut]                                            { rect:0_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:Infos/default_1; }

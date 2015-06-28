@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Tiling;
+using ActionStreetMap.Core.Tiling.Models;
+using ActionStreetMap.Core.Unity;
 using ActionStreetMap.Infrastructure.Reactive;
 using UnityEngine;
 
 namespace Assets.Scripts.MapEditor.Behaviors
 {
     /// <summary> Provides the way to draw lines on game object. </summary>
-    public class TerrainDrawBehaviour : MonoBehaviour
+    public class TerrainDrawBehaviour : MonoBehaviour, IModelBehaviour
     {
         /// <summary> Radius of last point detection logic. </summary>
         public float SensivityRadius = 0.5f;
@@ -17,20 +20,17 @@ namespace Assets.Scripts.MapEditor.Behaviors
         private TerrainInputMode _inputMode = TerrainInputMode.None;
 
         private IMessageBus _messageBus;
-        /// <summary> Messages bus. </summary>
-        public IMessageBus MessageBus
-        {
-            set
-            {
-                _messageBus = value;
-                _messageBus.AsObservable<TerrainInputMode>().Subscribe(m => _inputMode = m );
-            }
-        }
 
         private float _heightError = 0.5f;
         
         // NOTE: Point buffer should be static to allow cross tile selection
         private static readonly List<Vector3> MarkPoints = new List<Vector3>();
+
+        void Start()
+        {
+            _messageBus= ApplicationManager.Instance.GetService<IMessageBus>();
+            _messageBus.AsObservable<TerrainInputMode>().Subscribe(m => _inputMode = m);
+        }
 
         void Update()
         {
@@ -46,7 +46,7 @@ namespace Assets.Scripts.MapEditor.Behaviors
                 SendPolyline();
         }
 
-        private void OnMouseDown()
+        void OnMouseDown()
         {
             if (_inputMode == TerrainInputMode.None)
             {
@@ -141,5 +141,17 @@ namespace Assets.Scripts.MapEditor.Behaviors
                 _messageBus.Send(new TerrainPolygonMessage(MarkPoints.ToList()));
             Clear();
         }
+
+        #region IModelBehaviour implementation
+
+        /// <inheritdoc />
+        public string Name { get { return "terrain_draw"; } }
+
+        /// <inheritdoc />
+        public void Apply(IGameObject go, Model model)
+        {
+        }
+
+        #endregion
     }
 }

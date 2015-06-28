@@ -5,10 +5,6 @@ using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
-using Assets.Scripts.MapEditor;
-using Assets.Scripts.MapEditor.Behaviors;
-using UnityEngine;
-using RenderMode = ActionStreetMap.Core.RenderMode;
 
 namespace Assets.Scripts.Demo
 {
@@ -54,35 +50,6 @@ namespace Assets.Scripts.Demo
                 tile.RenderMode, tile.Width, tile.Height, _stopwatch.ElapsedMilliseconds));
             GC.Collect();
             _stopwatch.Reset();
-
-            if (tile.RenderMode == RenderMode.Overview)
-                return;
-
-            Scheduler.MainThread.Schedule(() =>
-            {
-                foreach (Transform child in tile.GameObject.GetComponent<GameObject>().transform)
-                {
-                    var name = child.gameObject.name;
-                    if (name == "terrain")
-                    {
-                        foreach (Transform cell in child.gameObject.transform)
-                        {
-                            cell.gameObject.AddComponent<ModifyableTerrainBehaviour>().MessageBus = _messageBus;
-                            cell.gameObject.AddComponent<TerrainDrawBehaviour>().MessageBus = _messageBus;
-                        }
-                    }
-                    else if (name.StartsWith("building"))
-                    {
-                        foreach (Transform buildingPart in child.gameObject.transform)
-                            if (buildingPart.name == "facade")
-                                buildingPart.gameObject.AddComponent<ModifyableFacadeBehaviour>();
-                    }
-                    else if(name.StartsWith("tree"))
-                    {
-                        child.gameObject.AddComponent<DestroyableMeshBehaviour>();
-                    }
-                }
-            });
         }
 
         /*private void SaveAsPrefab(GameObject gameObject)

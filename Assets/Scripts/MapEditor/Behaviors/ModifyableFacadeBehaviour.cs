@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Tiling;
+using ActionStreetMap.Core.Tiling.Models;
+using ActionStreetMap.Core.Unity;
 using ActionStreetMap.Explorer.Geometry;
 using ActionStreetMap.Explorer.Interactions;
 using UnityEngine;
@@ -8,17 +11,15 @@ using Debug = UnityEngine.Debug;
 
 namespace Assets.Scripts.MapEditor.Behaviors
 {
-    public class ModifyableFacadeBehaviour : MonoBehaviour
+    public class ModifyableFacadeBehaviour : MonoBehaviour, IModelBehaviour
     {
         private IMeshIndex _meshIndex;
 
-        void Start()
+        void OnMouseDown()
         {
-            _meshIndex = gameObject.GetComponent<MeshIndexBehaviour>().Index;
-        }     
+            if (_meshIndex == null)
+                _meshIndex = gameObject.GetComponent<MeshIndexBehaviour>().Index;
 
-        private void OnMouseDown()
-        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
@@ -29,7 +30,7 @@ namespace Assets.Scripts.MapEditor.Behaviors
             }
         }
 
-        void Modify(MapPoint center)
+        private void Modify(MapPoint center)
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -56,5 +57,17 @@ namespace Assets.Scripts.MapEditor.Behaviors
 
             Debug.Log(String.Format("Processed in {0}ms (incl. collider)", sw.ElapsedMilliseconds));
         }
+
+        #region IModelBehaviour implementation
+
+        /// <inheritdoc />
+        public string Name { get { return "building_modify_facade"; } }
+
+        /// <inheritdoc />
+        public void Apply(IGameObject go, Model model)
+        {
+        }
+
+        #endregion
     }
 }

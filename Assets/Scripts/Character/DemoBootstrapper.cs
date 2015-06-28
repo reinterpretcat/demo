@@ -1,10 +1,13 @@
 ﻿using System;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Tiling;
+using ActionStreetMap.Explorer.Infrastructure;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using Assets.Scripts.Demo;
 using ActionStreetMap.Infrastructure.Bootstrap;
 using ActionStreetMap.Infrastructure.IO;
+using Assets.Scripts.MapEditor.Behaviors;
 
 namespace Assets.Scripts.Character
 {
@@ -32,6 +35,13 @@ namespace Assets.Scripts.Character
 
             // this class will listen messages about tile processing from ASM engine
             _messageListener = new DemoTileListener(_messageBus, _trace);
+
+            // behaviours
+            Container.RegisterInstance(new BehaviourProvider()
+                .Register("terrain_modify", typeof(ModifyableTerrainBehaviour))
+                .Register("terrain_draw", typeof(TerrainDrawBehaviour))
+                .Register("building_modify_facade", typeof(ModifyableFacadeBehaviour))
+                .Register("mesh_destroy", typeof(DestroyableMeshBehaviour)));
 
             return true;
         }

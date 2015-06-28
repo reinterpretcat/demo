@@ -94,7 +94,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scenes\MapLevelAssets\Scripts\AddressViewController.cs" />
     <Compile Include="Assets\Scenes\MapLevelAssets\Scripts\EditorMenuController.cs" />
+    <Compile Include="Assets\Scenes\MapLevelAssets\Scripts\ViewModeController.cs" />
     <Compile Include="Assets\Scenes\MenuAssets\Scripts\OfflineMapsPanelManager.cs" />
     <Compile Include="Assets\Scenes\MenuAssets\Scripts\PanelManager.cs" />
     <Compile Include="Assets\Scenes\MenuAssets\Scripts\PlayGamePanelManager.cs" />

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Tiling;
+using ActionStreetMap.Core.Tiling.Models;
+using ActionStreetMap.Core.Unity;
 using ActionStreetMap.Explorer.Geometry;
 using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Infrastructure.Reactive;
@@ -9,32 +12,25 @@ using Debug = UnityEngine.Debug;
 
 namespace Assets.Scripts.MapEditor.Behaviors
 {
-    public class ModifyableTerrainBehaviour: MonoBehaviour
+    public class ModifyableTerrainBehaviour: MonoBehaviour, IModelBehaviour
     {
         private IMeshIndex _meshIndex;
 
         private static EditorActionMode _action = EditorActionMode.None;
 
-        private IMessageBus _messageBus;
-        /// <summary> Messages bus. </summary>
-        public IMessageBus MessageBus
-        {
-            set
-            {
-                _messageBus = value;
-                _messageBus.AsObservable<EditorActionMode>().Subscribe(m => _action = m );
-            }
-        }
-
         void Start()
         {
-            _meshIndex = gameObject.GetComponent<MeshIndexBehaviour>().Index;
+            ApplicationManager.Instance.GetService<IMessageBus>()
+                .AsObservable<EditorActionMode>().Subscribe(m => _action = m);
         }
 
-        private void OnMouseDown()
+        void OnMouseDown()
         {
             if (_action != EditorActionMode.TerrainUp && _action != EditorActionMode.TerrainDown)
                 return;
+
+            if (_meshIndex == null)
+                _meshIndex = gameObject.GetComponent<MeshIndexBehaviour>().Index;
             
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -46,7 +42,7 @@ namespace Assets.Scripts.MapEditor.Behaviors
             }
         }
 
-        void Modify(MapPoint center, bool upMode)
+        private void Modify(MapPoint center, bool upMode)
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -81,5 +77,22 @@ namespace Assets.Scripts.MapEditor.Behaviors
             sw.Stop();
             Debug.Log(String.Format("Processed in {0}ms (incl. collider). Status: {1} ", sw.ElapsedMilliseconds, isModified));
         }
+
+        #region IModelBehaviour implementation
+
+        /// <inheritdoc />
+        public string Name { get { return "terrain_modify"; } }
+
+        /// <inheritdoc />
+        public void Apply(IGameObject go, Model model)
+        {
+            /*foreach (Transform cell in gameObject.transform)
+            {
+                cell.gameObject.AddComponent<ModifyableTerrainBehaviour>();
+                cell.gameObject.AddComponent<TerrainDrawBehaviour>();
+            }*/
+        }
+
+        #endregion
     }
 }
