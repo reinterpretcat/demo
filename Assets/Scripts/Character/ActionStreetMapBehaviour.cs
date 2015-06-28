@@ -50,6 +50,7 @@ namespace Assets.Scripts.Character
             _messageBus.AsObservable<GameRunner.GameStartedMessage>()
                 .Where(msg => msg.Tile.RenderMode == RenderMode.Scene)
                 .Take(1)
+                .Delay(TimeSpan.FromSeconds(2)) // give extra seconds..
                 .ObserveOnMainThread()
                 .Subscribe(_ =>
                 {
@@ -61,7 +62,7 @@ namespace Assets.Scripts.Character
                 });
 
             // ASM should be started from non-UI thread
-            Scheduler.ThreadPool.Schedule(() => _appManager.RunGame());
+           Observable.Start(() => _appManager.RunGame(), Scheduler.ThreadPool);
         }
 
         #endregion

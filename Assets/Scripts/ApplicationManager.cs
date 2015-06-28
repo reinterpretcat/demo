@@ -9,11 +9,13 @@ using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.IO;
 using ActionStreetMap.Infrastructure.Reactive;
+using ActionStreetMap.Unity.IO;
 using Assets.Scripts.Character;
 using Assets.Scripts.Console;
 using Assets.Scripts.Demo;
 using Assets.Scripts.MapEditor;
 using UnityEngine;
+using Component = ActionStreetMap.Infrastructure.Dependencies.Component;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
 namespace Assets.Scripts
@@ -39,12 +41,12 @@ namespace Assets.Scripts
         private ApplicationManager()
         {
             InitializeFramework();
-            InitializeApplication();
-            //Coordinate = new GeoCoordinate(52.53192, 13.38736);
+        
+            //Coordinate = new GeoCoordinate(52.5192, 13.411);
             Coordinate = new GeoCoordinate(55.75282, 37.62259);
         }
 
-        public static ApplicationManager Instance { get { return Nested.Instance; } }
+        public static ApplicationManager Instance { get { return Nested.__instance; } }
 
         private class Nested
         {
@@ -52,7 +54,7 @@ namespace Assets.Scripts
             // not to mark type as beforefieldinit
             static Nested() { }
 
-            internal static readonly ApplicationManager Instance = new ApplicationManager();
+            internal static readonly ApplicationManager __instance = new ApplicationManager();
         }
 
         #endregion
@@ -90,28 +92,34 @@ namespace Assets.Scripts
                 _container.RegisterInstance<IPathResolver>(new WinPathResolver());
                 // Message bus
                 _container.RegisterInstance(_messageBus);
-                // Build config with default settings
-                var config = ConfigBuilder.GetDefault()
-                    .Build();
+                // File system service
+                _container.Register(Component.For<IFileSystemService>().Use<FileSystemService>().Singleton());
 
-                // Create ASM entry point with settings provided, register custom plugin which adds 
-                // custom logic or replaces default one. Then run bootstrapping process which populates container
-                // with defined implementations.
-                _gameRunner = new GameRunner(_container, config)
-                    .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
-                    .Bootstrap();
+                Observable.Start(() =>
+                {
+                    // Build config with default settings
+                    var config = ConfigBuilder.GetDefault()
+                        .SetSandbox(true)
+                        .Build();
+
+                    // Create ASM entry point with settings provided, register custom plugin which adds 
+                    // custom logic or replaces default one. Then run bootstrapping process which populates container
+                    // with defined implementations.
+                    _gameRunner = new GameRunner(_container, config)
+                        .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
+                        .Bootstrap();
+
+                    // Set up editor
+                    var tileModelEditor = _container.Resolve<ITileModelEditor>();
+                    EditorController.Subscribe(tileModelEditor, _messageBus);
+                });
+              
             }
             catch (Exception ex)
             {
                 _trace.Error(FatalCategoryName, ex, "Cannot initialize ASM framework");
                 throw;
             }
-        }
-
-        private void InitializeApplication()
-        {
-            var tileModelEditor = _container.Resolve<ITileModelEditor>();
-            EditorController.Subscribe(tileModelEditor, _messageBus);
         }
 
         /// <summary> Creates debug console in scene. </summary>
@@ -149,8 +157,6 @@ namespace Assets.Scripts
         public GeoCoordinate Coordinate { get; set; }
 
         public bool IsInitialized { get; private set; }
-
-        public IMessageBus MessageBus { get { return _messageBus; } }
 
         public void RunGame()
         {

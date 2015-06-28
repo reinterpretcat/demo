@@ -22,9 +22,30 @@ namespace Assets.Scripts.MapEditor.Behaviors
         private IMessageBus _messageBus;
 
         private float _heightError = 0.5f;
+
+        private static Material LineMaterial = CreateMaterial();
         
         // NOTE: Point buffer should be static to allow cross tile selection
         private static readonly List<Vector3> MarkPoints = new List<Vector3>();
+
+        private static Material CreateMaterial()
+        {
+            return new Material(
+                 @"Shader ""Lines/Colored Blended"" {
+                     SubShader {
+                         Tags { ""RenderType""=""Opaque"" }
+                         Pass {
+                             ZWrite On
+                             ZTest LEqual
+                             Cull Off
+                             Fog { Mode Off }
+                             BindChannels {
+                                 Bind ""vertex"", vertex Bind ""color"", color
+                             }
+                         }
+                     }
+                 }");
+        }
 
         void Start()
         {
@@ -74,8 +95,13 @@ namespace Assets.Scripts.MapEditor.Behaviors
                 MarkPoints.Any(mark => Vector3.Distance(mark, point) <= SensivityRadius);
         }
 
-        void DrawConnectingLines()
+        void OnRenderObject()
         {
+            LineMaterial.SetPass(0);
+
+            GL.PushMatrix();
+            GL.MultMatrix(transform.localToWorldMatrix);
+
             if (MarkPoints.Count > 0)
             {
                 var count = MarkPoints.Count;
@@ -103,18 +129,7 @@ namespace Assets.Scripts.MapEditor.Behaviors
                     GL.End();
                 }
             }
-        }
-
-        /// <summary> To show the lines in the game window when it is running. </summary>
-        void OnPostRender()
-        {
-            DrawConnectingLines();
-        }
-
-        /// <summary> To show the lines in the editor. </summary>
-        void OnDrawGizmos()
-        {
-            DrawConnectingLines();
+            GL.PopMatrix();
         }
 
         private void Clear()

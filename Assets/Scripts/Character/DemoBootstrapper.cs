@@ -30,9 +30,6 @@ namespace Assets.Scripts.Character
 
         public override bool Run()
         {
-            // NOTE Use this for web builds:
-            //Container.Register(Component.For<IFileSystemService>().Use<WebFileSystemService>().Singleton());
-
             // this class will listen messages about tile processing from ASM engine
             _messageListener = new DemoTileListener(_messageBus, _trace);
 

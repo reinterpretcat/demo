@@ -44,7 +44,7 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
 
         void Start ()
         {
-            _messageBus = ApplicationManager.Instance.MessageBus;
+            _messageBus = ApplicationManager.Instance.GetService<IMessageBus>();
 
             ListenMainMenu();
             ListenAddMenu();
