@@ -13,7 +13,7 @@ namespace Assets.Scripts.MapEditor.Behaviors
     public class TerrainDrawBehaviour : MonoBehaviour, IModelBehaviour
     {
         /// <summary> Radius of last point detection logic. </summary>
-        public float SensivityRadius = 0.5f;
+        public float SensivityRadius = 1f;
         /// <summary> Line color. </summary>
         public Color LineColor = new Color(1, 0, 0, 1);
 
