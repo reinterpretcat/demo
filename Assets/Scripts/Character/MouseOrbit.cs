@@ -20,6 +20,10 @@ namespace Assets.Scripts.Character
 
         private float zoomDistance;
 
+        private float ZoomAmount = 10; //With Positive and negative values
+        private float MaxToClamp = 10;
+        private float ROTSpeed = 10;
+
         void Start()
         {
             var angles = transform.eulerAngles;
@@ -32,12 +36,12 @@ namespace Assets.Scripts.Character
             if (rigidBody)
                 rigidBody.freezeRotation = true;
         }
-        private float ZoomAmount = 10; //With Positive and negative values
-        private float MaxToClamp = 10;
-        private float ROTSpeed = 10;
 
         private void LateUpdate()
         {
+            if (target == null)
+                return;
+            
             zoomDistance += Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
 
             if (target && Input.GetMouseButton(1))
