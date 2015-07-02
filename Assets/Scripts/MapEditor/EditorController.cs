@@ -64,6 +64,7 @@ namespace Assets.Scripts.MapEditor
         /// <summary> Modifies terrain height in given point. </summary>
         public void ModifyTerrain(Vector3 center, bool upMode)
         {
+            // TODO save this event
             var anyCellFound = false;
             foreach (var cell in GetCells(center))
             {

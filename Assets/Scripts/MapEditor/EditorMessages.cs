@@ -39,23 +39,27 @@ namespace Assets.Scripts.MapEditor
         }
     }
 
-    internal sealed class TerrainPolylineMessage
+    internal sealed class TerrainPolylineMessage : MultiplayerMessage
     {
-        public readonly List<Vector3> Polyline;
+        public const short MsgId = 1001;
+        public List<Vector3> Polyline;
+        public override short Id { get { return MsgId; } }
 
-        public TerrainPolylineMessage(List<Vector3> polygon)
+        public override void Serialize(NetworkWriter writer)
         {
-            Polyline = polygon;
+            base.Serialize(writer);
+            writer.Write(Polyline.Count);
+            foreach (var vector3 in Polyline)
+                writer.Write(vector3);
         }
-    }
 
-    internal sealed class TerrainPolygonMessage
-    {
-        public readonly List<Vector3> Polygon;
-
-        public TerrainPolygonMessage(List<Vector3> polygon)
+        public override void Deserialize(NetworkReader reader)
         {
-            Polygon = polygon;
+            base.Deserialize(reader);
+            int count = reader.ReadInt32();
+            Polyline = new List<Vector3>(count);
+            for(int i=0; i < count; i++)
+                Polyline.Add(reader.ReadVector3());
         }
     }
 }

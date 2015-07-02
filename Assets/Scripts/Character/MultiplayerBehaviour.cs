@@ -1,4 +1,5 @@
-﻿using ActionStreetMap.Core;
+﻿using System;
+using ActionStreetMap.Core;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer.Tiling;
 using ActionStreetMap.Infrastructure.Diagnostic;
@@ -44,6 +45,7 @@ namespace Assets.Scripts.Character
         private void SubscribeToLocalEvents()
         {
             _messageBus.AsObservable<TerrainPointMessage>().Subscribe(msg => _client.Send(msg.Id, msg));
+            _messageBus.AsObservable<TerrainPolylineMessage>().Subscribe(msg => _client.Send(msg.Id, msg));
         }
 
         private void SubscribeToNetworkEvents()
@@ -62,14 +64,26 @@ namespace Assets.Scripts.Character
                         _editorController.ModifyTerrain(message.Point, 
                             message.ActionMode == EditorActionMode.TerrainUp);
                 });
+
+                _client.RegisterHandler(TerrainPolylineMessage.MsgId, msg =>
+                {
+                    var message = msg.ReadMessage<TerrainPolylineMessage>();
+                    // building
+                    if (message.ActionMode == EditorActionMode.AddBuilding)
+                        _editorController.AddBuilding(message.Polyline);
+                    // barrier
+                    else if (message.ActionMode == EditorActionMode.AddBarrier)
+                        _editorController.AddBarrier(message.Polyline);
+                });
             }
 
             if (isServer)
             {
                 NetworkServer.RegisterHandler(TerrainPointMessage.MsgId, msg =>
-                {
-                    NetworkServer.SendToAll(TerrainPointMessage.MsgId, msg.ReadMessage<TerrainPointMessage>());
-                });
+                    NetworkServer.SendToAll(TerrainPointMessage.MsgId, msg.ReadMessage<TerrainPointMessage>()));
+
+                NetworkServer.RegisterHandler(TerrainPolylineMessage.MsgId, msg =>
+                    NetworkServer.SendToAll(TerrainPolylineMessage.MsgId, msg.ReadMessage<TerrainPolylineMessage>()));
             }
         }
 

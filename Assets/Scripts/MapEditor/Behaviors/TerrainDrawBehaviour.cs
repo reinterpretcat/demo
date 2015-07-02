@@ -6,20 +6,19 @@ using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Core.Unity;
 using ActionStreetMap.Infrastructure.Reactive;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Assets.Scripts.MapEditor.Behaviors
 {
     /// <summary> Provides the way to draw lines on game object. </summary>
-    public class TerrainDrawBehaviour : NetworkBehaviour, IModelBehaviour
+    public class TerrainDrawBehaviour : MonoBehaviour, IModelBehaviour
     {
         /// <summary> Radius of last point detection logic. </summary>
         public float SensivityRadius = 1f;
         /// <summary> Line color. </summary>
         public Color LineColor = new Color(1, 0, 0, 1);
 
-        private TerrainInputMode _inputMode = TerrainInputMode.None;
-        private EditorActionMode _actionMode = EditorActionMode.None;
+        private static TerrainInputMode _inputMode = TerrainInputMode.None;
+        private static EditorActionMode _actionMode = EditorActionMode.None;
 
         private IMessageBus _messageBus;
 
@@ -153,14 +152,22 @@ namespace Assets.Scripts.MapEditor.Behaviors
         private void SendPolyline()
         {
             if (MarkPoints.Count > 1)
-                _messageBus.Send(new TerrainPolylineMessage(MarkPoints.ToList()));
+                _messageBus.Send(new TerrainPolylineMessage()
+                {
+                    ActionMode = _actionMode,
+                    Polyline = MarkPoints.ToList()
+                });
             Clear();
         }
 
         private void SendPolygon()
         {
             if (MarkPoints.Count > 2)
-                _messageBus.Send(new TerrainPolygonMessage(MarkPoints.ToList()));
+                _messageBus.Send(new TerrainPolylineMessage()
+                {
+                    ActionMode = _actionMode,
+                    Polyline = MarkPoints.ToList()
+                });
             Clear();
         }
 
