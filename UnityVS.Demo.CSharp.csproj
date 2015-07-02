@@ -136,7 +136,6 @@
     <Compile Include="Assets\Scripts\Demo\WinPathResolver.cs" />
     <Compile Include="Assets\Scripts\MapEditor\Behaviors\DestroyableMeshBehaviour.cs" />
     <Compile Include="Assets\Scripts\MapEditor\Behaviors\ModifyableFacadeBehaviour.cs" />
-    <Compile Include="Assets\Scripts\MapEditor\Behaviors\ModifyableTerrainBehaviour.cs" />
     <Compile Include="Assets\Scripts\MapEditor\Behaviors\TerrainDrawBehaviour.cs" />
     <Compile Include="Assets\Scripts\MapEditor\EditorActionMode.cs" />
     <Compile Include="Assets\Scripts\MapEditor\EditorController.cs" />

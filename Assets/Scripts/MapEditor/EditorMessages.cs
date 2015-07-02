@@ -1,15 +1,41 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Assets.Scripts.MapEditor
 {
-    internal sealed class TerrainPointMessage
+    internal abstract class MultiplayerMessage : MessageBase
     {
-         public readonly Vector3 Point;
+        public EditorActionMode ActionMode;
+        public abstract short Id { get; }
 
-         public TerrainPointMessage(Vector3 point)
+        public override void Serialize(NetworkWriter writer)
         {
-            Point = point;
+            writer.Write((int)ActionMode);
+        }
+
+        public override void Deserialize(NetworkReader reader)
+        {
+            ActionMode = (EditorActionMode) reader.ReadInt32();
+        }
+    }
+
+    internal sealed class TerrainPointMessage : MultiplayerMessage
+    {
+        public const short MsgId = 1000;
+        public Vector3 Point;
+        public override short Id { get { return MsgId; } }
+
+        public override void Serialize(NetworkWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(Point);
+        }
+
+        public override void Deserialize(NetworkReader reader)
+        {
+            base.Deserialize(reader);
+            Point = reader.ReadVector3();
         }
     }
 

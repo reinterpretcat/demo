@@ -96,13 +96,13 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
             TerrainUp.onClick.AsObservable().Subscribe(_ =>
             {
                 _messageBus.Send(EditorActionMode.TerrainUp);
-                _messageBus.Send(TerrainInputMode.None);
+                _messageBus.Send(TerrainInputMode.SetPoint);
             });
 
             TerrainDown.onClick.AsObservable().Subscribe(_ =>
             {
                 _messageBus.Send(EditorActionMode.TerrainDown);
-                _messageBus.Send(TerrainInputMode.None);
+                _messageBus.Send(TerrainInputMode.SetPoint);
             });
         }
 

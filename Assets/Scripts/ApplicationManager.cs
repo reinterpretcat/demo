@@ -108,10 +108,6 @@ namespace Assets.Scripts
                     _gameRunner = new GameRunner(_container, config)
                         .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
                         .Bootstrap();
-
-                    // Set up editor
-                    var tileModelEditor = _container.Resolve<ITileModelEditor>();
-                    EditorController.Subscribe(tileModelEditor, _messageBus);
                 });
               
             }

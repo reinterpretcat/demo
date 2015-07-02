@@ -1,24 +1,24 @@
-canvas { 
-    
-    behaviours: terrain_modify, terrain_draw;
-    
+canvas {
+
+    behaviours: terrain_draw;
+
     material_background: Terrain/TerrainBase;
     material_water: Terrain/TerrainWater;
-       
+
     background_color_noise_freq:                            0.1;
     background_ele_noise_freq:                              0.05;
-    
+
     background_gradient:                                    gradient(#dcdcdc 0%, #c0c0c0 10%, #a9a9a9 50%, #808080);
     water_color_noise_freq:                                 0.1;
     water_ele_noise_freq:                                   0.2;
     water_gradient:                                         gradient(#87cefa, #1e90ff);
     water_surface_level:                                    1;
-    water_bottom_level:                                     3;  
-    
+    water_bottom_level:                                     3;
+
     car_color_noise_freq:                                   0.1;
     car_ele_noise_freq:                                     0.0;
     car_gradient:                                           gradient(#4d4d4d, #404040);
-    
+
     pedestrian_color_noise_freq:                            0.1;
     pedestrian_ele_noise_freq:                              0.2;
     pedestrian_gradient:                                    gradient(#636363, #4d4d4d);
@@ -52,13 +52,13 @@ area|z19[building:min_height]                                { min_height: eval(
 area|z19[min_height]                                            { min_height: eval(num(tag('min_height'))); }
 
 area|z19[building=yes],
-area|z19[building:part]                                        { part: true; }    
+area|z19[building:part]                                        { part: true; }
 
 area|z19[building=residential],
 area|z19[building=residental]                                { facade-builder: window; }
 
 area|z19[building:shape=sphere]                                { builder: sphere; }
-area|z19[building:shape=cylinder]                            { builder: cylinder; }                    
+area|z19[building:shape=cylinder]                            { builder: cylinder; }
 
 
 area|z19[building=bridge]                                    { height:0.1; }
@@ -180,7 +180,7 @@ area|z19[building:shape=pyramidal]                            { roof-builder: py
 
 area|z19[roof:height]                                        { roof-height: eval(num(tag('roof:height')))}
 
-area|z19[man_made=bridge]                                    { builder: building; height:0.5; min_height: 0; 
+area|z19[man_made=bridge]                                    { builder: building; height:0.5; min_height: 0;
                                                           fill-color:gradient(#666666, #000000 50%, #000000); facade-builder:empty; material:Materials/Buildings/Building;
                                                           roof-color:gradient(#666666, #000000 50%, #000000); roof-builder:flat; roof-material:Materials/Buildings/Building; }
 
@@ -213,14 +213,14 @@ area[amenity=school],
 area[amenity=hospital],
 area[amenity=kindergarten]                                 { fill-color: gradient(#fcdd76, #a9a9a9 20%, #909090 70%, #556b2f); }
 
-/* green zones */       
-area[landuse=industrial],                                                                                                 
+/* green zones */
+area[landuse=industrial],
 area[landuse=railway]                                    { builder: surface; fill-color:gradient(#7d7d7d, #707070); }
 
-     
+
 area[leisure=park]                                       { builder: surface; fill-color: gradient(#98fb98, #adff2f 5%, #006400 10%, #556b2f 80%, #b8860b); }
 
-area[natural=wood],    
+area[natural=wood],
 area[landuse=forest]                                      { builder: surface; forest:true; fill-color: gradient(#98fb98, #064807 10%, #032804 50%, #b8860b); foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); tree-freq:0.05; material: Materials/Buildings/Building; }
 
 area[landuse=farmland],
@@ -233,16 +233,16 @@ area[landuse=meadow]                                      { builder: surface; fi
 area[leisure=recreation_ground]                            { builder: surface; fill-color: gradient(#0d81ff, #0b6fdb 50%, #063b75); }
 
 /* water */
-area[natural=water],    
-area[landuse=basin],    
-area[waterway=riverbank], 
+area[natural=water],
+area[landuse=basin],
+area[waterway=riverbank],
 area[waterway=dock]                                        { fill-color: gradient(#1a9fa4, #0a3c3e 50%, #000000); builder: water; }
 
 
 /************************************************** WAYS ********************************************/
 way[waterway],
 way[waterway][name]                                        { fill-color: gradient(#1a9fa4, #0a3c3e 50%, #000000); builder: water; }
-                                                        
+
 /* roads */
 way[highway]                                            { builder:road; width:3; type:pedestrian; }
 
@@ -261,7 +261,7 @@ way[highway=motorway],
 way[highway=motorway_link]                                { fill-color: gradient(#18d2f9, #0e7c93 50%, #04262d); width:11; type:car; }
 
 
-            
+
 way[highway=secondary],
 way[highway=secondary_link]                                { fill-color: gradient(#0e4eff, #0a37b4 50%, #04184e); width:9; type:car; }
 
@@ -546,6 +546,6 @@ node|z19[waterway=weir]                                                { rect:52
 
 /* Shouldn't be shown */
 way[level<0],
-way[layer<0],                                             
+way[layer<0],
 area[level<0],
 area[man_made!=bridge][layer<0]                            { skip:true;}

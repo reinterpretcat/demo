@@ -6,11 +6,12 @@ using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Core.Unity;
 using ActionStreetMap.Infrastructure.Reactive;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Assets.Scripts.MapEditor.Behaviors
 {
     /// <summary> Provides the way to draw lines on game object. </summary>
-    public class TerrainDrawBehaviour : MonoBehaviour, IModelBehaviour
+    public class TerrainDrawBehaviour : NetworkBehaviour, IModelBehaviour
     {
         /// <summary> Radius of last point detection logic. </summary>
         public float SensivityRadius = 1f;
@@ -18,6 +19,7 @@ namespace Assets.Scripts.MapEditor.Behaviors
         public Color LineColor = new Color(1, 0, 0, 1);
 
         private TerrainInputMode _inputMode = TerrainInputMode.None;
+        private EditorActionMode _actionMode = EditorActionMode.None;
 
         private IMessageBus _messageBus;
 
@@ -51,6 +53,7 @@ namespace Assets.Scripts.MapEditor.Behaviors
         {
             _messageBus= ApplicationManager.Instance.GetService<IMessageBus>();
             _messageBus.AsObservable<TerrainInputMode>().Subscribe(m => _inputMode = m);
+            _messageBus.AsObservable<EditorActionMode>().Subscribe(a => _actionMode = a);
         }
 
         void Update()
@@ -139,7 +142,11 @@ namespace Assets.Scripts.MapEditor.Behaviors
 
         private void SendPoint(Vector3 point)
         {
-            _messageBus.Send(new TerrainPointMessage(point));
+            _messageBus.Send(new TerrainPointMessage()
+            {
+                ActionMode = _actionMode,
+                Point = point
+            });
             Clear();
         }
 
