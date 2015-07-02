@@ -16,7 +16,11 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
         public Button OverviewButton;
         public Button SceneButton;
 
-        public GameObject Character;
+        private GameObject _character;
+        private GameObject Character
+        {
+            get { return _character ?? (_character = FindObjectOfType<ActionStreetMapBehaviour>().gameObject); }
+        }
 
         private ApplicationManager _appManager;
 
@@ -34,6 +38,9 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
 
         private void SwitchSceneMode(bool isToOverview)
         {
+            if (Character == null)
+                return;
+
             CameraScene.orthographic = isToOverview;
 
             // disable MouseOrbit/ThirdPersonController script to prevent interference with animation
@@ -49,6 +56,7 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
 
             // setup animation
             var cameraAnimation = CameraScene.GetComponent<CameraAnimation>();
+            cameraAnimation.Target = Character;
             cameraAnimation.Play(2, isToOverview);
             Observable.FromEvent<EventHandler>(
                 g => OnFinishAnimation,
