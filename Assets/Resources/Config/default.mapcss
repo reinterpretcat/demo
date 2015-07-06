@@ -10,7 +10,7 @@ canvas {
 
     background_gradient:                                    gradient(#dcdcdc 0%, #c0c0c0 10%, #a9a9a9 50%, #808080);
     water_color_noise_freq:                                 0.1;
-    water_ele_noise_freq:                                   0.2;
+    water_ele_noise_freq:                                   0.15;
     water_gradient:                                         gradient(#87cefa, #1e90ff);
     water_surface_level:                                    1;
     water_bottom_level:                                     3;
@@ -20,7 +20,7 @@ canvas {
     car_gradient:                                           gradient(#4d4d4d, #404040);
 
     pedestrian_color_noise_freq:                            0.1;
-    pedestrian_ele_noise_freq:                              0.2;
+    pedestrian_ele_noise_freq:                              0.1;
     pedestrian_gradient:                                    gradient(#636363, #4d4d4d);
 }
 /* flat areas, general rules */
