@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using ActionStreetMap.Core;
+using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Core.Unity;
-using ActionStreetMap.Explorer.Geometry;
 using ActionStreetMap.Explorer.Interactions;
+using ActionStreetMap.Explorer.Scene;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -25,12 +25,11 @@ namespace Assets.Scripts.MapEditor.Behaviors
             if (Physics.Raycast(ray, out hit))
             {
                 var point = hit.point;
-                var center = new MapPoint(point.x, point.z, point.y);
-                Modify(center);
+                Modify(point);
             }
         }
 
-        private void Modify(MapPoint center)
+        private void Modify(Vector3 center)
         {
             var sw = new Stopwatch();
             sw.Start();

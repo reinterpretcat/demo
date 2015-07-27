@@ -1,4 +1,5 @@
 ﻿using ActionStreetMap.Core;
+using ActionStreetMap.Core.Geometry;
 using UnityEngine;
 
 namespace Assets.Scripts.Character
@@ -40,7 +41,7 @@ namespace Assets.Scripts.Character
                 new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane));
 
             ApplicationManager.Instance
-                .Move(new MapPoint(centerOfScreen.x, centerOfScreen.z, centerOfScreen.y));
+                .Move(new Vector2d(centerOfScreen.x, centerOfScreen.z));
         }
     }
 }

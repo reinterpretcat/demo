@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer;
 using ActionStreetMap.Explorer.Infrastructure;
@@ -34,16 +35,16 @@ namespace Assets.Scripts
         private GameRunner _gameRunner;
 
         private ITileController _tileController;
-        private IPositionObserver<MapPoint> _positionObserver;
+        private IPositionObserver<Vector2d> _positionObserver;
 
         #region Singleton implementation
 
         private ApplicationManager()
         {
             InitializeFramework();
-        
-            //Coordinate = new GeoCoordinate(52.5192, 13.411);
-            Coordinate = new GeoCoordinate(55.75282, 37.62259);
+
+            Coordinate = new GeoCoordinate(52.53192, 13.38736);
+            //Coordinate = new GeoCoordinate(55.75282, 37.62259);
         }
 
         public static ApplicationManager Instance { get { return Nested.__instance; } }
@@ -79,7 +80,7 @@ namespace Assets.Scripts
             UnityMainThreadDispatcher.RegisterUnhandledExceptionCallback(ex =>
                 _trace.Error(FatalCategoryName, ex, "Unhandled exception"));
 
-            // Console is way to debug/investigate app behavior on real devices when 
+            // Console is way to debug/investigate app behavior on real devices when
             // regular debugger is not applicable
             CreateConsole(false);
 
@@ -99,17 +100,18 @@ namespace Assets.Scripts
                 {
                     // Build config with default settings
                     var config = ConfigBuilder.GetDefault()
+                        .SetLocalMapData(@"g:\__ASM\__repository\_index\Index_Berlin")
                         .SetSandbox(true)
                         .Build();
 
-                    // Create ASM entry point with settings provided, register custom plugin which adds 
+                    // Create ASM entry point with settings provided, register custom plugin which adds
                     // custom logic or replaces default one. Then run bootstrapping process which populates container
                     // with defined implementations.
                     _gameRunner = new GameRunner(_container, config)
                         .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
                         .Bootstrap();
                 });
-              
+
             }
             catch (Exception ex)
             {
@@ -132,7 +134,7 @@ namespace Assets.Scripts
 
         #endregion
 
-        #region Service locator 
+        #region Service locator
 
         /// <summary> Gets service of T from container. </summary>
         public T GetService<T>()
@@ -170,12 +172,12 @@ namespace Assets.Scripts
             }
         }
 
-        public void Move(MapPoint point)
+        public void Move(Vector2d point)
         {
             Scheduler.ThreadPool.Schedule(() => _positionObserver.OnNext(point));
         }
 
-        public void SwitchMode(RenderMode renderMode, MapRectangle rectange)
+        public void SwitchMode(RenderMode renderMode, Rectangle2d rectange)
         {
             _tileController.Mode = renderMode;
             _tileController.Viewport = rectange;

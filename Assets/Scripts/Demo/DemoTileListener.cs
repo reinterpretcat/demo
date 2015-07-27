@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Core.Tiling.Models;
 using ActionStreetMap.Infrastructure.Diagnostic;
@@ -33,11 +34,11 @@ namespace Assets.Scripts.Demo
             _trace.Debug(LogTag, "Tile destroyed: center:{0}", tile.MapCenter.ToString());
         }
 
-        public void OnTileFound(Tile tile, MapPoint position)
+        public void OnTileFound(Tile tile, Vector2d position)
         {
         }
 
-        public void OnTileBuildStarted(MapPoint center)
+        public void OnTileBuildStarted(Vector2d center)
         {
             _stopwatch.Start();
             _trace.Debug(LogTag, "Tile build begin: center:{0}", center.ToString());

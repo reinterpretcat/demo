@@ -1,5 +1,6 @@
 ﻿using System;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts;
 using Assets.Scripts.Character;
@@ -84,10 +85,10 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
             Character.GetComponent<ThirdPersonController>().enabled = !isToOverview;
 
             _appManager.SwitchMode(isToOverview ? RenderMode.Overview : RenderMode.Scene,
-                new MapRectangle(0, 0, viewportWidth, viewportHeight));
+                new Rectangle2d(0, 0, viewportWidth, viewportHeight));
             
             var position = Character.transform.position;
-            _appManager.Move(new MapPoint(position.x, position.z, position.y));
+            _appManager.Move(new Vector2d(position.x, position.z));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ActionStreetMap.Core;
+using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Scene;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer.Interactions;
@@ -22,7 +22,7 @@ namespace Assets.Scripts.MapEditor
         private readonly ITrace _trace;
 
         /// <summary> Creates instance of <see cref="EditorController"/>. </summary>
-        public EditorController(ITileController tileController, ITileModelEditor tileModelEditor, 
+        public EditorController(ITileController tileController, ITileModelEditor tileModelEditor,
             ITrace trace)
         {
             _tileController = tileController;
@@ -36,7 +36,7 @@ namespace Assets.Scripts.MapEditor
             _tileModelEditor.AddBuilding(new Building()
             {
                 Height = 0,
-                Footprint = footPrint.Select(p => new MapPoint(p.x, p.z, p.y)).ToList()
+                Footprint = footPrint.Select(p => new Vector2d(p.x, p.z)).ToList()
             });
         }
 
@@ -46,7 +46,7 @@ namespace Assets.Scripts.MapEditor
             _tileModelEditor.AddBarrier(new Barrier()
             {
                 Height = 0,
-                Footprint = footPrint.Select(p => new MapPoint(p.x, p.z, p.y)).ToList()
+                Footprint = footPrint.Select(p => new Vector2d(p.x, p.z)).ToList()
             });
         }
 
@@ -55,7 +55,7 @@ namespace Assets.Scripts.MapEditor
         {
             _tileModelEditor.AddTree(new Tree()
             {
-                Point = new MapPoint(point.x, point.z, point.y)
+                Point = new Vector2d(point.x, point.z)
             });
         }
 
@@ -76,8 +76,7 @@ namespace Assets.Scripts.MapEditor
                 const float radius = 5;
 
                 bool isModified = false;
-                meshIndex.Query(new MapPoint(center.x, center.z, center.y), radius, vertices, 
-                    (i, distance, _) =>
+                meshIndex.Query(center, radius, vertices, (i, distance, _) =>
                 {
                     var vertex = vertices[i];
                     float heightDiff = (distance - radius) / 2;
@@ -94,18 +93,18 @@ namespace Assets.Scripts.MapEditor
                     mesh.RecalculateBounds();
                     mesh.RecalculateNormals();
 
-                    UnityEngine.Object.DestroyImmediate(cell.GetComponent<MeshCollider>());
-                    cell.AddComponent<MeshCollider>();
+                    //UnityEngine.Object.DestroyImmediate(cell.GetComponent<MeshCollider>());
+                    //cell.AddComponent<MeshCollider>();
                 }
             }
 
             if (!anyCellFound)
-                _trace.Warn(CategoryName, "Cannot find any terrain cell");           
+                _trace.Warn(CategoryName, "Cannot find any terrain cell");
         }
 
         private IEnumerable<GameObject> GetCells(Vector3 point)
         {
-            var tile = _tileController.GetTile(new MapPoint(point.x, point.z, point.y));
+            var tile = _tileController.GetTile(new Vector2d(point.x, point.z));
             var tileObject = tile.GameObject.GetComponent<GameObject>();
 
             foreach (Transform child in tileObject.transform)

@@ -1,6 +1,7 @@
 ﻿using System;
 using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Core;
+using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Explorer;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -29,7 +30,7 @@ namespace Assets.Scripts.Character
             if (isLocalPlayer && _appManager.IsInitialized && _position != transform.position)
             {
                 _position = transform.position;
-                _appManager.Move(new MapPoint(_position.x, _position.z, _position.y));
+                _appManager.Move(new Vector2d(_position.x, _position.z));
             }
         }
 
@@ -58,7 +59,7 @@ namespace Assets.Scripts.Character
                 {
                     var position = transform.position;
                     var elevation = _appManager.GetService<IElevationProvider>()
-                        .GetElevation(new MapPoint(position.x, position.z));
+                        .GetElevation(new Vector2d(position.x, position.z));
                     transform.position = new Vector3(position.x, elevation + 90, position.z);
                     thirdPersonControll.gravity = _initialGravity;
                 });
