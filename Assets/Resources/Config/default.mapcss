@@ -1,6 +1,6 @@
 canvas {
 
-    behaviours: terrain_draw;
+    behaviours: terrain_draw, mesh_modify;
 
     material_background: Terrain/TerrainBase;
     material_water: Terrain/TerrainWater;
@@ -34,7 +34,7 @@ area|z19[man_made=tower],
 area|z19[building:levels],
 area|z19[building:shape],
 area|z19[building:part],
-area|z19[building]                                            { builder: building;  height:12; min_height: 0; levels: 5; behaviours: building_modify_facade;
+area|z19[building]                                            { builder: building;  height:12; min_height: 0; levels: 5; behaviours: mesh_modify;
                                                           fill-color:gradient(#c0c0c0, #a9a9a9 50%, #808080); facade-builder:empty; material:Materials/Buildings/Building;
                                                           roof-color:gradient(#808080, #606060 50%, #505050); roof-builder:flat; roof-material:Materials/Buildings/Building; }
 
@@ -275,7 +275,7 @@ way[highway=service]                                    { fill-color: gradient(#
 
 way[highway=footway]                                     { width:2; type:pedestrian; }
 
-way|z19[barrier]                                            { builder: barrier; fill-color: gradient(#a0a0a0, #808080); material: Materials/Buildings/Building; height:2; width:0.2;  }
+way|z19[barrier]                                            { builder: barrier; fill-color: gradient(#a0a0a0, #808080); material: Materials/Buildings/Building; height:3; color_noise_freq: 0.3;  }
 
 way|z19[height]                                                { height: eval(num(tag('height'))); }
 

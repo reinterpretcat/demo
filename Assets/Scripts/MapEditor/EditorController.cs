@@ -6,7 +6,7 @@ using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Explorer.Tiling;
 using ActionStreetMap.Infrastructure.Diagnostic;
-
+using Assets.Scripts.MapEditor.Behaviors;
 using UnityEngine;
 using Tree = ActionStreetMap.Core.Scene.Tree;
 
@@ -64,7 +64,11 @@ namespace Assets.Scripts.MapEditor
         /// <summary> Modifies terrain height in given point. </summary>
         public void ModifyTerrain(Vector3 center, bool upMode)
         {
-            // TODO save this event
+            const float radius = 5;
+            var forceDirection = upMode ? new Vector3(0, 1, 0) : new Vector3(0, -1, 0);
+            BehaviourHelper.Modify(forceDirection, center, radius);
+
+           /* // TODO save this event
             var anyCellFound = false;
             foreach (var cell in GetCells(center))
             {
@@ -99,10 +103,10 @@ namespace Assets.Scripts.MapEditor
             }
 
             if (!anyCellFound)
-                _trace.Warn(CategoryName, "Cannot find any terrain cell");
+                _trace.Warn(CategoryName, "Cannot find any terrain cell");*/
         }
 
-        private IEnumerable<GameObject> GetCells(Vector3 point)
+        /*private IEnumerable<GameObject> GetCells(Vector3 point)
         {
             var tile = _tileController.GetTile(new Vector2d(point.x, point.z));
             var tileObject = tile.GameObject.GetComponent<GameObject>();
@@ -119,7 +123,7 @@ namespace Assets.Scripts.MapEditor
                     }
                 }
             }
-        }
+        }*/
 
         #endregion
     }
