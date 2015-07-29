@@ -12,8 +12,8 @@ namespace Assets.Scripts.MapEditor.Behaviors
             foreach (var hitCollider in hitColliders)
             {
                 var collidePoint = hitCollider.ClosestPointOnBounds(epicenter);
-                var vertices = hitCollider.gameObject
-                    .GetComponent<MeshFilter>().mesh.vertices;
+                var mesh = hitCollider.gameObject.GetComponent<MeshFilter>().mesh;
+                var vertices = mesh.vertices;
 
                 var meshIndexBehavior = hitCollider.gameObject.GetComponent<MeshIndexBehaviour>();
                 meshIndexBehavior.IsMeshModified = meshIndexBehavior
@@ -28,6 +28,9 @@ namespace Assets.Scripts.MapEditor.Behaviors
                         Radius = radius,
                         Vertices = vertices
                     });
+
+                if (meshIndexBehavior.IsMeshModified)
+                    mesh.vertices = vertices;
             }
         }
     }
