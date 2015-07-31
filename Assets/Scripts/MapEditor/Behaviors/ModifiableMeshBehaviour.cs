@@ -20,10 +20,16 @@ namespace Assets.Scripts.MapEditor.Behaviors
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                var point = hit.point;
                 const float radius = 2;
                 // TODO this should be changed with adding weapons
-                BehaviourHelper.Modify(transform.forward, point, radius);
+                BehaviourHelper.Modify(new MeshQuery()
+                {
+                    Epicenter = hit.point,
+                    Radius = radius,
+                    ForceDirection = transform.forward,
+                    ForcePower = 1,
+                    OffsetThreshold = 1,
+                });
             }
         }
 

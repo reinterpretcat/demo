@@ -6,33 +6,24 @@ namespace Assets.Scripts.MapEditor.Behaviors
 {
     static class BehaviourHelper
     {
-        public static void Modify(Vector3 forceDirection, Vector3 epicenter, float radius)
+        public static void Modify(MeshQuery query)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(epicenter, radius);
+            Collider[] hitColliders = Physics.OverlapSphere(query.Epicenter, query.Radius);
             foreach (var hitCollider in hitColliders)
             {
                 var meshIndexBehavior = hitCollider.gameObject.GetComponent<MeshIndexBehaviour>();
                 if (meshIndexBehavior == null)
                     continue;
 
-                var collidePoint = hitCollider.ClosestPointOnBounds(epicenter);
+                query.CollidePoint = hitCollider.ClosestPointOnBounds(query.Epicenter);
+                query.ForceDirection = query.CollidePoint - query.Epicenter;
                 var mesh = hitCollider.gameObject.GetComponent<MeshFilter>().mesh;
-                var vertices = mesh.vertices;
-                var index = meshIndexBehavior.Index;
+                query.Vertices = mesh.vertices;
 
-                meshIndexBehavior.IsMeshModified = index.Modify(new MeshQuery()
-                    {
-                        Epicenter = epicenter,
-                        CollidePoint = collidePoint,
-                        ForceDirection = forceDirection,
-                        ForcePower = 1,
-                        OffsetThreshold = 1,
-                        Radius = radius,
-                        Vertices = vertices
-                    }) > 0;
+                meshIndexBehavior.IsMeshModified = meshIndexBehavior.Index.Modify(query) > 0;
 
                 if (meshIndexBehavior.IsMeshModified)
-                    mesh.vertices = vertices;
+                    mesh.vertices = query.Vertices;
             }
         }
     }

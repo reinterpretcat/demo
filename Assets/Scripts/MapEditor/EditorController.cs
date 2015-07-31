@@ -4,6 +4,7 @@ using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Scene;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer.Interactions;
+using ActionStreetMap.Explorer.Scene;
 using ActionStreetMap.Explorer.Tiling;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using Assets.Scripts.MapEditor.Behaviors;
@@ -66,7 +67,14 @@ namespace Assets.Scripts.MapEditor
         {
             const float radius = 5;
             var forceDirection = upMode ? new Vector3(0, 1, 0) : new Vector3(0, -1, 0);
-            BehaviourHelper.Modify(forceDirection, center, radius);
+            BehaviourHelper.Modify(new MeshQuery()
+            {
+                Epicenter = center,
+                Radius = radius,
+                ForceDirection = forceDirection,
+                ForcePower = 1,
+                OffsetThreshold = 1,
+            });
         }
 
         #endregion
