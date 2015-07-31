@@ -11,14 +11,16 @@ namespace Assets.Scripts.MapEditor.Behaviors
             Collider[] hitColliders = Physics.OverlapSphere(epicenter, radius);
             foreach (var hitCollider in hitColliders)
             {
+                var meshIndexBehavior = hitCollider.gameObject.GetComponent<MeshIndexBehaviour>();
+                if (meshIndexBehavior == null)
+                    continue;
+
                 var collidePoint = hitCollider.ClosestPointOnBounds(epicenter);
                 var mesh = hitCollider.gameObject.GetComponent<MeshFilter>().mesh;
                 var vertices = mesh.vertices;
+                var index = meshIndexBehavior.Index;
 
-                var meshIndexBehavior = hitCollider.gameObject.GetComponent<MeshIndexBehaviour>();
-                meshIndexBehavior.IsMeshModified = meshIndexBehavior
-                    .Index
-                    .Modify(new MeshQuery()
+                meshIndexBehavior.IsMeshModified = index.Modify(new MeshQuery()
                     {
                         Epicenter = epicenter,
                         CollidePoint = collidePoint,
@@ -27,7 +29,7 @@ namespace Assets.Scripts.MapEditor.Behaviors
                         OffsetThreshold = 1,
                         Radius = radius,
                         Vertices = vertices
-                    });
+                    }) > 0;
 
                 if (meshIndexBehavior.IsMeshModified)
                     mesh.vertices = vertices;

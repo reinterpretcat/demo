@@ -67,63 +67,7 @@ namespace Assets.Scripts.MapEditor
             const float radius = 5;
             var forceDirection = upMode ? new Vector3(0, 1, 0) : new Vector3(0, -1, 0);
             BehaviourHelper.Modify(forceDirection, center, radius);
-
-           /* // TODO save this event
-            var anyCellFound = false;
-            foreach (var cell in GetCells(center))
-            {
-                anyCellFound = true;
-                var meshIndex = cell.GetComponent<MeshIndexBehaviour>().Index;
-                var mesh = cell.GetComponent<MeshFilter>().mesh;
-                var vertices = mesh.vertices;
-
-                const float radius = 5;
-
-                bool isModified = false;
-                meshIndex.Query(center, radius, vertices, (i, distance, _) =>
-                {
-                    var vertex = vertices[i];
-                    float heightDiff = (distance - radius) / 2;
-                    vertices[i] = new Vector3(
-                        vertex.x,
-                        vertex.y + (upMode ? -heightDiff : heightDiff),
-                        vertex.z);
-                    isModified = true;
-                });
-
-                if (isModified)
-                {
-                    mesh.vertices = vertices;
-                    mesh.RecalculateBounds();
-                    mesh.RecalculateNormals();
-
-                    //UnityEngine.Object.DestroyImmediate(cell.GetComponent<MeshCollider>());
-                    //cell.AddComponent<MeshCollider>();
-                }
-            }
-
-            if (!anyCellFound)
-                _trace.Warn(CategoryName, "Cannot find any terrain cell");*/
         }
-
-        /*private IEnumerable<GameObject> GetCells(Vector3 point)
-        {
-            var tile = _tileController.GetTile(new Vector2d(point.x, point.z));
-            var tileObject = tile.GameObject.GetComponent<GameObject>();
-
-            foreach (Transform child in tileObject.transform)
-            {
-                var name = child.gameObject.name;
-                if (name == "terrain")
-                {
-                    foreach (Transform cell in child.gameObject.transform)
-                    {
-                        if (cell.gameObject.GetComponent<Renderer>().bounds.Contains(point))
-                            yield return cell.gameObject;
-                    }
-                }
-            }
-        }*/
 
         #endregion
     }

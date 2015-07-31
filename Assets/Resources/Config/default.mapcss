@@ -1,6 +1,6 @@
 canvas {
 
-    behaviours: terrain_draw, mesh_modify;
+    behaviours: terrain_draw;
 
     material_background: Terrain/TerrainBase;
     material_water: Terrain/TerrainWater;
