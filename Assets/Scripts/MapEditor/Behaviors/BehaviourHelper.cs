@@ -20,7 +20,6 @@ namespace Assets.Scripts.MapEditor.Behaviors
                     continue;
 
                 query.CollidePoint = hitCollider.ClosestPointOnBounds(query.Epicenter);
-                query.ForceDirection = query.CollidePoint - query.Epicenter;
                 var mesh = hitCollider.gameObject.GetComponent<MeshFilter>().mesh;
                 query.Vertices = mesh.vertices;
 
@@ -39,8 +38,8 @@ namespace Assets.Scripts.MapEditor.Behaviors
                     meshIndexBehavior.IsMeshModified = true;
                 }
 
-                Debug.Log(String.Format("MeshIndex:{0} modified:{1} scanned tris:{2}", 
-                    hitCollider.name, meshQueryResult.ModifiedVertices, meshQueryResult.ScannedTriangles));
+                Debug.Log(String.Format("MeshIndex:{0} modified:{1} scanned tris:{2}, forceDir:{3}", 
+                    hitCollider.name, meshQueryResult.ModifiedVertices, meshQueryResult.ScannedTriangles, query.ForceDirection));
             }
         }
 
