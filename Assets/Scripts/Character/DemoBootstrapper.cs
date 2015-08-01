@@ -35,9 +35,7 @@ namespace Assets.Scripts.Character
 
             // behaviours
             Container.RegisterInstance(new BehaviourProvider()
-                .Register("terrain_draw", typeof(TerrainDrawBehaviour))
-                .Register("mesh_modify", typeof(ModifiableMeshBehaviour))
-                .Register("mesh_destroy", typeof(DestroyableMeshBehaviour)));
+                .Register("terrain_draw", typeof(TerrainDrawBehaviour)));
 
             return true;
         }

@@ -53,14 +53,16 @@ namespace Assets.Scripts.Character
             {
                 if (_isDestroyed) return;
 
+                Debug.Log("GrenadeBehavior.OnCollisionEnter");
+
                 ContactPoint contact = collision.contacts[0];
                 BehaviourHelper.Modify(new MeshQuery()
                     {
                         Epicenter = contact.point,
                         Radius = ExplosionRadius,
                         ForceDirection = transform.forward,
-                        ForcePower = 1,
-                        OffsetThreshold = 1,
+                        ForcePower = 0.5f,
+                        OffsetThreshold = 1.5f,
                     });
                 Destroy(gameObject);
                 _isDestroyed = true;
