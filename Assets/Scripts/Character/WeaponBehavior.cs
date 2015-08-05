@@ -1,4 +1,5 @@
-﻿using ActionStreetMap.Explorer.Scene;
+﻿using System;
+using ActionStreetMap.Explorer.Scene;
 using Assets.Scripts.MapEditor.Behaviors;
 using UnityEngine;
 
@@ -76,8 +77,8 @@ namespace Assets.Scripts.Character
                         Epicenter = contact.point,
                         Radius = ExplosionRadius,
                         ForceDirection = _direction,
-                        ForcePower = 1f,
                         OffsetThreshold = 2f,
+                        GetForceChange = distance => 2 / ((float)Math.Pow(distance + 1, 1.67))
                     });
                 Destroy(gameObject);
                 _isDestroyed = true;

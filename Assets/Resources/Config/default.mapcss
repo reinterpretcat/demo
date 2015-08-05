@@ -170,10 +170,10 @@ area|z19[building:color]                                        { fill-color:eva
 /* support only mansard/flat so far, so don't eval */
 area|z19[roof:shape=flat]                                    { roof-builder: flat; }
 area|z19[roof:shape=mansard]                                    { roof-builder: flat; }
-/*area|z19[roof:shape=dome]                                    { roof-builder: dome; }
+area|z19[roof:shape=dome]                                    { roof-builder: dome; }
 area|z19[roof:shape=pyramidal]                                { roof-builder: pyramidal; }
 area|z19[roof:shape=gabled]                                    { roof-builder: gabled; }
-area|z19[roof:shape=hipped]                                    { roof-builder: hipped; }*/
+area|z19[roof:shape=hipped]                                    { roof-builder: hipped; }
 /* checked on Eiffel tower, Paris */
 area|z19[building:shape=pyramidal]                            { roof-builder: pyramidal; height:0; roof-height: eval(num(tag('height'))); }
 

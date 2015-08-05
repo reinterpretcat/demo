@@ -19,7 +19,6 @@ namespace Assets.Scripts.MapEditor.Behaviors
                 if (meshIndexBehavior == null)
                     continue;
 
-                query.CollidePoint = hitCollider.ClosestPointOnBounds(query.Epicenter);
                 var mesh = hitCollider.gameObject.GetComponent<MeshFilter>().mesh;
                 query.Vertices = mesh.vertices;
 

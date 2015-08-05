@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Scene;
@@ -72,8 +73,8 @@ namespace Assets.Scripts.MapEditor
                 Epicenter = center,
                 Radius = radius,
                 ForceDirection = forceDirection,
-                ForcePower = 1,
                 OffsetThreshold = 1,
+                GetForceChange = distance => 2 / ((float)Math.Pow(distance + 1, 1.67))
             });
         }
 
