@@ -101,7 +101,6 @@ namespace Assets.Scripts
                     // Build config with default settings
                     var config = ConfigBuilder.GetDefault()
                         .SetLocalMapData(@"g:\__ASM\__repository\_index\Index_Berlin")
-                        .SetSandbox(true)
                         .Build();
 
                     // Create ASM entry point with settings provided, register custom plugin which adds

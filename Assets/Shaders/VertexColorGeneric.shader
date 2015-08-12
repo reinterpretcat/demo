@@ -1,58 +1,40 @@
-﻿Shader "ActionStreetMap/Vertex Color Generic" {
+﻿Shader "ActionStreetMap/Surface colored" {
     Properties {
-        _Color ("Diffuse Color", Color) = (1.0, 1.0, 1.0, 1.0)
+        _Color ("Color", Color) = (1,1,1,1)
+        _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _Glossiness ("Smoothness", Range(0,1)) = 0.1
+        _Metallic ("Metallic", Range(0,1)) = 0.33
     }
     SubShader {
-            Tags { "RenderType" = "Opaque" }
-        Pass {
-            Tags { "LightMode" = "ForwardBase" }
-            CGPROGRAM
-                #pragma vertex vert
-                #pragma fragment frag
-
-                #include "UnityCG.cginc"
-                #include "Lighting.cginc"
-                #include "AutoLight.cginc"
-
-                uniform float4 _Color; 
-
-                struct vertex_input {
-                    float4 vertex : POSITION;
-                    float4 color : COLOR;
-                    float3 normal : NORMAL;
-                };
-
-                struct vertex_output {
-                    float4 pos : POSITION;
-                    float4 color : COLOR;
-                    LIGHTING_COORDS(3, 4)
-                };
-                
-                vertex_output vert(vertex_input v) {
-                    vertex_output o;                   
-                    o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-             
-                    // diffuse lighting
-                    float3 normal_dir = normalize(float4(mul(float4(v.normal, 0.0), _World2Object)));
-                    float3 light_dir = normalize(float4(_WorldSpaceLightPos0));
-                    float3 diffuse_reflection = float4(_LightColor0) * float4(_Color) * max(0.0, dot(normal_dir, light_dir));
-                    
-                    // ambient
-                    float3 ambient_lighting = UNITY_LIGHTMODEL_AMBIENT.rgb * _Color.rgb;
-                    
-                    float3 lightning = diffuse_reflection + ambient_lighting;
-
-                    o.color = lerp(v.color, float4(lightning, 1.0), 0.5);
-                    
-                    TRANSFER_VERTEX_TO_FRAGMENT(o);
-
-                    return o;
-                };
-
-                float4 frag(vertex_output v) : COLOR {
-                    return v.color;
-                };
-            ENDCG    
+        Tags { "RenderType"="Opaque" }
+        LOD 200
+     
+        CGPROGRAM
+        // Physically based Standard lighting model, and enable shadows on all light types
+        #pragma surface surf Standard fullforwardshadows
+ 
+        // Use shader model 3.0 target, to get nicer looking lighting
+        #pragma target 3.0
+ 
+        sampler2D _MainTex;
+ 
+        struct Input {
+            float2 uv_MainTex;
+            float4 color : COLOR;
+        };
+ 
+        half _Glossiness;
+        half _Metallic;
+        fixed4 _Color;
+ 
+        void surf (Input IN, inout SurfaceOutputStandard o) {
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            o.Albedo = c.rgb * IN.color;
+            o.Metallic = _Metallic;
+            o.Smoothness = _Glossiness;
+            o.Alpha = c.a;
         }
+        ENDCG
     }
+    FallBack "Diffuse"
 }
