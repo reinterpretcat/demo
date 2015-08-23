@@ -30,6 +30,7 @@ area[landuse]                                            { builder: surface; fil
 
 /* buildings. */
 area|z19[amenity=shelter][shelter_type=public_transport],
+area|z19[man_made=bridge] ,
 area|z19[man_made=tower],
 area|z19[building:levels],
 area|z19[building:shape],
@@ -179,9 +180,7 @@ area|z19[building:shape=pyramidal]                            { roof-builder: py
 
 area|z19[roof:height]                                        { roof-height: eval(num(tag('roof:height')))}
 
-area|z19[man_made=bridge]                                    { builder: building; height:0.5; min_height: 0;
-                                                          fill-color:gradient(#666666, #000000 50%, #000000); facade-builder:empty; material:vertex_colored;
-                                                          roof-color:gradient(#666666, #000000 50%, #000000); roof-builder:flat; roof-material:vertex_colored; }
+area|z19[man_made=bridge]                                    { height:0.5; min_height: 0;}
 
 area[landuse=residential]                                { fill-color: gradient(#a9a9a9, #a9a9a9 30%, #707070 70%, #556b2f); }
 
