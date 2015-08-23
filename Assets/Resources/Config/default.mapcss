@@ -29,12 +29,12 @@ area[historic=memorial],
 area[landuse]                                            { builder: surface; fill-color: gradient(#10ff00, #0ff000 50%, #098a00); }
 
 /* buildings. */
-area[amenity=shelter][shelter_type=public_transport],
+area|z19[amenity=shelter][shelter_type=public_transport],
 area|z19[man_made=tower],
 area|z19[building:levels],
 area|z19[building:shape],
 area|z19[building:part],
-area|z19[building]                                            { builder: building;  height:12; min_height: 0; levels: 2;
+area|z19[building]                                            { builder: building;  height:12; min_height: 0; levels: 1;
                                                           fill-color:gradient(#c0c0c0, #a9a9a9 50%, #808080); facade-builder:empty; material:vertex_colored;
                                                           roof-color:gradient(#808080, #606060 50%, #505050); roof-builder:flat; roof-material:vertex_colored; 
                                                           floor-front-color:gradient(#f3e2c7, #c19e67 50%, #b68d4c 51%, #e9d4b3);
@@ -55,9 +55,9 @@ area|z19[building=yes],
 area|z19[building:part]                                        { part: true; }
 
 area|z19[building=residential],
-area|z19[building=residental]                                { facade-builder: empty; }
+area|z19[building=residental]                                { facade-builder: empty;}
 
-area|z19[building:shape=sphere]                                { builder: sphere; }
+area|z19[building:shape=sphere]                              { builder: sphere; }
 area|z19[building:shape=cylinder]                            { builder: cylinder; }
 
 
@@ -168,9 +168,8 @@ area|z19[roof:material=wood]                                    { roof-color:gra
 area|z19[building:colour]                                    { fill-color:eval(gradient(tag('building:colour'))); }
 area|z19[building:color]                                        { fill-color:eval(gradient(tag('building:color'))); }
 
-/* support only mansard/flat so far, so don't eval */
 area|z19[roof:shape=flat]                                    { roof-builder: flat; }
-area|z19[roof:shape=mansard]                                    { roof-builder: flat; }
+area|z19[roof:shape=mansard]                                    { roof-builder: mansard; }
 area|z19[roof:shape=dome]                                    { roof-builder: dome; }
 area|z19[roof:shape=pyramidal]                                { roof-builder: pyramidal; }
 area|z19[roof:shape=gabled]                                    { roof-builder: gabled; }
