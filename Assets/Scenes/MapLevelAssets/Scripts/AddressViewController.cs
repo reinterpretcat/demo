@@ -1,7 +1,7 @@
 ﻿using System;
 using ActionStreetMap.Core;
 using ActionStreetMap.Core.Scene;
-using ActionStreetMap.Explorer;
+using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer.Commands;
 using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Infrastructure.Reactive;
@@ -18,7 +18,7 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
         void Start()
         {
             ApplicationManager.Instance.GetService<IMessageBus>()
-                .AsObservable<GameRunner.GameStartedMessage>()
+                .AsObservable<TileLoadFinishMessage>()
                 .Take(1)
                 .ObserveOnMainThread()
                 .Subscribe(_ =>

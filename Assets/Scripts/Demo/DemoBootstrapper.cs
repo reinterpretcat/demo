@@ -1,15 +1,11 @@
-﻿using System;
-using ActionStreetMap.Core;
-using ActionStreetMap.Core.Tiling;
+﻿using ActionStreetMap.Core;
 using ActionStreetMap.Explorer.Infrastructure;
+using ActionStreetMap.Infrastructure.Bootstrap;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
-using Assets.Scripts.Demo;
-using ActionStreetMap.Infrastructure.Bootstrap;
-using ActionStreetMap.Infrastructure.IO;
 using Assets.Scripts.MapEditor.Behaviors;
 
-namespace Assets.Scripts.Character
+namespace Assets.Scripts.Demo
 {
     /// <summary> Adds some specific services to default bootstrapper pipeline. </summary>
     public class DemoBootstrapper: BootstrapperPlugin

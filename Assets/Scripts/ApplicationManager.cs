@@ -5,16 +5,13 @@ using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer;
 using ActionStreetMap.Explorer.Infrastructure;
-using ActionStreetMap.Explorer.Tiling;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.IO;
 using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Unity.IO;
-using Assets.Scripts.Character;
 using Assets.Scripts.Console;
 using Assets.Scripts.Demo;
-using Assets.Scripts.MapEditor;
 using UnityEngine;
 using Component = ActionStreetMap.Infrastructure.Dependencies.Component;
 using RenderMode = ActionStreetMap.Core.RenderMode;
@@ -43,7 +40,7 @@ namespace Assets.Scripts
         {
             InitializeFramework();
 
-            Coordinate = new GeoCoordinate(52.53192, 13.38736);
+            Coordinate = new GeoCoordinate(52.52090, 13.40793);
             //Coordinate = new GeoCoordinate(55.75282, 37.62259);
         }
 
@@ -90,26 +87,29 @@ namespace Assets.Scripts
                 // Trace implementation
                 _container.RegisterInstance<ITrace>(_trace);
                 // Path resolver which knows about current platform
-                _container.RegisterInstance<IPathResolver>(new WinPathResolver());
+                _container.RegisterInstance<IPathResolver>(new PathResolver());
                 // Message bus
                 _container.RegisterInstance(_messageBus);
                 // File system service
-                _container.Register(Component.For<IFileSystemService>().Use<FileSystemService>().Singleton());
+                _container.Register(Component.For<IFileSystemService>()
+#if UNITY_WEBPLAYER
+                    .Use<WebFileSystemService>().Singleton());
+#else
+                    .Use<FileSystemService>().Singleton());
+#endif
+                // Build config with default settings
+                var config = ConfigBuilder.GetDefault()
+#if UNITY_WEBPLAYER
+                    .SetSandbox(true)
+#endif
+                    .Build();
 
-                Observable.Start(() =>
-                {
-                    // Build config with default settings
-                    var config = ConfigBuilder.GetDefault()
-                        .SetLocalMapData(@"g:\__ASM\__repository\_index\Index_Berlin")
-                        .Build();
-
-                    // Create ASM entry point with settings provided, register custom plugin which adds
-                    // custom logic or replaces default one. Then run bootstrapping process which populates container
-                    // with defined implementations.
-                    _gameRunner = new GameRunner(_container, config)
-                        .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
-                        .Bootstrap();
-                });
+                // Create ASM entry point with settings provided, register custom plugin which adds
+                // custom logic or replaces default one. Then run bootstrapping process which populates container
+                // with defined implementations.
+                _gameRunner = new GameRunner(_container, config)
+                    .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
+                    .Bootstrap();
 
             }
             catch (Exception ex)

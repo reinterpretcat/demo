@@ -1,8 +1,7 @@
-﻿using System;
-using ActionStreetMap.Infrastructure.Reactive;
+﻿using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Core;
 using ActionStreetMap.Core.Geometry;
-using ActionStreetMap.Explorer;
+using ActionStreetMap.Core.Tiling;
 using UnityEngine;
 using UnityEngine.Networking;
 using RenderMode = ActionStreetMap.Core.RenderMode;
@@ -39,7 +38,6 @@ namespace Assets.Scripts.Character
         private void Initialize()
         {
             // wait for loading..
-            //gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             var thirdPersonControll = gameObject.GetComponent<ThirdPersonController>();
             _initialGravity = thirdPersonControll.gravity;
             thirdPersonControll.gravity = 0;
@@ -50,10 +48,9 @@ namespace Assets.Scripts.Character
 
             _appManager.CreateConsole(true);
 
-            _messageBus.AsObservable<GameRunner.GameStartedMessage>()
+            _messageBus.AsObservable<TileLoadFinishMessage>()
                 .Where(msg => msg.Tile.RenderMode == RenderMode.Scene)
                 .Take(1)
-                .Delay(TimeSpan.FromSeconds(2)) // give extra seconds..
                 .ObserveOnMainThread()
                 .Subscribe(_ =>
                 {

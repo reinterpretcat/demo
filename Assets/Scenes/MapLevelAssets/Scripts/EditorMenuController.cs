@@ -45,7 +45,6 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
         void Start ()
         {
             _messageBus = ApplicationManager.Instance.GetService<IMessageBus>();
-
             ListenMainMenu();
             ListenAddMenu();
             ListenEditMenu();
@@ -78,8 +77,11 @@ namespace Assets.Scenes.MapLevelAssets.Scripts
 
             BarrierButton.onClick.AsObservable().Subscribe(_ =>
             {
-                _messageBus.Send(EditorActionMode.AddBarrier);
-                _messageBus.Send(TerrainInputMode.DrawLine);
+                //_messageBus.Send(EditorActionMode.AddBarrier);
+                //_messageBus.Send(TerrainInputMode.DrawLine);
+
+                _messageBus.Send(EditorActionMode.TerrainUp);
+                _messageBus.Send(TerrainInputMode.SetPoint);
             });
 
             TreeButton.onClick.AsObservable().Subscribe(_ =>
