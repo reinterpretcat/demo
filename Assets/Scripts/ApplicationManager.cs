@@ -97,11 +97,14 @@ namespace Assets.Scripts
 #else
                     .Use<FileSystemService>().Singleton());
 #endif
+                const float tileSize = 180;
                 // Build config with default settings
                 var config = ConfigBuilder.GetDefault()
 #if UNITY_WEBPLAYER
                     .SetSandbox(true)
 #endif
+                    .SetTileSettings(tileSize, 40)
+                    .SetRenderOptions(RenderMode.Scene, new Rectangle2d(0, 0, tileSize * 3, tileSize * 3))
                     .Build();
 
                 // Create ASM entry point with settings provided, register custom plugin which adds
