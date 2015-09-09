@@ -26,7 +26,7 @@ canvas {
 area[amenity],
 area[natural],
 area[historic=memorial],
-area[landuse]                                            { builder: surface; fill-color: gradient(#10ff00, #0ff000 50%, #098a00); }
+area[landuse]                                            { builders: surface; fill-color: gradient(#10ff00, #0ff000 50%, #098a00); }
 
 /* buildings. */
 area|z19[amenity=shelter][shelter_type=public_transport],
@@ -35,7 +35,7 @@ area|z19[man_made=tower],
 area|z19[building:levels],
 area|z19[building:shape],
 area|z19[building:part],
-area|z19[building]                                            { builder: building;  height:12; min_height: 0; levels: 1;
+area|z19[building]                                            { builders: building;  height:12; min_height: 0; levels: 1;
                                                           fill-color:gradient(#c0c0c0, #a9a9a9 50%, #808080); facade-builder:empty; material:vertex_colored;
                                                           roof-color:gradient(#808080, #606060 50%, #505050); roof-builder:flat; roof-material:vertex_colored; 
                                                           floor-front-color:gradient(#f3e2c7, #c19e67 50%, #b68d4c 51%, #e9d4b3);
@@ -58,8 +58,8 @@ area|z19[building:part]                                        { part: true; }
 area|z19[building=residential],
 area|z19[building=residental]                                { facade-builder: empty;}
 
-area|z19[building:shape=sphere]                              { builder: sphere; }
-area|z19[building:shape=cylinder]                            { builder: cylinder; }
+area|z19[building:shape=sphere]                              { builders: sphere; }
+area|z19[building:shape=cylinder]                            { builders: cylinder; }
 
 
 area|z19[building=bridge]                                    { height:0.1; }
@@ -213,36 +213,36 @@ area[amenity=kindergarten]                                 { fill-color: gradien
 
 /* green zones */
 area[landuse=industrial],
-area[landuse=railway]                                    { builder: surface; fill-color:gradient(#7d7d7d, #707070); }
+area[landuse=railway]                                    { builders: surface; fill-color:gradient(#7d7d7d, #707070); }
 
 
-area[leisure=park]                                       { builder: surface; fill-color: gradient(#98fb98, #adff2f 5%, #006400 10%, #556b2f 80%, #b8860b); }
+area[leisure=park]                                       { builders: surface; fill-color: gradient(#98fb98, #adff2f 5%, #006400 10%, #556b2f 80%, #b8860b); }
 
 area[natural=wood],
-area[landuse=forest]                                      { builder: surface; forest:true; fill-color: gradient(#98fb98, #064807 10%, #032804 50%, #b8860b); foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); tree-freq:0.05; material: vertex_colored; }
+area[landuse=forest]                                      { builders: surface; forest:true; fill-color: gradient(#98fb98, #064807 10%, #032804 50%, #b8860b); foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); tree-freq:0.05; material: vertex_colored; }
 
 area[landuse=farmland],
-area[landuse=scrub]                                       { builder: surface; fill-color:gradient(#adff2f, #006400 30%, #556b2f 90%, #b8860b); }
+area[landuse=scrub]                                       { builders: surface; fill-color:gradient(#adff2f, #006400 30%, #556b2f 90%, #b8860b); }
 
 area[landuse=village_green],
 area[landuse=grass],
-area[landuse=meadow]                                      { builder: surface; fill-color: gradient(#adff2f, #006400 30%, #556b2f 90%, #b8860b); }
+area[landuse=meadow]                                      { builders: surface; fill-color: gradient(#adff2f, #006400 30%, #556b2f 90%, #b8860b); }
 
-area[leisure=recreation_ground]                            { builder: surface; fill-color: gradient(#0d81ff, #0b6fdb 50%, #063b75); }
+area[leisure=recreation_ground]                            { builders: surface; fill-color: gradient(#0d81ff, #0b6fdb 50%, #063b75); }
 
 /* water */
 area[natural=water],
 area[landuse=basin],
 area[waterway=riverbank],
-area[waterway=dock]                                        { fill-color: gradient(#1a9fa4, #0a3c3e 50%, #000000); builder: water; }
+area[waterway=dock]                                        { builders: water; fill-color: gradient(#1a9fa4, #0a3c3e 50%, #000000); }
 
 
 /************************************************** WAYS ********************************************/
 way[waterway],
-way[waterway][name]                                        { fill-color: gradient(#1a9fa4, #0a3c3e 50%, #000000); builder: water; }
+way[waterway][name]                                        { builders: water; fill-color: gradient(#1a9fa4, #0a3c3e 50%, #000000); }
 
 /* roads */
-way[highway]                                            { builder:road; width:2; type:pedestrian; }
+way[highway]                                            { builders:road; width:2; type:pedestrian; }
 
 way[highway=tertiary],
 way[highway=residential],
@@ -273,274 +273,274 @@ way[highway=service]                                    { fill-color: gradient(#
 
 way[highway=footway]                                     { width:2; type:pedestrian; }
 
-way|z19[barrier]                                            { builder: barrier; fill-color: gradient(#a0a0a0, #808080); material: vertex_colored; height:3; color_noise_freq: 0.3;  }
+way|z19[barrier]                                            { builders: barrier; fill-color: gradient(#a0a0a0, #808080); material: vertex_colored; height:3; color_noise_freq: 0.3;  }
 
 way|z19[height]                                                { height: eval(num(tag('height'))); }
 
 /************************************************** NODES ********************************************/
-node|z19[natural=tree]                                        { builder:tree; foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); material: vertex_colored; }
+node|z19[natural=tree]                                        { builders:tree; foliage-color: gradient(#80c34c, #406126 50%, #101809); trunk-color: gradient(#f4a460, #614126 50%, #302013); material: vertex_colored; }
 
 /* Info */
-node|z19[tourism=alpinehut]                                            { rect:0_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=guest_house]                                    { rect:325_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=camp_site]                                            { rect:65_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=caravan_site]                                    { rect:0_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=chalet]                                            { rect:65_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=hostel]                                            { rect:130_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=hotel]                                                { rect:130_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=motel]                                                { rect:65_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=shelter]                                            { rect:130_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=alpinehut]                                            { rect:0_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=guest_house]                                    { rect:325_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=camp_site]                                            { rect:65_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=caravan_site]                                    { rect:0_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=chalet]                                            { rect:65_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=hostel]                                            { rect:130_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=hotel]                                                { rect:130_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=motel]                                                { rect:65_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=shelter]                                            { rect:130_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[tourism=youth_hostel]                                    { rect:195_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=youth_hostel]                                    { rect:195_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=bench]                                                { rect:195_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=courthouse]                                    { rect:195_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=fire_station]                                    { rect:0_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=fountain]                                            { rect:195_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=library]                                            { rect:260_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[leisure=playground]                                    { rect:260_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=police]                                            { rect:260_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=post_box]                                            { rect:65_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=post_office]                                    { rect:130_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=bench]                                                { rect:195_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=courthouse]                                    { rect:195_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=fire_station]                                    { rect:0_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=fountain]                                            { rect:195_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=library]                                            { rect:260_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[leisure=playground]                                    { rect:260_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=police]                                            { rect:260_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=post_box]                                            { rect:65_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=post_office]                                    { rect:130_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=prison]                                            { rect:195_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=public_building]                            { rect:260_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=recycling]                                            { rect:325_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[man_made=survey_point]                                    { rect:325_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=telephone]                                            { rect:325_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=toilets]                                            { rect:325_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=prison]                                            { rect:195_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=public_building]                            { rect:260_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=recycling]                                            { rect:325_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[man_made=survey_point]                                    { rect:325_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=telephone]                                            { rect:325_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=toilets]                                            { rect:325_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=townhall]                                            { rect:130_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=townhall]                                            { rect:130_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[waste],node|z19[amenity=waste_basket]                    { rect:260_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=block]                                                { rect:325_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=bollard]                                            { rect:390_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=cattle_grid]                                    { rect:390_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=cycle_barrier]                                    { rect:390_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=entrance]                                            { rect:390_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=exit]                                                   { rect:390_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=gate]                                                { rect:390_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons;}
-node|z19[barrier=kissing_gate]                                    { rect:390_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=lift_gate]                                            { rect:0_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=step]                                                { rect:65_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=stile]                                                   { rect:130_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[barrier=toll_booth]                                    { rect:195_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=college]                                            { rect:260_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[waste],node|z19[amenity=waste_basket]                    { rect:260_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=block]                                                { rect:325_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=bollard]                                            { rect:390_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=cattle_grid]                                    { rect:390_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=cycle_barrier]                                    { rect:390_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=entrance]                                            { rect:390_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=exit]                                                   { rect:390_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=gate]                                                { rect:390_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons;}
+node|z19[barrier=kissing_gate]                                    { rect:390_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=lift_gate]                                            { rect:0_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=step]                                                { rect:65_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=stile]                                                   { rect:130_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[barrier=toll_booth]                                    { rect:195_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=college]                                            { rect:260_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=nursery]                                            { rect:390_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=nursery]                                            { rect:390_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=school]                                            { rect:455_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=school]                                            { rect:455_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=university]                                    { rect:455_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=bar]                                                { rect:455_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=biergarten]                                    { rect:455_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=cafe]                                                { rect:0_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=drinking_water]                            { rect:65_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=fast_food]                                            { rect:130_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=university]                                    { rect:455_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=bar]                                                { rect:455_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=biergarten]                                    { rect:455_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=cafe]                                                { rect:0_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=drinking_water]                            { rect:65_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=fast_food]                                            { rect:130_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=ice_cream]                                            { rect:325_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=pizza]                                                { rect:390_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=pub]                                                { rect:455_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=restaurant]                                    { rect:520_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=dentist]                                            { rect:520_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=doctors]                                            { rect:520_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=hospital]                                            { rect:520_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=ice_cream]                                            { rect:325_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=pizza]                                                { rect:390_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=pub]                                                { rect:455_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=restaurant]                                    { rect:520_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=dentist]                                            { rect:520_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=doctors]                                            { rect:520_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=hospital]                                            { rect:520_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[shop=optician]                                                { rect:520_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=pharmacy]                                            { rect:520_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=optician]                                                { rect:520_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=pharmacy]                                            { rect:520_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=veterinary]                                    { rect:65_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[wood=coniferous]                                            { rect:130_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=veterinary]                                    { rect:65_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[wood=coniferous]                                            { rect:130_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[landuse=deciduous]                                            { rect:260_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[landuse=grass]                                                { rect:325_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[landuse_hills]                                                { rect:390_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[landuse=quary]                                                { rect:455_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[landuse=scrub]                                                { rect:520_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[landuse=swamp]                                                { rect:585_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=atm]                                                { rect:585_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[landuse=deciduous]                                            { rect:260_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[landuse=grass]                                                { rect:325_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[landuse_hills]                                                { rect:390_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[landuse=quary]                                                { rect:455_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[landuse=scrub]                                                { rect:520_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[landuse=swamp]                                                { rect:585_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=atm]                                                { rect:585_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=bank]                                                   { rect:585_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=bank]                                                   { rect:585_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=bureau_de_change]                            { rect:585_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=bureau_de_change]                            { rect:585_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
 /* check also amenity=place_of_worship */
-node|z19[religion=bahai]                                            { rect:585_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=buddhist]                                            { rect:585_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=christian]                                    { rect:0_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=hindu]                                            { rect:130_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=islamic]                                            { rect:260_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=jain]                                                { rect:390_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=jewish]                                            { rect:520_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=shinto]                                            { rect:650_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=sikh]                                                { rect:650_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[religion=unknown]                                            { rect:650_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=bahai]                                            { rect:585_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=buddhist]                                            { rect:585_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=christian]                                    { rect:0_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=hindu]                                            { rect:130_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=islamic]                                            { rect:260_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=jain]                                                { rect:390_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=jewish]                                            { rect:520_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=shinto]                                            { rect:650_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=sikh]                                                { rect:650_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[religion=unknown]                                            { rect:650_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[boundary=administrative]                            { rect:650_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[natural=cave_entrance]                            { rect:650_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[man_made=crane]                                            { rect:650_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=embassy]                                            { rect:650_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[boundary=administrative]                            { rect:650_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[natural=cave_entrance]                            { rect:650_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[man_made=crane]                                            { rect:650_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=embassy]                                            { rect:650_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[military=bunker]                                            { rect:0_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[historic=mine]                                                { rect:65_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[military=bunker]                                            { rect:0_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=mine]                                                { rect:65_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[mountain_pass]                                                { rect:195_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[natural=peak]                                                { rect:260_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[mountain_pass]                                                { rect:195_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[natural=peak]                                                { rect:260_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[place=city]                                                { rect:390_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[place=hamlet]                                                { rect:455_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[place=suburb]                                                { rect:520_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[place=town]                                                   { rect:585_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[place=village]                                                   { rect:650_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[place=city]                                                { rect:390_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[place=hamlet]                                                { rect:455_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[place=suburb]                                                { rect:520_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[place=town]                                                   { rect:585_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[place=village]                                                   { rect:650_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[man_made=communications_tower]                        { rect:715_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tower:type=observation]                                { rect:715_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[power=tower]                                                { rect:715_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[man_made=water_tower]                                    { rect:715_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[man_made=communications_tower]                        { rect:715_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tower:type=observation]                                { rect:715_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[power=tower]                                                { rect:715_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[man_made=water_tower]                                    { rect:715_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
 /*Not sure here*/
-node|z19[power_source=coal]                                            { rect:715_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[power_source=gas]                                            { rect:715_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[power_source=solar]                                    { rect:715_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[power_source=water]                                    { rect:715_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[power_source=wind]                                            { rect:715_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[power=substation]                                            { rect:715_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[power_source=coal]                                            { rect:715_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[power_source=gas]                                            { rect:715_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[power_source=solar]                                    { rect:715_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[power_source=water]                                    { rect:715_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[power_source=wind]                                            { rect:715_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[power=substation]                                            { rect:715_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[power=transformer]                                            { rect:130_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=alcohol]                                                   { rect:195_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=bakery]                                                { rect:260_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=bicycle]                                                   { rect:0_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=book]                                                       { rect:390_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=butcher]                                                { rect:455_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[power=transformer]                                            { rect:130_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=alcohol]                                                   { rect:195_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=bakery]                                                { rect:260_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=bicycle]                                                   { rect:0_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=book]                                                       { rect:390_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=butcher]                                                { rect:455_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[shop=car]                                                    { rect:585_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=car_repair]                                            { rect:650_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=clothes]                                                { rect:715_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=computer]                                                { rect:780_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=confectionery]                                    { rect:780_65_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=convenience]                                            { rect:780_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=copyshop]                                                { rect:780_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=department_store]                                    { rect:780_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=doityourself]                                            { rect:780_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=cestateagent]                                            { rect:780_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=car]                                                    { rect:585_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=car_repair]                                            { rect:650_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=clothes]                                                { rect:715_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=computer]                                                { rect:780_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=confectionery]                                    { rect:780_65_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=convenience]                                            { rect:780_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=copyshop]                                                { rect:780_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=department_store]                                    { rect:780_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=doityourself]                                            { rect:780_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=cestateagent]                                            { rect:780_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[shop=fish]                                                    { rect:780_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=florist]                                                { rect:780_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=garden_centre]                                    { rect:780_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=gift]                                                    { rect:780_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=greengrocer]                                            { rect:0_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=hairdresser]                                            { rect:65_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=hearing_aids]                                            { rect:130_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=hifi]                                                    { rect:195_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=jewelry]                                                { rect:260_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=fish]                                                    { rect:780_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=florist]                                                { rect:780_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=garden_centre]                                    { rect:780_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=gift]                                                    { rect:780_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=greengrocer]                                            { rect:0_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=hairdresser]                                            { rect:65_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=hearing_aids]                                            { rect:130_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=hifi]                                                    { rect:195_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=jewelry]                                                { rect:260_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[shop=kiosk]                                                { rect:390_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=laundrette]                                            { rect:455_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=marketplace]                                    { rect:520_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=mobile_phone]                                            { rect:585_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=motorcycle]                                            { rect:650_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=music]                                                { rect:715_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=newsagent]                                            { rect:780_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=pet]                                                    { rect:845_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=kiosk]                                                { rect:390_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=laundrette]                                            { rect:455_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=marketplace]                                    { rect:520_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=mobile_phone]                                            { rect:585_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=motorcycle]                                            { rect:650_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=music]                                                { rect:715_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=newsagent]                                            { rect:780_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=pet]                                                    { rect:845_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[shop=photo]                                                { rect:845_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=supermarket]                                            { rect:845_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=tackle]                                                { rect:845_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=tobacco]                                                { rect:845_325_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=toys]                                                    { rect:845_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=vending_machine]                                { rect:845_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[shop=video]                                                { rect:845_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=photo]                                                { rect:845_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=supermarket]                                            { rect:845_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=tackle]                                                { rect:845_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=tobacco]                                                { rect:845_325_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=toys]                                                    { rect:845_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=vending_machine]                                { rect:845_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[shop=video]                                                { rect:845_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[sport=archery]                                                   { rect:845_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=baseball]                                            { rect:845_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=canoe]                                                   { rect:845_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=cricket]                                                   { rect:845_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=diving]                                                { rect:845_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=golf]                                                { rect:0_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=gym]                                                { rect:65_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=gymnasium]                                            { rect:130_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=climbing]                                            { rect:260_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=horse_racing]                                    { rect:325_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=skating]                                                { rect:390_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=jetski]                                                { rect:455_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[leisure=sports_centre]                                    { rect:520_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[leisure=miniature_golf]                            { rect:585_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=motor]                                                { rect:650_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[leisure=playground]                                 { rect:715_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=sailing]                                                { rect:780_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=shooting]                                            { rect:845_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=archery]                                                   { rect:845_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=baseball]                                            { rect:845_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=canoe]                                                   { rect:845_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=cricket]                                                   { rect:845_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=diving]                                                { rect:845_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=golf]                                                { rect:0_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=gym]                                                { rect:65_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=gymnasium]                                            { rect:130_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=climbing]                                            { rect:260_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=horse_racing]                                    { rect:325_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=skating]                                                { rect:390_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=jetski]                                                { rect:455_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[leisure=sports_centre]                                    { rect:520_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[leisure=miniature_golf]                            { rect:585_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=motor]                                                { rect:650_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[leisure=playground]                                 { rect:715_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=sailing]                                                { rect:780_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=shooting]                                            { rect:845_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[sport=snooker]                                                { rect:910_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[sport=soccer]                                                { rect:910_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[leisure=stadium]                                            { rect:910_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=snooker]                                                { rect:910_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=soccer]                                                { rect:910_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[leisure=stadium]                                            { rect:910_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[sport=tennis]                                                { rect:910_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[sport=tennis]                                                { rect:910_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[historic=archaeological_site]                        { rect:910_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=gallery]                                            { rect:910_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=attraction]                                { rect:910_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[historic=battlefield]                                      { rect:910_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=archaeological_site]                        { rect:910_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=gallery]                                            { rect:910_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=attraction]                                { rect:910_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=battlefield]                                      { rect:910_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=casino]                                            { rect:65_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[historic=castle]                                            { rect:130_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=cinema]                                            { rect:260_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=clock]                                                { rect:390_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=fountain]                                            { rect:455_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[information=guidepost]                                    { rect:520_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=information]                                    { rect:585_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=casino]                                            { rect:65_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=castle]                                            { rect:130_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=cinema]                                            { rect:260_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=clock]                                                { rect:390_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=fountain]                                            { rect:455_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[information=guidepost]                                    { rect:520_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=information]                                    { rect:585_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[historic=memorial]                                            { rect:715_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[historic=monument]                                            { rect:780_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons;}
-node|z19[tourism=museum]                                            { rect:845_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=picnic_site]                                    { rect:910_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[historic=ruins]                                            { rect:975_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=memorial]                                            { rect:715_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=monument]                                            { rect:780_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons;}
+node|z19[tourism=museum]                                            { rect:845_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=picnic_site]                                    { rect:910_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=ruins]                                            { rect:975_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[amenity=theatre ]                                            { rect:975_130_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=theme_park]                                        { rect:975_195_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=viewpoint]                                            { rect:975_260_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=theatre ]                                            { rect:975_130_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=theme_park]                                        { rect:975_195_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=viewpoint]                                            { rect:975_260_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[historic=wayside_cross]                            { rect:975_390_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[historic=wayside_shrine]                            { rect:975_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[man_made=windmill]                                            { rect:975_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[historic=wreck]                                            { rect:975_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[tourism=zoo]                                                { rect:975_650_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[aeroway=aerodrome]                                            { rect:975_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[aeroway=airport]                                            { rect:975_845_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[aeroway=gate]                                                { rect:975_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[aeroway=terminal]                                            { rect:975_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons;}
-node|z19[amenity=bus_station]                                    { rect:65_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[highway=bus_stop]                                            { rect:130_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=car_sharing]                                    { rect:260_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[emergency=phone]                                            { rect:325_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[highway=ford]                                                { rect:390_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=fuel]                                                { rect:455_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=wayside_cross]                            { rect:975_390_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=wayside_shrine]                            { rect:975_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[man_made=windmill]                                            { rect:975_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[historic=wreck]                                            { rect:975_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[tourism=zoo]                                                { rect:975_650_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[aeroway=aerodrome]                                            { rect:975_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[aeroway=airport]                                            { rect:975_845_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[aeroway=gate]                                                { rect:975_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[aeroway=terminal]                                            { rect:975_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons;}
+node|z19[amenity=bus_station]                                    { rect:65_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[highway=bus_stop]                                            { rect:130_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=car_sharing]                                    { rect:260_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[emergency=phone]                                            { rect:325_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[highway=ford]                                                { rect:390_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=fuel]                                                { rect:455_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[transport_helicopter]                                    { rect:585_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[aeroway=helipad]                                            { rect:650_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[man_made=lighthouse]                                    { rect:715_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[transport_helicopter]                                    { rect:585_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[aeroway=helipad]                                            { rect:650_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[man_made=lighthouse]                                    { rect:715_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[highway=mini_roundabout]                            { rect:910_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=parking]                                            { rect:975_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=bicycle_parking]                            { rect:1040_0_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[highway=mini_roundabout]                            { rect:910_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=parking]                                            { rect:975_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=bicycle_parking]                            { rect:1040_0_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[landuse=port]                                                { rect:1040_455_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=bicycle_rental]                            { rect:1040_520_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=car_rental]                                    { rect:1040_585_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons;}
+node|z19[landuse=port]                                                { rect:1040_455_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=bicycle_rental]                            { rect:1040_520_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=car_rental]                                    { rect:1040_585_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons;}
 
-node|z19[junction=roundabout]                                    { rect:1040_715_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[leisure=slipway]                                            { rect:1040_780_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[junction=roundabout]                                    { rect:1040_715_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[leisure=slipway]                                            { rect:1040_780_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
-node|z19[railway=subway_entrance]                            { rect:1040_910_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[amenity=taxi]                                                { rect:1040_975_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[highway=traffic_signals]                            { rect:1040_1040_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[railway=station]                                            { rect:0_1105_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[railway=tram_stop]                                            { rect:130_1105_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[highway=turning_circle]                            { rect:195_1105_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[highway=path]                                                { rect:260_1105_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[highway=crossing]                                            { rect:325_1105_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[waterway=dam]                                                { rect:390_1105_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[man_made=water_tower]                                    { rect:455_1105_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
-node|z19[waterway=weir]                                                { rect:520_1105_64_64; min_height:16; builder:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[railway=subway_entrance]                            { rect:1040_910_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[amenity=taxi]                                                { rect:1040_975_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[highway=traffic_signals]                            { rect:1040_1040_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[railway=station]                                            { rect:0_1105_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[railway=tram_stop]                                            { rect:130_1105_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[highway=turning_circle]                            { rect:195_1105_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[highway=path]                                                { rect:260_1105_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[highway=crossing]                                            { rect:325_1105_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[waterway=dam]                                                { rect:390_1105_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[man_made=water_tower]                                    { rect:455_1105_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
+node|z19[waterway=weir]                                                { rect:520_1105_64_64; min_height:16; builders:info; width: 1104; height: 1169; collider: false; material:info_icons; }
 
 /* Shouldn't be shown */
 way[level<0],
