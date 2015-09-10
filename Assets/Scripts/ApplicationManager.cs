@@ -38,10 +38,6 @@ namespace Assets.Scripts
 
         private ApplicationManager()
         {
-            InitializeFramework();
-
-            Coordinate = new GeoCoordinate(52.52090, 13.40793);
-            //Coordinate = new GeoCoordinate(55.75282, 37.62259);
         }
 
         public static ApplicationManager Instance { get { return Nested.__instance; } }
@@ -59,7 +55,7 @@ namespace Assets.Scripts
 
         #region Initialization logic
 
-        private void InitializeFramework()
+        public void InitializeFramework(ConfigBuilder configBuilder)
         {
             // Setup main thread scheduler
             Scheduler.MainThread = UnityMainThreadScheduler.MainThread;
@@ -79,7 +75,7 @@ namespace Assets.Scripts
 
             // Console is way to debug/investigate app behavior on real devices when
             // regular debugger is not applicable
-            CreateConsole(false);
+            CreateConsole(true);
 
             try
             {
@@ -97,14 +93,11 @@ namespace Assets.Scripts
 #else
                     .Use<FileSystemService>().Singleton());
 #endif
-                const float tileSize = 180;
                 // Build config with default settings
-                var config = ConfigBuilder.GetDefault()
+                var config = configBuilder
 #if UNITY_WEBPLAYER
                     .SetSandbox(true)
 #endif
-                    .SetTileSettings(tileSize, 40)
-                    .SetRenderOptions(RenderMode.Scene, new Rectangle2d(0, 0, tileSize * 3, tileSize * 3))
                     .Build();
 
                 // Create ASM entry point with settings provided, register custom plugin which adds

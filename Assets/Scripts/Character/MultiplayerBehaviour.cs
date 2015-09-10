@@ -1,5 +1,4 @@
-﻿using System;
-using ActionStreetMap.Core;
+﻿using ActionStreetMap.Core;
 using ActionStreetMap.Explorer.Tiling;
 using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts.MapEditor;
@@ -8,11 +7,15 @@ using UnityEngine.Networking;
 
 namespace Assets.Scripts.Character
 {
-    public class MultiplayerBehaviour: NetworkBehaviour
+    /// <summary> 
+    ///     This behaviour shows main idea how to use unity multiplayer feature with ASM
+    ///     framework. So far is not in any scene, but kept as reference implementation
+    /// </summary>
+    public class MultiplayerBehaviour : NetworkBehaviour
     {
-        private IMessageBus _messageBus;
-        private EditorController _editorController;
         private NetworkClient _client;
+        private EditorController _editorController;
+        private IMessageBus _messageBus;
 
         public override void OnStartLocalPlayer()
         {
@@ -44,7 +47,7 @@ namespace Assets.Scripts.Character
         }
 
         private void SubscribeToNetworkEvents()
-        {           
+        {
             if (isClient)
             {
                 _client.RegisterHandler(TerrainPointMessage.MsgId, msg =>
@@ -55,8 +58,8 @@ namespace Assets.Scripts.Character
                         _editorController.AddTree(message.Point);
                     // terrain
                     else if (message.ActionMode == EditorActionMode.TerrainUp ||
-                        message.ActionMode == EditorActionMode.TerrainDown)
-                        _editorController.ModifyTerrain(message.Point, 
+                             message.ActionMode == EditorActionMode.TerrainDown)
+                        _editorController.ModifyTerrain(message.Point,
                             message.ActionMode == EditorActionMode.TerrainUp);
                 });
 

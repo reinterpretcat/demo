@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Character
 {
+    /// <summary> Typical script to control camera. </summary>
     public class MouseOrbit: MonoBehaviour
     {
         public Transform target;
