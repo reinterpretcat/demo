@@ -6,6 +6,7 @@ namespace Assets.Scripts.Character
     public class OverviewModeBehaviour: MonoBehaviour
     {
         public float PanSpeed = 30;		// Speed of the camera when being panned
+        public float ZoomSensitivity = 30f;
 
         private Vector3 _mouseOrigin;	// Position of cursor when mouse dragging starts
         private bool _isPanning;		// Is the camera being panned?
@@ -32,6 +33,8 @@ namespace Assets.Scripts.Character
                 Vector3 move = new Vector3(pos.x * PanSpeed, pos.y * PanSpeed, 0);
                 transform.Translate(move, Space.Self);
             }
+
+            Camera.main.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * ZoomSensitivity;
         }
 
         private void LoadTiles()
