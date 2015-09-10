@@ -94,7 +94,8 @@ namespace Assets.Scripts.Character
 
         private void Update()
         {
-            if (_appManager.IsInitialized && _position != transform.position)
+            if (RenderMode == RenderMode.Scene && _appManager.IsInitialized && 
+                _position != transform.position)
             {
                 _position = transform.position;
                 _appManager.Move(new Vector2d(_position.x, _position.z));
