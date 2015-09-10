@@ -17,7 +17,6 @@ namespace Assets.Scripts.Character
         private ApplicationManager _appManager;
 
         private float _initialGravity;
-        private IMessageBus _messageBus;
 
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
@@ -37,38 +36,6 @@ namespace Assets.Scripts.Character
 
         /// <summary> Size of tile. </summary>
         public float TileSize = 180;
-
-        private void Start()
-        {
-            // set gravity to zero to prevent free fall as terrain loading takes some time.
-            var thirdPersonControll = gameObject.GetComponent<ThirdPersonController>();
-            _initialGravity = thirdPersonControll.gravity;
-            thirdPersonControll.gravity = 0;
-
-            _appManager = ApplicationManager.Instance;
-            _appManager.InitializeFramework(GetConfigBuilder());
-
-            SetStartGeoCoordinate();
-
-            _messageBus = _appManager.GetService<IMessageBus>();
-
-            // restore gravity and adjust character y-position once first scene tile is loaded
-            _messageBus.AsObservable<TileLoadFinishMessage>()
-                .Where(msg => msg.Tile.RenderMode == RenderMode.Scene)
-                .Take(1)
-                .ObserveOnMainThread()
-                .Subscribe(_ =>
-                {
-                    var position = transform.position;
-                    var elevation = _appManager.GetService<IElevationProvider>()
-                        .GetElevation(new Vector2d(position.x, position.z));
-                    transform.position = new Vector3(position.x, elevation + 90, position.z);
-                    thirdPersonControll.gravity = _initialGravity;
-                });
-
-            // ASM should be started from non-UI thread
-            Observable.Start(() => _appManager.RunGame(), Scheduler.ThreadPool);
-        }
 
         /// <summary>
         ///     Sets start geocoordinate using desired method: direct latitude/longitude or
@@ -92,16 +59,6 @@ namespace Assets.Scripts.Character
             _appManager.Coordinate = coordinate;
         }
 
-        private void Update()
-        {
-            if (RenderMode == RenderMode.Scene && _appManager.IsInitialized && 
-                _position != transform.position)
-            {
-                _position = transform.position;
-                _appManager.Move(new Vector2d(_position.x, _position.z));
-            }
-        }
-
         /// <summary> Returns config builder initialized with user defined settings. </summary>
         private ConfigBuilder GetConfigBuilder()
         {
@@ -109,5 +66,65 @@ namespace Assets.Scripts.Character
                 .SetTileSettings(TileSize, 40)
                 .SetRenderOptions(RenderMode, new Rectangle2d(0, 0, TileSize*3, TileSize*3));
         }
+
+        /// <summary>
+        ///     Set gravity to zero on start to prevent free fall as terrain loading takes some time.
+        ///     Restore it afterwards. Used only in Scene mode
+        /// </summary>
+        private void AdjustCharacter()
+        {
+            var thirdPersonController = gameObject.GetComponent<ThirdPersonController>();
+
+            _initialGravity = thirdPersonController.gravity;
+            thirdPersonController.gravity = 0;
+
+            // restore gravity and adjust character y-position once first scene tile is loaded
+            _appManager.GetService<IMessageBus>().AsObservable<TileLoadFinishMessage>()
+                .Where(msg => msg.Tile.RenderMode == RenderMode.Scene)
+                .Take(1)
+                .ObserveOnMainThread()
+                .Subscribe(_ =>
+                {
+                    var position = transform.position;
+                    var elevation = _appManager.GetService<IElevationProvider>()
+                        .GetElevation(new Vector2d(position.x, position.z));
+                    transform.position = new Vector3(position.x, elevation + 90, position.z);
+                    thirdPersonController.gravity = _initialGravity;
+                });
+        }
+
+        #region Unity lifecycle events
+
+        /// <summary> Performs framework initialization once, before any Start() is called. </summary>
+        private void Awake()
+        {
+            _appManager = ApplicationManager.Instance;
+            _appManager.InitializeFramework(GetConfigBuilder());
+
+            SetStartGeoCoordinate();
+
+            if (RenderMode == RenderMode.Scene)
+                AdjustCharacter();
+        }
+
+        /// <summary> Runs game after all Start() methods are called. </summary>
+        private void OnEnable()
+        {
+            // ASM should be started from non-UI thread
+            Observable.Start(() => _appManager.RunGame(), Scheduler.ThreadPool);
+        }
+
+        /// <summary> Listens for position changes to notify framework. </summary>
+        private void Update()
+        {
+            if (RenderMode == RenderMode.Scene && _appManager.IsInitialized &&
+                _position != transform.position)
+            {
+                _position = transform.position;
+                _appManager.Move(new Vector2d(_position.x, _position.z));
+            }
+        }
+
+        #endregion
     }
 }
