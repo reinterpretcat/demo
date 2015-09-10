@@ -103,17 +103,13 @@
     <Compile Include="Assets\Scenes\MapLevelAssets\Scripts\AddressViewController.cs" />
     <Compile Include="Assets\Scenes\MapLevelAssets\Scripts\EditorMenuController.cs" />
     <Compile Include="Assets\Scenes\MapLevelAssets\Scripts\ViewModeController.cs" />
-    <Compile Include="Assets\Scenes\MenuAssets\Scripts\OfflineMapsPanelManager.cs" />
-    <Compile Include="Assets\Scenes\MenuAssets\Scripts\PanelManager.cs" />
-    <Compile Include="Assets\Scenes\MenuAssets\Scripts\PlayGamePanelManager.cs" />
-    <Compile Include="Assets\Scenes\MenuAssets\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\Scripts\ApplicationManager.cs" />
     <Compile Include="Assets\Scripts\Character\ActionStreetMapBehaviour.cs" />
     <Compile Include="Assets\Scripts\Character\CameraAnimation.cs" />
-    <Compile Include="Assets\Scripts\Demo\DemoBootstrapper.cs" />
     <Compile Include="Assets\Scripts\Character\MouseOrbit.cs" />
     <Compile Include="Assets\Scripts\Character\MultiplayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Character\OverviewModeBehaviour.cs" />
+    <Compile Include="Assets\Scripts\MapEditor\EditorBehaviour.cs" />
     <Compile Include="Assets\Scripts\Character\WeaponBehavior.cs" />
     <Compile Include="Assets\Scripts\Console\Commands\GrepCommand.cs" />
     <Compile Include="Assets\Scripts\Console\DebugConsole.cs" />
@@ -124,6 +120,7 @@
     <Compile Include="Assets\Scripts\Console\Watchers\VarWatcher.cs" />
     <Compile Include="Assets\Scripts\Console\Watchers\WatchVar.cs" />
     <Compile Include="Assets\Scripts\Console\Watchers\WatchVarBase.cs" />
+    <Compile Include="Assets\Scripts\Demo\DemoBootstrapper.cs" />
     <Compile Include="Assets\Scripts\Demo\DemoTileListener.cs" />
     <Compile Include="Assets\Scripts\Demo\PathResolver.cs" />
     <Compile Include="Assets\Scripts\Demo\WebFileSystemService.cs" />
@@ -138,7 +135,6 @@
     <None Include="Assets\Resources\Config\srtm.schema.txt" />
     <None Include="Assets\Resources\Maps\osm\berlin\header.txt" />
     <None Include="Assets\Resources\Maps\osm\moscow\header.txt" />
-    <None Include="Assets\Scenes\MenuAssets\Fonts\Jupiter\LICENSE.txt" />
     <None Include="Assets\Shaders\VertexColorGeneric.shader" />
     <None Include="Assets\Shaders\VertexColorWater.shader" />
   </ItemGroup>

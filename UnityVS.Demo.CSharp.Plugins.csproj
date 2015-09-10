@@ -95,7 +95,6 @@
     <None Include="Assets\Resources\Config\srtm.schema.txt" />
     <None Include="Assets\Resources\Maps\osm\berlin\header.txt" />
     <None Include="Assets\Resources\Maps\osm\moscow\header.txt" />
-    <None Include="Assets\Scenes\MenuAssets\Fonts\Jupiter\LICENSE.txt" />
     <None Include="Assets\Shaders\VertexColorGeneric.shader" />
     <None Include="Assets\Shaders\VertexColorWater.shader" />
   </ItemGroup>

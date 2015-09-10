@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Scene;
-using ActionStreetMap.Core.Tiling;
-using ActionStreetMap.Explorer.Interactions;
 using ActionStreetMap.Explorer.Scene;
 using ActionStreetMap.Explorer.Tiling;
-using ActionStreetMap.Infrastructure.Diagnostic;
 using Assets.Scripts.MapEditor.Behaviors;
 using UnityEngine;
 using Tree = ActionStreetMap.Core.Scene.Tree;
@@ -17,19 +14,12 @@ namespace Assets.Scripts.MapEditor
     /// <summary> Editor controller. </summary>
     public sealed class EditorController
     {
-        private const string CategoryName = "Editor";
-
-        private readonly ITileController _tileController;
         private readonly ITileModelEditor _tileModelEditor;
-        private readonly ITrace _trace;
 
         /// <summary> Creates instance of <see cref="EditorController"/>. </summary>
-        public EditorController(ITileController tileController, ITileModelEditor tileModelEditor,
-            ITrace trace)
+        public EditorController(ITileModelEditor tileModelEditor)
         {
-            _tileController = tileController;
             _tileModelEditor = tileModelEditor;
-            _trace = trace;
         }
 
         /// <summary> Adds building with default properties using given foorprint. </summary>

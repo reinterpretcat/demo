@@ -3,12 +3,11 @@ using ActionStreetMap.Core;
 using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Tiling;
 using UnityEngine;
-using UnityEngine.Networking;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
 namespace Assets.Scripts.Character
 {
-    public class ActionStreetMapBehaviour : NetworkBehaviour
+    public class ActionStreetMapBehaviour : MonoBehaviour
     {
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
         private ApplicationManager _appManager;
@@ -19,14 +18,13 @@ namespace Assets.Scripts.Character
         // Use this for initialization
         void Start()
         {
-            if (isLocalPlayer)
-                Initialize();
+            Initialize();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (isLocalPlayer && _appManager.IsInitialized && _position != transform.position)
+            if (_appManager.IsInitialized && _position != transform.position)
             {
                 _position = transform.position;
                 _appManager.Move(new Vector2d(_position.x, _position.z));

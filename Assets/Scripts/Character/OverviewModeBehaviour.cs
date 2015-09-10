@@ -1,5 +1,4 @@
-﻿using ActionStreetMap.Core;
-using ActionStreetMap.Core.Geometry;
+﻿using ActionStreetMap.Core.Geometry;
 using UnityEngine;
 
 namespace Assets.Scripts.Character

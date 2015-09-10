@@ -1,8 +1,6 @@
 ﻿using System;
 using ActionStreetMap.Core;
-using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer.Tiling;
-using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts.MapEditor;
 using UnityEngine;
@@ -31,10 +29,7 @@ namespace Assets.Scripts.Character
             _messageBus = appManager.GetService<IMessageBus>();
             _client = NetworkManager.singleton.client;
 
-            _editorController = new EditorController(
-                appManager.GetService<ITileController>(),
-                appManager.GetService<ITileModelEditor>(),
-                appManager.GetService<ITrace>());
+            _editorController = new EditorController(appManager.GetService<ITileModelEditor>());
 
             SubscribeToLocalEvents();
             SubscribeToNetworkEvents();
