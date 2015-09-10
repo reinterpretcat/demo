@@ -28,7 +28,7 @@ namespace Assets.Scenes.SimpleMap2D
                     var position = transform.position;
                     var elevation = ApplicationManager.Instance.GetService<IElevationProvider>()
                         .GetElevation(new Vector2d(position.x, position.z));
-                    transform.position = new Vector3(position.x, elevation + 90, position.z);
+                    transform.position = new Vector3(position.x, elevation + 300, position.z);
 
                     CameraScene.orthographicSize = transform.position.y;
 
