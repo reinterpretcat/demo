@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.MapEditor.Behaviors
 {
-    /// <summary> Provides the way to draw lines on game object. </summary>
+    /// <summary> Provides the way to draw lines on terrain game object. </summary>
     public class TerrainDrawBehaviour : MonoBehaviour, IModelBehaviour
     {
         /// <summary> Radius of last point detection logic. </summary>

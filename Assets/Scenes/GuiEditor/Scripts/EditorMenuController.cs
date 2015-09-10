@@ -5,7 +5,7 @@ using Assets.Scripts.MapEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scenes.MapLevelAssets.Scripts
+namespace Assets.Scenes.GuiEditor.Scripts
 {
     /// <summary> Controller for editor main menu. </summary>
     public class EditorMenuController : MonoBehaviour

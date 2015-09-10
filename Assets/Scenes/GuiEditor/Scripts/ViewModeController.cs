@@ -1,5 +1,4 @@
 ﻿using System;
-using ActionStreetMap.Core;
 using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Infrastructure.Reactive;
 using Assets.Scripts;
@@ -8,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
-namespace Assets.Scenes.MapLevelAssets.Scripts
+namespace Assets.Scenes.GuiEditor.Scripts
 {
     public class ViewModeController: MonoBehaviour
     {

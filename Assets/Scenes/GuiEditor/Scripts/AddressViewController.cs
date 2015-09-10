@@ -9,7 +9,7 @@ using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scenes.MapLevelAssets.Scripts
+namespace Assets.Scenes.GuiEditor.Scripts
 {
     public class AddressViewController: MonoBehaviour
     {
