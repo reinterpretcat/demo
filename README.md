@@ -12,6 +12,14 @@
 </ul>
 <p>The engine can be used to build different 3D-games (like car simulations or GTA 2/3 ) or some map tools (target is mobile devices). Web demo build can be found <a href="http://actionstreetmap.github.io/demo/demo_list.html">here</a>. More info will be published at <a href="http://actionstreetmap.github.io/demo/">github pages</a>.</p>
 
+<h2>Demo scenes:</h2>
+You may find the following scenes in Assets\Scenes folder:
+<ul>
+<li>SimpleMap2D demonstrates Overview mode which allows you to load 2D map of large area with low detail terrain and without the certain objects (e.g. buildings). You can pan/zoom map here. </li>
+<li>SimpleMap3D demonstrates Scene mode which load one tile with all details (full detail terrain, buildings, trees) and adjusted tiles with low level of details. You can walk: tiles will be loaded/unloaded automatically. </li>
+<li>GuiEditor demonstrates several features: map editor, current address resolution, dynamic switch between 2D/3D maps. You may find video which shows this scene in action. </li>
+</ul>
+
 <h2>Screenshots</h2>
 <img src="http://actionstreetmap.github.io/demo/images/current/FlatShading_1.png"/>
 <img src="http://actionstreetmap.github.io/demo/images/current/FlatShading_2.png"/>
