@@ -9,7 +9,7 @@ namespace Assets.Scripts.MapEditor
     {
         private EditorController _editorController;
 
-        private void Start()
+        void Start()
         {
             var appManager = ApplicationManager.Instance;
             _editorController = new EditorController(appManager.GetService<ITileModelEditor>());
