@@ -12,7 +12,7 @@
 </ul>
 <p>The engine can be used to build different 3D-games (like car simulations or GTA 2/3 ) or some map tools (target is mobile devices). Web demo build can be found <a href="http://actionstreetmap.github.io/demo/demo_list.html">here</a>. More info will be published at <a href="http://actionstreetmap.github.io/demo/">github pages</a>.</p>
 
-<h2>Demo scenes:</h2>
+<h2>Demo scenes</h2>
 Demo project contains the following scenes in Assets\Scenes folder:
 <ul>
 <li>SimpleMap2D demonstrates Overview mode which allows you to load 2D map of large area with low detail terrain and without the certain objects (e.g. buildings). You can pan/zoom map here. </li>
