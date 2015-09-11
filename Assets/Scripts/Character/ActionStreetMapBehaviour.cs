@@ -96,7 +96,7 @@ namespace Assets.Scripts.Character
         #region Unity lifecycle events
 
         /// <summary> Performs framework initialization once, before any Start() is called. </summary>
-        private void Awake()
+        void Awake()
         {
             _appManager = ApplicationManager.Instance;
             _appManager.InitializeFramework(GetConfigBuilder());
@@ -108,14 +108,14 @@ namespace Assets.Scripts.Character
         }
 
         /// <summary> Runs game after all Start() methods are called. </summary>
-        private void OnEnable()
+        void OnEnable()
         {
             // ASM should be started from non-UI thread
             Observable.Start(() => _appManager.RunGame(), Scheduler.ThreadPool);
         }
 
         /// <summary> Listens for position changes to notify framework. </summary>
-        private void Update()
+        void Update()
         {
             if (RenderMode == RenderMode.Scene && _appManager.IsInitialized &&
                 _position != transform.position)
