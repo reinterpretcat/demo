@@ -74,6 +74,11 @@ namespace Assets.Scripts.Character
         private void AdjustCharacter()
         {
             var thirdPersonController = gameObject.GetComponent<ThirdPersonController>();
+            if (thirdPersonController == null)
+            {
+                _appManager.GetService<ITrace>().Warn("init", "ThirdPersonController script is not set.");
+                return;
+            }
 
             _initialGravity = thirdPersonController.gravity;
             thirdPersonController.gravity = 0;

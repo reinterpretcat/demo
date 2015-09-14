@@ -17,6 +17,7 @@ Demo project contains the following scenes in Assets\Scenes folder:
 <ul>
 <li>SimpleMap2D demonstrates Overview mode which allows you to load 2D map of large area with low detail terrain and without the certain objects (e.g. buildings). You can pan/zoom map here. </li>
 <li>SimpleMap3D demonstrates Scene mode which load one tile with all details (full detail terrain, buildings, trees) and adjusted tiles with low level of details. You can walk: tiles will be loaded/unloaded automatically. </li>
+<li>GpsTracking demonstrates how to work with Location Services (e.g. GPS). </li>
 <li>GuiEditor demonstrates several features: map editor, current address resolution, dynamic switch between 2D/3D maps. You may find video which shows this scene in action. </li>
 </ul>
 
