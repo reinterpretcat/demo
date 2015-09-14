@@ -1,7 +1,6 @@
 ﻿using System;
 using ActionStreetMap.Core;
 using ActionStreetMap.Core.Geometry;
-using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer.Infrastructure;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
@@ -15,8 +14,6 @@ namespace Assets.Scripts.Character
     public class ActionStreetMapBehaviour : MonoBehaviour
     {
         private ApplicationManager _appManager;
-
-        private float _initialGravity;
 
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
@@ -67,37 +64,6 @@ namespace Assets.Scripts.Character
                 .SetRenderOptions(RenderMode, new Rectangle2d(0, 0, TileSize*3, TileSize*3));
         }
 
-        /// <summary>
-        ///     Set gravity to zero on start to prevent free fall as terrain loading takes some time.
-        ///     Restore it afterwards. Used only in Scene mode
-        /// </summary>
-        private void AdjustCharacter()
-        {
-            var thirdPersonController = gameObject.GetComponent<ThirdPersonController>();
-            if (thirdPersonController == null)
-            {
-                _appManager.GetService<ITrace>().Warn("init", "ThirdPersonController script is not set.");
-                return;
-            }
-
-            _initialGravity = thirdPersonController.gravity;
-            thirdPersonController.gravity = 0;
-
-            // restore gravity and adjust character y-position once first scene tile is loaded
-            _appManager.GetService<IMessageBus>().AsObservable<TileLoadFinishMessage>()
-                .Where(msg => msg.Tile.RenderMode == RenderMode.Scene)
-                .Take(1)
-                .ObserveOnMainThread()
-                .Subscribe(_ =>
-                {
-                    var position = transform.position;
-                    var elevation = _appManager.GetService<IElevationProvider>()
-                        .GetElevation(new Vector2d(position.x, position.z));
-                    transform.position = new Vector3(position.x, elevation + 90, position.z);
-                    thirdPersonController.gravity = _initialGravity;
-                });
-        }
-
         #region Unity lifecycle events
 
         /// <summary> Performs framework initialization once, before any Start() is called. </summary>
@@ -107,9 +73,6 @@ namespace Assets.Scripts.Character
             _appManager.InitializeFramework(GetConfigBuilder());
 
             SetStartGeoCoordinate();
-
-            if (RenderMode == RenderMode.Scene)
-                AdjustCharacter();
         }
 
         /// <summary> Runs game after all Start() methods are called. </summary>

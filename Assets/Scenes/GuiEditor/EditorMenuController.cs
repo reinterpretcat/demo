@@ -5,7 +5,7 @@ using Assets.Scripts.MapEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scenes.GuiEditor.Scripts
+namespace Assets.Scenes.GuiEditor
 {
     /// <summary> Controller for editor main menu. </summary>
     public class EditorMenuController : MonoBehaviour
@@ -77,11 +77,8 @@ namespace Assets.Scenes.GuiEditor.Scripts
 
             BarrierButton.onClick.AsObservable().Subscribe(_ =>
             {
-                //_messageBus.Send(EditorActionMode.AddBarrier);
-                //_messageBus.Send(TerrainInputMode.DrawLine);
-
-                _messageBus.Send(EditorActionMode.TerrainUp);
-                _messageBus.Send(TerrainInputMode.SetPoint);
+                _messageBus.Send(EditorActionMode.AddBarrier);
+                _messageBus.Send(TerrainInputMode.DrawLine);
             });
 
             TreeButton.onClick.AsObservable().Subscribe(_ =>

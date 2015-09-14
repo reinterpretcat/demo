@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
-namespace Assets.Scenes.GuiEditor.Scripts
+namespace Assets.Scenes.GuiEditor
 {
     public class ViewModeController: MonoBehaviour
     {
