@@ -15,10 +15,11 @@
 <h2>Demo scenes</h2>
 Demo project contains the following scenes in Assets\Scenes folder:
 <ul>
-<li>SimpleMap2D demonstrates Overview mode which allows you to load 2D map of large area with low detail terrain and without the certain objects (e.g. buildings). You can pan/zoom map here. </li>
-<li>SimpleMap3D demonstrates Scene mode which load one tile with all details (full detail terrain, buildings, trees) and adjusted tiles with low level of details. You can walk: tiles will be loaded/unloaded automatically. </li>
-<li>GpsTracking demonstrates how to work with Location Services (e.g. GPS). </li>
-<li>GuiEditor demonstrates several features: map editor, current address resolution, dynamic switch between 2D/3D maps. You may find video which shows this scene in action. </li>
+<li>SimpleMap2D scene loads 2D map of large area with low detail terrain and allows you to skip the certain objects (e.g. buildings, trees) using MapCSS rules for different zoom levels. You can also pan/zoom map.</li>
+<li>SimpleMap3D scene loads one tile with all details (full detail terrain, buildings, trees) and adjusted tiles with low level of details. You can walk and interact with environment: modify facade of building, make craters. Tiles will be loaded/unloaded automatically.</li>
+<li>GpsTracking scene demonstrates how to work with Location Services (e.g. GPS). Nmea file is used as GPS signal source to simulate movement.</li>
+<li>Customization scene demonstrates how to add custom objects to the map or/and extend their behaviour. </li>
+<li>GuiEditor scene demonstrates several features: map editor (create new map object such as buildings, barriers, trees; adjust terrain height), current address resolution (detects where you are), dynamic switch between 2D/3D maps (2D map shows larger area). You may find video which shows this scene above.</li>
 </ul>
 
 <h2>Screenshots</h2>

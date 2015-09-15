@@ -5,6 +5,7 @@ using ActionStreetMap.Core.Geometry;
 using ActionStreetMap.Core.Tiling;
 using ActionStreetMap.Explorer;
 using ActionStreetMap.Explorer.Infrastructure;
+using ActionStreetMap.Infrastructure.Bootstrap;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.IO;
@@ -55,7 +56,8 @@ namespace Assets.Scripts
 
         #region Initialization logic
 
-        public void InitializeFramework(ConfigBuilder configBuilder)
+        public void InitializeFramework(ConfigBuilder configBuilder, 
+            Action<IContainer, IMessageBus, ITrace, GameRunner> bootInitAction)
         {
             // Setup main thread scheduler
             Scheduler.MainThread = UnityMainThreadScheduler.MainThread;
@@ -100,13 +102,16 @@ namespace Assets.Scripts
 #endif
                     .Build();
 
-                // Create ASM entry point with settings provided, register custom plugin which adds
+                // Create ASM entry point with settings provided, register custom plugin(-s) which add(-s)
                 // custom logic or replaces default one. Then run bootstrapping process which populates container
                 // with defined implementations.
-                _gameRunner = new GameRunner(_container, config)
-                    .RegisterPlugin<DemoBootstrapper>("demo", _messageBus, _trace)
-                    .Bootstrap();
+                _gameRunner = new GameRunner(_container, config);
 
+                // provide the way to insert different custom extensions for different scenes
+                bootInitAction(_container, _messageBus, _trace, _gameRunner);
+                
+                // run bootstrappering
+                _gameRunner.Bootstrap();
             }
             catch (Exception ex)
             {

@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using ActionStreetMap.Core;
 using ActionStreetMap.Core.Geometry;
+using ActionStreetMap.Explorer;
 using ActionStreetMap.Explorer.Infrastructure;
+using ActionStreetMap.Infrastructure.Bootstrap;
+using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using ActionStreetMap.Infrastructure.Reactive;
 using ActionStreetMap.Maps.GeoCoding;
+using Assets.Scripts.Demo;
 using UnityEngine;
 using RenderMode = ActionStreetMap.Core.RenderMode;
 
@@ -13,7 +18,7 @@ namespace Assets.Scripts.Character
     /// <summary> Performs some initialization and listens for position changes of character.  </summary>
     public class ActionStreetMapBehaviour : MonoBehaviour
     {
-        private ApplicationManager _appManager;
+        protected ApplicationManager AppManager;
 
         private Vector3 _position = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
@@ -44,24 +49,33 @@ namespace Assets.Scripts.Character
             if (!String.IsNullOrEmpty(PlaceName))
             {
                 // NOTE this will freeze UI thread as we're making web request and should wait for its result
-                var place = _appManager.GetService<IGeocoder>().Search(PlaceName)
+                var place = AppManager.GetService<IGeocoder>().Search(PlaceName)
                     .Wait();
 
                 if (place != null)
                     coordinate = place.Coordinate;
                 else
-                    _appManager.GetService<ITrace>()
+                    AppManager.GetService<ITrace>()
                         .Warn("init", "Cannot resolve '{0}', will use default latitude/longitude", PlaceName);
             }
-            _appManager.Coordinate = coordinate;
+            AppManager.Coordinate = coordinate;
         }
 
         /// <summary> Returns config builder initialized with user defined settings. </summary>
-        private ConfigBuilder GetConfigBuilder()
+        protected virtual ConfigBuilder GetConfigBuilder()
         {
             return ConfigBuilder.GetDefault()
                 .SetTileSettings(TileSize, 40)
                 .SetRenderOptions(RenderMode, new Rectangle2d(0, 0, TileSize*3, TileSize*3));
+        }
+
+        /// <summary> Returns bootstrapper plugin. </summary>
+        protected virtual Action<IContainer, IMessageBus, ITrace, GameRunner> GetBootInitAction()
+        {
+            return (container, messageBus, trace, gameRunner) =>
+            {
+                gameRunner.RegisterPlugin<DemoBootstrapper>("demo", messageBus, trace);
+            };
         }
 
         #region Unity lifecycle events
@@ -69,8 +83,8 @@ namespace Assets.Scripts.Character
         /// <summary> Performs framework initialization once, before any Start() is called. </summary>
         void Awake()
         {
-            _appManager = ApplicationManager.Instance;
-            _appManager.InitializeFramework(GetConfigBuilder());
+            AppManager = ApplicationManager.Instance;
+            AppManager.InitializeFramework(GetConfigBuilder(), GetBootInitAction());
 
             SetStartGeoCoordinate();
         }
@@ -79,17 +93,17 @@ namespace Assets.Scripts.Character
         void OnEnable()
         {
             // ASM should be started from non-UI thread
-            Observable.Start(() => _appManager.RunGame(), Scheduler.ThreadPool);
+            Observable.Start(() => AppManager.RunGame(), Scheduler.ThreadPool);
         }
 
         /// <summary> Listens for position changes to notify framework. </summary>
         void Update()
         {
-            if (RenderMode == RenderMode.Scene && _appManager.IsInitialized &&
+            if (RenderMode == RenderMode.Scene && AppManager.IsInitialized &&
                 _position != transform.position)
             {
                 _position = transform.position;
-                _appManager.Move(new Vector2d(_position.x, _position.z));
+                AppManager.Move(new Vector2d(_position.x, _position.z));
             }
         }
 
