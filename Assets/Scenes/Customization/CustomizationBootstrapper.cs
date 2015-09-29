@@ -1,4 +1,5 @@
 ﻿using ActionStreetMap.Explorer.Bootstrappers;
+using Assets.Scripts.Demo;
 
 namespace Assets.Scenes.Customization
 {
@@ -10,7 +11,7 @@ namespace Assets.Scenes.Customization
         {
             // Register model extensions. Name should match with mapCSS 
             // rule builders/behaviours declaration.
-            ExtensionProvider
+            CustomizationService
                 .RegisterBuilder("waypoint", typeof (WaypointModelBuilder))
                 .RegisterBehaviour("hide", typeof(HideModelBehaviour));
 

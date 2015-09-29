@@ -1,5 +1,6 @@
 ﻿using ActionStreetMap.Core;
 using ActionStreetMap.Explorer.Bootstrappers;
+using ActionStreetMap.Explorer.Customization;
 using ActionStreetMap.Infrastructure.Dependencies;
 using ActionStreetMap.Infrastructure.Diagnostic;
 using Assets.Scripts.MapEditor.Behaviors;
@@ -29,8 +30,9 @@ namespace Assets.Scripts.Demo
             _messageListener = new DemoTileListener(_messageBus, _trace);
 
             // extensions
-           ExtensionProvider
-               .RegisterBehaviour("terrain_draw", typeof(TerrainDrawBehaviour));
+            CustomizationService
+                 .RegisterBehaviour("terrain_draw", typeof(TerrainDrawBehaviour))
+                 .RegisterAtlas("main", TextureAtlasHelper.GeTextureAtlas());
 
             return true;
         }

@@ -129,6 +129,7 @@
     <Compile Include="Assets\Scripts\Demo\DemoBootstrapper.cs" />
     <Compile Include="Assets\Scripts\Demo\DemoTileListener.cs" />
     <Compile Include="Assets\Scripts\Demo\PathResolver.cs" />
+    <Compile Include="Assets\Scripts\Demo\TextureAtlasHelper.cs" />
     <Compile Include="Assets\Scripts\Demo\WebFileSystemService.cs" />
     <Compile Include="Assets\Scripts\MapEditor\Behaviors\BehaviourHelper.cs" />
     <Compile Include="Assets\Scripts\MapEditor\Behaviors\TerrainDrawBehaviour.cs" />
