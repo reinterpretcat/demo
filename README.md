@@ -23,10 +23,11 @@ Demo project contains the following scenes in Assets\Scenes folder:
 </ul>
 
 <h2>Screenshots</h2>
-<img src="http://actionstreetmap.github.io/demo/images/current/FlatShading_1.png"/>
-<img src="http://actionstreetmap.github.io/demo/images/current/FlatShading_2.png"/>
+<img src="http://actionstreetmap.github.io/demo/images/current/scene_texture_berlin1.png"/>
+<img src="http://actionstreetmap.github.io/demo/images/current/scene_texture_berlin2.png"/>
+<img src="http://actionstreetmap.github.io/demo/images/current/scene_color_only_moscow1.png"/>
 
-<img src="http://actionstreetmap.github.io/demo/images/current/Overview2D_1.png"/>
+<img src="http://actionstreetmap.github.io/demo/images/current/overview_berlin2.png"/>
 
 <h2>Contacts</h2>
 In case of any questions, don't hesitate to ask <a href=mailto:actionstreetmap@gmail.com">me</a>.
