@@ -12,6 +12,7 @@ namespace Assets.Scenes.Customization
             // Register model extensions. Name should match with mapCSS 
             // rule builders/behaviours declaration.
             CustomizationService
+                .RegisterAtlas("main", TextureAtlasHelper.GeTextureAtlas())
                 .RegisterBuilder("waypoint", typeof (WaypointModelBuilder))
                 .RegisterBehaviour("hide", typeof(HideModelBehaviour));
 
