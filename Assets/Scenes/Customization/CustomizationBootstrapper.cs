@@ -1,4 +1,6 @@
-﻿using ActionStreetMap.Explorer.Bootstrappers;
+﻿using ActionStreetMap.Core;
+using ActionStreetMap.Explorer.Bootstrappers;
+using ActionStreetMap.Infrastructure.Dependencies;
 using Assets.Scripts.Demo;
 
 namespace Assets.Scenes.Customization
@@ -9,6 +11,9 @@ namespace Assets.Scenes.Customization
 
         public override bool Run()
         {
+            // Replace default elevation provider with custom one
+            Container.Register(Component.For<IElevationProvider>().Use<FlatElevationProvider>().Singleton());
+
             // Register model extensions. Name should match with mapCSS 
             // rule builders/behaviours declaration.
             CustomizationService
