@@ -1,3 +1,7 @@
+<h1>Update</h1>
+<p>Currently, I'm working on geo index improvements in private repository to make core logic faster and support new requirements (e.g.  multiple zoom levels: render entire planet with low details or just small part in full details). So, no public progress will be shared here until the most of the work is done.</p>
+<p>Some details: I decided to rewrite core logic using C++ for later use as Unity's native plugin. Definitely, it will take some time to complete.</p>
+
 <h2>Description</h2>
 <p> In short, ASM is an engine for building real city environment dynamically using OSM data. It includes:</p>
 <ul>
