@@ -1,6 +1,10 @@
 <h1>Update</h1>
 <p>Currently, I'm working on geo index improvements in private repository to make core logic faster and support new requirements (e.g.  multiple zoom levels: render entire planet with low details or just small part in full details). So, no public progress will be shared here until the most of the work is done.</p>
-<p>Some details: I decided to rewrite core logic using C++ to use it as Unity's native plugin (or even in some other apps as there is no dependency on Unity at all). Definitely, it will take some time to complete.</p>
+<p>Some details: I decided to rewrite core logic using C++ to use it as Unity's native plugin (or even in some other apps as there is no dependency on Unity at all).</p>
+<p>
+<b>3 Feb 2016:</b> able to render coastline data at zoom level 1 using Natural Earth shapefiles:
+<img src="http://actionstreetmap.github.io/demo/images/current/scene_texture_berlin1.png"/>
+</p>
 
 <h2>Description</h2>
 <p> In short, ASM is an engine for building real city environment dynamically using OSM data. It includes:</p>
