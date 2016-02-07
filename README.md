@@ -2,7 +2,7 @@
 <p>Currently, I'm working on geo index improvements in private repository to make core logic faster and support new requirements (e.g.  multiple zoom levels: render entire planet with low details or just small part in full details). So, no public progress will be shared here until the most of the work is done.</p>
 <p>Some details: I decided to rewrite core logic using C++ to use it as Unity's native plugin (or even in some other apps as there is no dependency on Unity at all).</p>
 <p>
-<b>3 Feb 2016:</b> able to render coastline data at zoom level 1 using Natural Earth shapefiles:
+<b>Feb 2016:</b> Some results (using Natural Earth shapefiles):
 <img src="http://actionstreetmap.github.io/demo/images/first_globe_result.png"/>
 </p>
 
