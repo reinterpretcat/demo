@@ -3,7 +3,8 @@
 <p>Some details: I decided to rewrite core logic using C++ to use it as Unity's native plugin (or even in some other apps as there is no dependency on Unity at all).</p>
 <p>
 <b>Feb 2016:</b> Some results (using Natural Earth shapefiles):
-<img src="http://actionstreetmap.github.io/demo/images/first_globe_result.png"/>
+<img src="http://actionstreetmap.github.io/demo/images/first_globe_result3.png"/>
+<img src="http://actionstreetmap.github.io/demo/images/first_globe_result5.png"/>
 </p>
 
 <h2>Description</h2>
