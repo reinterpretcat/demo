@@ -1,6 +1,6 @@
-<h1>Update</h1>
-<p>Currently, I'm working on geo index improvements in private repository to make core logic faster and support new requirements (e.g.  multiple zoom levels: render entire planet with low details or just small part in full details). So, no public progress will be shared here until the most of the work is done.</p>
-<p>Some details: I decided to rewrite core logic using C++ to use it as Unity's native plugin (or even in some other apps as there is no dependency on Unity at all).</p>
+<h1>Project status</h1>
+<p>Project is in maintenance mode: I decided to rewrite core logic using C++11 and add new features. That's why I started new project instead: https://github.com/reinterpretcat/utymap </p>
+
 <p>
 <b>Feb 2016:</b> Some results (using Natural Earth shapefiles):
 <img src="http://actionstreetmap.github.io/demo/images/first_globe_result3.png"/>
