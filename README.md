@@ -1,5 +1,5 @@
 <h1>Project status</h1>
-<p>Project is in maintenance mode: I decided to rewrite core logic using C++11 and add new features. That's why I started new project instead: https://github.com/reinterpretcat/utymap </p>
+<p><b>Project is in maintenance mode: I decided to rewrite core logic using C++11 and add new features. Please follow new project:</b> https://github.com/reinterpretcat/utymap </p>
 
 <p>
 <b>Feb 2016:</b> Some results (using Natural Earth shapefiles):
