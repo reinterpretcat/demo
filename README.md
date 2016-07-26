@@ -1,5 +1,5 @@
 <h1>Project status</h1>
-<p><b>Project is deprecated: please follow new one improved:</b> https://github.com/reinterpretcat/utymap </p>
+<p><b>Project is deprecated, please follow new one improved:</b> https://github.com/reinterpretcat/utymap </p>
 
 <h2>Description</h2>
 <p> In short, ASM is an engine for building real city environment dynamically using OSM data. It includes:</p>
