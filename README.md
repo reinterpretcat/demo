@@ -1,11 +1,5 @@
 <h1>Project status</h1>
-<p><b>Project is in maintenance mode: I decided to rewrite core logic using C++11 and add new features. Please follow new project:</b> https://github.com/reinterpretcat/utymap </p>
-
-<p>
-<b>Feb 2016:</b> Some results (using Natural Earth shapefiles):
-<img src="http://actionstreetmap.github.io/demo/images/first_globe_result3.png"/>
-<img src="http://actionstreetmap.github.io/demo/images/first_globe_result5.png"/>
-</p>
+<p><b>Project is deprecated: please follow new one improved:</b> https://github.com/reinterpretcat/utymap </p>
 
 <h2>Description</h2>
 <p> In short, ASM is an engine for building real city environment dynamically using OSM data. It includes:</p>
